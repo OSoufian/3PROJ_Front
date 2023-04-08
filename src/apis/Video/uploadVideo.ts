@@ -20,7 +20,7 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
                     "Authorization": `Bearer ${sessionStorage.token}`
                 }
             })
-            console.log(await response.json())
+            
             return response.status
         }
     }
