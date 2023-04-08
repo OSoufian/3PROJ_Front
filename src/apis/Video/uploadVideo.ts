@@ -1,5 +1,3 @@
-
-
 const baseURL = "http://127.0.0.1:3000/files"
 
 export const useVideoUpload = (fileInput: File | null | undefined, callback: Function) => (async (fileInput: File | null | undefined) => {
@@ -9,7 +7,7 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
         if (!!fileInput) {
             formdata.append("video", fileInput, `${Date.now()}-${fileInput.name}`);
             formdata.append("info",  JSON.stringify({
-                channelId: 6
+                channelId: 3
             }))
 
             const response = await fetch(`${baseURL}`, {

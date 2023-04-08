@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDeleteVideo, useGetUser, useGetVideo, useGetVideos, useLogin, useRegister, useVideoUpload } from '@/apis';
 import useCreateChannel from '@/apis/Users/channels';
 
@@ -17,7 +16,7 @@ interface User {
 }
 
 function WebAuthn() {
-  
+
   const [userInput, setUserInput] = useState('');
   const [user, setUser] = useState<User | undefined>();
   const [videoList, setVideoList] = useState<string[] | null>()
@@ -36,7 +35,7 @@ function WebAuthn() {
     handleRetrieve()
   };
 
-  
+
 
   const handleLogin = () => {
     useLogin(userInput, (user: any) => {
@@ -58,7 +57,7 @@ function WebAuthn() {
           event.target.files = null
         else
           console.log("error")
-      });	
+      });
       handleRetrieve()
     }
   };
@@ -81,28 +80,28 @@ function WebAuthn() {
           <p>User Info:</p>
           <p>Username: {user?.Username}</p>
           <p>Email: {user?.Email}</p>
-          <br/>
+          <br />
           <button onClick={() => {
-            useCreateChannel(sessionStorage.token, () => {})
+            useCreateChannel(sessionStorage.token, () => { })
           }}> Create a Channel</button>
-          <br/>
-          <br/>
-          <input type="file" accept="video/*" onChange={handleVideoUpload} /> <br/>
+          <br />
+          <br />
+          <input type="file" accept="video/*" onChange={handleVideoUpload} /> <br />
 
           {!!videoList && typeof videoList !== "string" && videoList.map((v: string, Index) => (
             <div key={Index}>
-              <button onClick={()  => useGetVideo(v, (c: Blob) => setVideoSrc(c))}>{v}</button>
+              <button onClick={() => useGetVideo(v, (c: Blob) => setVideoSrc(c))}>{v}</button>
               <button onClick={() => useDeleteVideo(v, () => {
                 handleRetrieve()
               })}> X </button>
-            <br /></div>
+              <br /></div>
           ))}
 
           {typeof videoList === "string" && (
             <p>{videoList}</p>
           )}
 
-          {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true'/>)}
+          {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
 
           <button onClick={handleLogout}>Logout</button>
         </div>
