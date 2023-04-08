@@ -1,6 +1,4 @@
-import React from 'react';
-import CategoryPanel from './CategoryPanel';
-import VideoCard from './VideoCard';
+import { CategoryPanel }  from '@/components/Categories';
 import VideoList from './VideoList';
 // import { getVideoList } from '../api/videos';
 

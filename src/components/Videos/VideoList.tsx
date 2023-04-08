@@ -1,4 +1,3 @@
-import React from 'react';
 import VideoCard from './VideoCard';
 
 type Video = {
@@ -16,7 +15,7 @@ function VideoList({ videos }: VideoListProps) {
   return (
     <div>
       {videos.map((video) => (
-        <Link to={`/video/${video.id}`} key={video.id}>
+        <Link to={`/watch/${video.id}`} key={video.id}>
             <VideoCard
             title={video.title}
             description={video.description}

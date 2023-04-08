@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 10px;
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+.switch {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.switch-input {
+  display: none;
+}
+
+.switch-label {
+  display: inline-block;
+  background-color: var(--primary-500);
+  color: var(--white);
+  padding: .5rem 1rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .2s ease-in-out;
+  user-select: none;
+}
+
+.switch-label-on {
+  background-color: var(--success-500);
+}
+
+.switch-label-off {
+  background-color: var(--danger-500);
+}
+
+.switch-handle {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+  margin-left: .5rem;
+  transition: all .2s ease-in-out;
+  transform: translateX(0);
+}
+
+.switch-input:checked ~ .switch-handle {
+  transform: translateX(1rem);
+}

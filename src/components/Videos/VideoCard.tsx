@@ -1,5 +1,4 @@
-import React from 'react';
-import './VideoCard.css';
+import '@/styles/VideoCard.css';
 
 interface Props {
   title: string;

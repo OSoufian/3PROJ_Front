@@ -1,24 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-
-interface User {
-    Id: number;
-    Icon: string;
-    Username: string;
-    Email: string;
-    Password: string;
-    Incredentials: string;
-    ValideAccount: boolean;
-    Disable: boolean;
-    Subscribtion?: any;
-    Role?: any;
-    Credentials?: any;
-  }
-
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | undefined>();
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -26,8 +9,7 @@ function Navbar() {
 
   const handleLogout = () => {
     sessionStorage.clear();
-    setUser(undefined);
-    window.location.reload();
+    navigate(1)
   };
 
   const handleSearchQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {

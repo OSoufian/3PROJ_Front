@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import "./CategoryPanel.css"
+import "@/styles/CategoryPanel.css"
 // import { getCategoryList } from '../api/categories';
 
 function CategoryPanel() {
