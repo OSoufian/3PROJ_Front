@@ -8,6 +8,9 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
 
         if (!!fileInput) {
             formdata.append("video", fileInput, `${Date.now()}-${fileInput.name}`);
+            formdata.append("info",  JSON.stringify({
+                channelId: 6
+            }))
 
             const response = await fetch(`${baseURL}`, {
                 method: "POST",
@@ -17,7 +20,7 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
                     "Authorization": `Bearer ${sessionStorage.token}`
                 }
             })
-
+            console.log(await response.json())
             return response.status
         }
     }

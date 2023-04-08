@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDeleteVideo, useGetUser, useGetVideo, useGetVideos, useLogin, useRegister, useVideoUpload } from '@/apis';
+import useCreateChannel from '@/apis/Users/channels';
 
 interface User {
   Id: number;
@@ -80,6 +81,12 @@ function WebAuthn() {
           <p>User Info:</p>
           <p>Username: {user?.Username}</p>
           <p>Email: {user?.Email}</p>
+          <br/>
+          <button onClick={() => {
+            useCreateChannel(sessionStorage.token, () => {})
+          }}> Create a Channel</button>
+          <br/>
+          <br/>
           <input type="file" accept="video/*" onChange={handleVideoUpload} /> <br/>
 
           {!!videoList && typeof videoList !== "string" && videoList.map((v: string, Index) => (

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +20,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-100">
+    <nav>
       <ul className="flex items-center justify-between px-8 py-4">
         <li>
           <Link to="/" className="text-lg font-bold">
@@ -36,7 +39,7 @@ function Navbar() {
             />
             <button
               type="submit"
-              className="rounded-md p-2 bg-blue-500 text-white hover:bg-blue-700"
+              className="bg-blue-500 text-white rounded-md p-2"
             >
               Search
             </button>
@@ -44,10 +47,7 @@ function Navbar() {
         </li>
         <li>
           {!sessionStorage.token ? (
-            <Link
-              to="/connect"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-            >
+            <Link to="/connect" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
               Connect
             </Link>
           ) : (
@@ -61,20 +61,14 @@ function Navbar() {
               {isMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
                   <div className="py-1">
-                    <Link
-                      to="/logout"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                    >
-                      Logout
-                    </Link>
+                  <Link to="/logout">
+                    Logout
+                  </Link>
                   </div>
                   <div className="py-1">
-                    <Link
-                      to="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
-                    >
-                      Profile
-                    </Link>
+                  <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    Profile
+                  </Link>
                   </div>
                 </div>
               )}
@@ -86,4 +80,6 @@ function Navbar() {
   );
 };
 
+
 export default Navbar;
+

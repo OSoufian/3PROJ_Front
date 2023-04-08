@@ -8,7 +8,7 @@ export default function useLogin(username: string, callback: Function) {
         const response = await fetch(`http://localhost:3000/login/start/${username}`, {
             method: 'POST',
         });
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 403) {
             return false
             
         }

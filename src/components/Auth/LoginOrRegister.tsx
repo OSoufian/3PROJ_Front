@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 function LoginOrRegister() {
     const [userInput, setUserInput] = useState('');
-    const [sucess, setSucces] = useState(false)
     const navigate = useNavigate();
 
     const handleSubmit = () => {
@@ -13,17 +12,14 @@ function LoginOrRegister() {
                 useRegister(userInput, (isSucessed: Boolean) => {
                     if (!isSucessed) {
                         alert("Fail")
-                        
+
+                    } else {
+                        navigate('/')
                     }
-                    setSucces(true)
                 });
-            } 
-            else{
-                setSucces(true)
-            }
-            
-            if(sucess)
+            } else {
                 navigate('/')
+            }
         })
     };
 
