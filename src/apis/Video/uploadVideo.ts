@@ -1,6 +1,6 @@
 
 
-const baseURL = "http://127.0.0.1:3000/upload"
+const baseURL = "http://127.0.0.1:3000/files"
 
 export const useVideoUpload = (fileInput: File | null | undefined, callback: Function) => (async (fileInput: File | null | undefined) => {
     if (fileInput) {

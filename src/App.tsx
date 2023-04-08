@@ -8,6 +8,7 @@ import routes from 'virtual:generated-pages-react';
 
 import Footer from '@/components/Footer';
 import { defaultLocale, dynamicActivate } from '@/utils';
+import Navbar from './components/Navbar';
 
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <I18nProvider i18n={i18n}>
           <main p="x-4 y-10" text="center gray-700 dark:gray-200">
+            <Navbar />
             {useRoutes(routes)}
             <Footer />
           </main>
