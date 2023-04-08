@@ -1,10 +1,7 @@
-
-
-
-export default function useGetUser(token: string, callback: Function) {
+export default function useLogoutUser(token: string, callback: Function) {
     return (async () => {
         if(!token) return
-        const response = await fetch("http://127.0.0.1:3000/user",{
+        const response = await fetch("http://127.0.0.1:3000/user/Logout",{
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -13,4 +10,3 @@ export default function useGetUser(token: string, callback: Function) {
         return await response.json()
     })().then(c => callback(c))
 }
-
