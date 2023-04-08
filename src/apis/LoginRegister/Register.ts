@@ -10,6 +10,10 @@ export default function useRegister(username: string, callback: Function) {
                 method: 'POST'
             });
             
+            if (response.status === 401) {
+                return false
+            }
+
             lock=true
             let data
             try {

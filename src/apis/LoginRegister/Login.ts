@@ -8,7 +8,10 @@ export default function useLogin(username: string, callback: Function) {
         const response = await fetch(`http://localhost:3000/login/start/${username}`, {
             method: 'POST',
         });
-
+        if (response.status === 401) {
+            return false
+            
+        }
         const data = await response.json();
 
         data.publicKey.challenge = bufferDecode(data.publicKey.challenge);
