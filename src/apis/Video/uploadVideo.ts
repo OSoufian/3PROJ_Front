@@ -69,10 +69,7 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 
     const response = await fetch(`${baseURL}/videos/${id}`, {
         method: 'GET',
-        redirect: 'follow',
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
+        redirect: 'follow'
     })
 
     return response.ok ? await response.json() : await response.text()

@@ -77,7 +77,7 @@
 
 import { useParams } from 'react-router-dom';
 import { type VideoType } from '@/types';
-import { useGetVideoById } from '@/apis';
+import { useGetVideoById, useGetVideo } from '@/apis';
 
 function Video() {
   const [videoSrc, setVideoSrc] = useState<Blob>()
@@ -89,8 +89,14 @@ function Video() {
     setComments([...comments, comment]);
   };
 
-  const [video, setVideo] = useState<VideoType>({});
+  const [video, setVideo] = useState<VideoType|undefined>();
 
+  useEffect(() => {
+    if (!!video) {
+      useGetVideo(video.VideoURL, setVideoSrc)
+    }
+  }, [video]);
+  
   useEffect(() => {
     useGetVideoById(parseInt(params.id ?? ''), setVideo)
   }, [params.id]);
