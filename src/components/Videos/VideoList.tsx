@@ -1,25 +1,19 @@
+import { type VideoType } from '@/types';
 import VideoCard from './VideoCard';
 
-type Video = {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-};
-
 type VideoListProps = {
-  videos: Video[];
+  videos: VideoType[];
 };
 
 function VideoList({ videos }: VideoListProps) {
   return (
     <div>
       {videos.map((video) => (
-        <Link to={`/watch/${video.id}`} key={video.id}>
+        <Link to={`/watch/${video.Id}`} key={video.Id}>
             <VideoCard
-            title={video.title}
-            description={video.description}
-            thumbnail={video.thumbnail}
+            title={video.Name}
+            description={video.Description}
+            thumbnail={video.Icon}
             />
         </Link>
       ))}
