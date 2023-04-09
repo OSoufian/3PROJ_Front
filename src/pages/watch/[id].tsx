@@ -1,25 +1,37 @@
-import { Trans } from '@lingui/macro';
+import React, { useState } from 'react';
+import '@/styles/VideoPage.css';
 
-export default function Hi() {
-  const navigate = useNavigate();
-  const params = useParams();
+interface Props {
+  videoSrc: string;
+}
+
+function VideoPage(props: Props) {
+  const { videoSrc } = props;
+  const [comments, setComments] = useState<string[]>([]);
+
+  const handleAddComment = (comment: string) => {
+    setComments([...comments, comment]);
+  };
 
   return (
-    <div>
-      <div className="i-carbon-pedestrian text-4xl inline-block" />
-      <p>
-        <Trans>Hi, {params.title}</Trans>
-      </p>
-      <p className="text-sm op50">
-        <em>
-          <Trans>Dynamic route!</Trans>
-        </em>
-      </p>
-      <div>
-        <button className="btn m-3 text-sm mt-8" onClick={() => navigate(-1)}>
-          <Trans>Back</Trans>
-        </button>
+    <div className="video-page">
+      <div className="video-container">
+        <video src={videoSrc} controls crossOrigin='true' />
+      </div>
+      <div className="chat-container">
+        <div className="comment-list">
+          {comments.map((comment, index) => (
+            <div className="comment" key={index}>
+              {comment}
+            </div>
+          ))}
+        </div>
+        <div className="comment-input">
+          <input type="text" placeholder="Add a comment..." onChange={(event) => handleAddComment(event.target.value)} />
+        </div>
       </div>
     </div>
   );
 }
+
+export default VideoPage;

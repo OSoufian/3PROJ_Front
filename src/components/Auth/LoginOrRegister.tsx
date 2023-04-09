@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLogin, useRegister } from '@/apis';
 import { useNavigate } from 'react-router-dom';
+import "@/styles/LoginOrRegister.css"
 
 function LoginOrRegister() {
     const [userInput, setUserInput] = useState('');
@@ -26,11 +27,11 @@ function LoginOrRegister() {
     return (
         <div className="form-container">
             <div className="form-group">
-                <label htmlFor="username">Username:</label>
-                <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
+                <h1>Connect</h1>
+                <input type="text"placeholder="Username" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
             </div>
             <div className="form-group">
-                <button onClick={handleSubmit}>Go</button>
+                <button onClick={handleSubmit}>OK</button>
             </div>
 
         </div>
