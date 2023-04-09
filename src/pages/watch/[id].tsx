@@ -4,6 +4,7 @@ export default function Hi() {
   const navigate = useNavigate();
   const params = useParams();
 
+  // test
   return (
     <div>
       <div className="i-carbon-pedestrian text-4xl inline-block" />
