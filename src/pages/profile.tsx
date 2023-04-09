@@ -54,7 +54,7 @@ function WebAuthn() {
 
   return (
     <div style={{ marginBottom: 3 }}>
-      {!sessionStorage.token ? (
+      {sessionStorage.token ? (
         <div>
           <h1>Not logged</h1>
           <Link to="/connect" className="connect-link">

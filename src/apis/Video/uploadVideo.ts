@@ -31,10 +31,7 @@ export const useGetVideos = (callback: Function) => (async () => {
 
     const response = await fetch(`${baseURL}/videos`, {
         method: 'GET',
-        redirect: 'follow',
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
+        redirect: 'follow'
     })
 
     return response.ok ? await response.json() : await response.text()
@@ -56,11 +53,7 @@ export const useDeleteVideo = (name: string, callback: Function) => (async () =>
 })().then(c => callback(c))
 
 export const useGetVideo = (video: string, callback: Function) => (async () => {
-    const response = await fetch(`${baseURL}/files?filename=${video}`, {
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
-    })
+    const response = await fetch(`${baseURL}/files?filename=${video}`)
     return response.blob()
 })().then(c => callback(c))
 
