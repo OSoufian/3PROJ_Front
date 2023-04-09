@@ -1,5 +1,6 @@
 import { useDeleteVideo, useGetUser, useGetVideo, useGetVideos, useLogin, useRegister, useVideoUpload } from '@/apis';
 import useCreateChannel from '@/apis/Users/channels';
+import "@/styles/Profile.css"
 
 interface User {
   Id: number;
@@ -69,41 +70,42 @@ function WebAuthn() {
 
   return (
     <div style={{ marginBottom: 3 }}>
-      {!sessionStorage.token ? (
+      {sessionStorage.token ? (
         <div>
-          <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
-          <button onClick={handleRegister}>Register</button>
-          <button onClick={handleLogin}>Login</button>
+          <h1>Not logged</h1>
+          <Link to="/connect" className="connect-link">
+            Connect
+          </Link>
         </div>
       ) : (
-        <div>
-          <p>User Info:</p>
-          <p>Username: {user?.Username}</p>
-          <p>Email: {user?.Email}</p>
-          <br />
-          <button onClick={() => {
-            useCreateChannel(sessionStorage.token, () => { })
-          }}> Create a Channel</button>
-          <br />
-          <br />
-          <input type="file" accept="video/*" onChange={handleVideoUpload} /> <br />
+        <div className="profile-container">
+          <div className="profile-header">
+            <img className="profile-icon" src={user?.Icon} alt="User icon" />
+            <h1 className="profile-username">{user?.Username}</h1>
+            <p className="profile-email">{user?.Email}</p>
+          </div>
+          <div className="profile-body">
+            <button onClick={() => {
+              useCreateChannel(sessionStorage.token, () => { })
+            }} className='create-channel-btn'> Create a Channel</button>
+            <br/>
+            <input type="file" accept="video/*" onChange={handleVideoUpload} className='upload-btn'/> <br />
 
-          {!!videoList && typeof videoList !== "string" && videoList.map((v: string, Index) => (
-            <div key={Index}>
-              <button onClick={() => useGetVideo(v, (c: Blob) => setVideoSrc(c))}>{v}</button>
-              <button onClick={() => useDeleteVideo(v, () => {
-                handleRetrieve()
-              })}> X </button>
-              <br /></div>
-          ))}
+            {!!videoList && typeof videoList !== "string" && videoList.map((v: string, Index) => (
+              <div key={Index} className='video-list'>
+                <button onClick={() => useGetVideo(v, (c: Blob) => setVideoSrc(c))}>{v}</button>
+                <button onClick={() => useDeleteVideo(v, () => {
+                  handleRetrieve()
+                })}> X </button>
+                <br /></div>
+            ))}
 
-          {typeof videoList === "string" && (
-            <p>{videoList}</p>
-          )}
+            {typeof videoList === "string" && (
+              <p>{videoList}</p>
+            )}
 
-          {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
-
-          <button onClick={handleLogout}>Logout</button>
+            {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+          </div>
         </div>
       )}
     </div>
