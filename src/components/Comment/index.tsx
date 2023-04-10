@@ -55,6 +55,7 @@ function Comments() {
                     </button>
 
                     <button
+                    className='comment-cancel-button'
                     onClick={handleCommentCancel}
                     >
                     Cancel
