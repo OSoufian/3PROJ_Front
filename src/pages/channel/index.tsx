@@ -1,53 +1,55 @@
 import { useDeleteVideo, useGetUser, useGetVideos, useVideoUpload } from '@/apis';
-import { useGetChannelById, useCreateChannel } from '@/apis/Users/channels';
-import { useParams } from 'react-router-dom';
+import { useCreateChannel, useGetChannelById, useGetMeChannel } from '@/apis/Users/channels';
 import "@/styles/Profile.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
 function Channel() {
-  const params = useParams();
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User | undefined>()
   const [videoList, setVideoList] = useState<VideoType[] | null>()
-  const [channel, setChannel] = useState<ChannelType|undefined>();
-
-  // const handleRetrieve = () => {
-  //   useGetVideos((c: VideoType[]) => {
-  //     const updatedVideoList = c.map((v: VideoType) => ({
-  //       ...v,
-  //       thumbnail: v.Icon,
-  //       channelName: v.Channel.Owner.Username,
-  //       channelIcon: v.Channel.Owner.Icon
-  //     }));
-  //     setVideoList(updatedVideoList)
-  //   })
-  // }
-
   const [hiddenVideos, setHiddenVideos] = useState<string[]>([]);
   const [blockedVideos, setBlockedVideos] = useState<string[]>([]);
+  const [channel, setChannel] = useState<ChannelType | undefined>()
+
+  useEffect(()=> {
+    useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
+  }, [])
+
+  const handleRetreiveChannel = (video: VideoType, c: Function) => {
+    return useGetChannelById(video.ChannelId, c)
+  }
 
   const handleRetrieve = () => {
     useGetVideos((c: VideoType[]) => {
       const updatedVideoList = c
         .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
         .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
-        .map((v: VideoType) => ({
-          ...v,
-          thumbnail: v.Icon,
-          channelName: v.Channel.Owner.Username,
-          channelIcon: v.Channel.Owner.Icon
-        }));
+        .map((v: VideoType) => {
+          const channel: ChannelType = {
+              Id: 0,
+              OwnerId: 0,
+              Description: '',
+              SocialLink: '',
+              Banner: '',
+              Icon: '',
+              Subscribers: null
+          }
+          handleRetreiveChannel(v, (c: ChannelType) =>  {
+            Object.assign(channel, c)
+          })
+
+          return {
+            ...v,
+            channelIcon: channel.Icon
+          }
+
+        })
       setVideoList(updatedVideoList);
     });
   };
 
-  
-  useEffect(() => {
-    useGetChannelById(parseInt(params.id ?? ''), setChannel)
-  }, [params.id]);
-
   const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      useVideoUpload(event.target.files[0], (c: any) => {
+    if (event.target.files && !!channel) {
+      useVideoUpload(event.target.files[0], channel.Id, (c: any) => {
         if (c === 200)
           event.target.files = null
         else
@@ -99,7 +101,9 @@ function Channel() {
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
                   </div>
                 </div>
-                <button onClick={() => useDeleteVideo(v.VideoURL, () => handleRetrieve())} className='delete-btn'>Delete</button>
+                {!!channel && (
+                <button onClick={() => useDeleteVideo(v.VideoURL, channel.Id, () => handleRetrieve())} className='delete-btn'>Delete</button>
+                )}
               </div>
             ))}
 

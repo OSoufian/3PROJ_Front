@@ -1,16 +1,16 @@
 const baseURL = "http://127.0.0.1:3000"
 
-export const useVideoUpload = (fileInput: File | null | undefined, callback: Function) => (async (fileInput: File | null | undefined) => {
+export const useVideoUpload = (fileInput: File | null | undefined, channelId: number, callback: Function) => (async (fileInput: File | null | undefined, channelId: number) => {
     if (fileInput) {
         const formdata = new FormData();
 
         if (!!fileInput) {
             formdata.append("video", fileInput, `${Date.now()}-${fileInput.name}`);
             formdata.append("info",  JSON.stringify({
-                channelId: 20
+                channelId: channelId
             }))
 
-            const response = await fetch(`${baseURL}/files/video?channelId=${20}`, {
+            const response = await fetch(`${baseURL}/files/video?channelId=${channelId}`, {
                 method: "POST",
                 body: formdata,
                 redirect: "follow",
@@ -22,8 +22,32 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
             return response.status
         }
     }
-})(fileInput).then(c => callback(c))
+})(fileInput, channelId).then(c => callback(c))
 
+
+export const useImageUpload = (fileInput: File | null | undefined, channelId: number, callback: Function) => (async (fileInput: File | null | undefined, channelId: number) => {
+    if (fileInput) {
+        const formdata = new FormData();
+
+        if (!!fileInput) {
+            formdata.append("image", fileInput, `${Date.now()}-${fileInput.name}`);
+            formdata.append("info",  JSON.stringify({
+                channelId: channelId
+            }))
+
+            const response = await fetch(`${baseURL}/files/image?channelId=${channelId}`, {
+                method: "POST",
+                body: formdata,
+                redirect: "follow",
+                headers: {
+                    "Authorization": `Bearer ${sessionStorage.token}`
+                }
+            })
+            
+            return response.status
+        }
+    }
+})(fileInput, channelId).then(c => callback(c))
 
 
 export const useGetVideos = (callback: Function) => (async () => {
@@ -38,10 +62,10 @@ export const useGetVideos = (callback: Function) => (async () => {
 })().then(c => callback(c))
 
 
-export const useDeleteVideo = (name: string, callback: Function) => (async () => {
+export const useDeleteVideo = (name: string, channelId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/files/?filename=${name}`, {
+    const response = await fetch(`${baseURL}/files/?channelId=${channelId}&filename=${name}`, {
         method: 'DELETE',
         redirect: 'follow',
         headers: {
