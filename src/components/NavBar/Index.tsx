@@ -56,6 +56,9 @@ function Navbar() {
                   <Link to="/profile" className="block px-4 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
                     Profile
                   </Link>
+                  <Link to="/channel/" className="block px-4 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
+                    Channel
+                  </Link>
                   <Link to="/logout" className="block px-4 py-2 text-sm rounded-md text-red-700 hover:bg-red-100">
                     Logout
                   </Link>

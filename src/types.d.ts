@@ -44,3 +44,13 @@ export type User = {
   Role?: any;
   Credentials?: any;
 };
+
+export type ChannelType = {
+    Id: number;
+    OwnerId: number;
+    Description: string;
+    SocialLink: string;
+    Banner: string;
+    Icon: string;
+    Subscribers: null | number; // Subscribers can be null or a number
+}

@@ -7,10 +7,10 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
         if (!!fileInput) {
             formdata.append("video", fileInput, `${Date.now()}-${fileInput.name}`);
             formdata.append("info",  JSON.stringify({
-                channelId: 1
+                channelId: 20
             }))
 
-            const response = await fetch(`${baseURL}/files`, {
+            const response = await fetch(`${baseURL}/files/video?channelId=${20}`, {
                 method: "POST",
                 body: formdata,
                 redirect: "follow",
