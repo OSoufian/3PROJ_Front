@@ -1,0 +1,14 @@
+.video-page {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .video-container {
+    width: 70%;
+    margin-right: 2%;
+  }
+
+  .chat-container {
+    width: 35%;
+    margin-right: 2%;
+  }

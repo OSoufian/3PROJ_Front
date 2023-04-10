@@ -1,6 +1,4 @@
-
-
-const baseURL = "http://127.0.0.1:3000/files"
+const baseURL = "http://127.0.0.1:3000"
 
 export const useVideoUpload = (fileInput: File | null | undefined, callback: Function) => (async (fileInput: File | null | undefined) => {
     if (fileInput) {
@@ -9,10 +7,10 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
         if (!!fileInput) {
             formdata.append("video", fileInput, `${Date.now()}-${fileInput.name}`);
             formdata.append("info",  JSON.stringify({
-                channelId: 6
+                channelId: 1
             }))
 
-            const response = await fetch(`${baseURL}`, {
+            const response = await fetch(`${baseURL}/files`, {
                 method: "POST",
                 body: formdata,
                 redirect: "follow",
@@ -31,12 +29,9 @@ export const useVideoUpload = (fileInput: File | null | undefined, callback: Fun
 export const useGetVideos = (callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/files`, {
+    const response = await fetch(`${baseURL}/videos`, {
         method: 'GET',
-        redirect: 'follow',
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
+        redirect: 'follow'
     })
 
     return response.ok ? await response.json() : await response.text()
@@ -46,7 +41,7 @@ export const useGetVideos = (callback: Function) => (async () => {
 export const useDeleteVideo = (name: string, callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/?filename=${name}`, {
+    const response = await fetch(`${baseURL}/files/?filename=${name}`, {
         method: 'DELETE',
         redirect: 'follow',
         headers: {
@@ -58,10 +53,17 @@ export const useDeleteVideo = (name: string, callback: Function) => (async () =>
 })().then(c => callback(c))
 
 export const useGetVideo = (video: string, callback: Function) => (async () => {
-    const response = await fetch(`${baseURL}?filename=${video}`, {
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
-    })
+    const response = await fetch(`${baseURL}/files?filename=${video}`)
     return response.blob()
+})().then(c => callback(c))
+
+export const useGetVideoById = (id: number, callback: Function) => (async () => {
+    if (!sessionStorage.token) return
+
+    const response = await fetch(`${baseURL}/videos/${id}`, {
+        method: 'GET',
+        redirect: 'follow'
+    })
+
+    return response.ok ? await response.json() : await response.text()
 })().then(c => callback(c))

@@ -1,26 +1,41 @@
-import { Trans } from '@lingui/macro';
+import { useParams } from 'react-router-dom';
+import { type VideoType } from '@/types';
+import { useGetVideoById, useGetVideo } from '@/apis';
+import "@/styles/VideoPage.css";
+import Chat from '@/components/Chat.tsx';
+import Comments from '@/components/Comment';
 
-export default function Hi() {
-  const navigate = useNavigate();
+function Video() {
+  const [videoSrc, setVideoSrc] = useState<Blob>()
   const params = useParams();
 
-  // test
+  const [video, setVideo] = useState<VideoType|undefined>();
+
+  useEffect(() => {
+    if (!!video) {
+      useGetVideo(video.VideoURL, setVideoSrc)
+    }
+  }, [video]);
+  
+  useEffect(() => {
+    useGetVideoById(parseInt(params.id ?? ''), setVideo)
+  }, [params.id]);
+
   return (
     <div>
-      <div className="i-carbon-pedestrian text-4xl inline-block" />
-      <p>
-        <Trans>Hi, {params.title}</Trans>
-      </p>
-      <p className="text-sm op50">
-        <em>
-          <Trans>Dynamic route!</Trans>
-        </em>
-      </p>
+      <div className="video-page">
+        <div className="video-container">
+          {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+        </div>
+        <div className="chat-container">
+          <Chat />
+        </div>
+      </div>
       <div>
-        <button className="btn m-3 text-sm mt-8" onClick={() => navigate(-1)}>
-          <Trans>Back</Trans>
-        </button>
+        <Comments />
       </div>
     </div>
   );
 }
+
+export default Video;

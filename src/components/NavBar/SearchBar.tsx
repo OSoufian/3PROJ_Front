@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import "@/styles/SearchBar.css";
 
 function SearchBar({ onSearch }: {onSearch: Function}) {
   const [searchText, setSearchText] = useState('');
@@ -9,6 +10,7 @@ function SearchBar({ onSearch }: {onSearch: Function}) {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('Search submitted:', searchText);
     onSearch(searchText);
   };
 

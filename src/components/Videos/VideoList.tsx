@@ -1,26 +1,25 @@
+import { type VideoType } from '@/types';
 import VideoCard from './VideoCard';
 
-type Video = {
-  id: number;
-  title: string;
-  description: string;
-  thumbnail: string;
-};
-
 type VideoListProps = {
-  videos: Video[];
+  videos: VideoType[];
+  filteredVideos: VideoType[];
+  onFilterChange: (filteredVideos: VideoType[]) => void;
 };
 
-function VideoList({ videos }: VideoListProps) {
+function VideoList({ videos, filteredVideos, onFilterChange }: VideoListProps) {
+  const displayVideos = filteredVideos && filteredVideos.length > 0 ? filteredVideos : videos;
+  console.log(displayVideos);
+
   return (
     <div>
-      {videos.map((video) => (
-        <Link to={`/watch/${video.id}`} key={video.id}>
-            <VideoCard
-            title={video.title}
-            description={video.description}
-            thumbnail={video.thumbnail}
-            />
+      {displayVideos.map((video) => (
+        <Link to={`/watch/${video.Id}`} key={video.Id}>
+          <VideoCard
+            title={video.Name}
+            description={video.Description}
+            thumbnail={video.Icon}
+          />
         </Link>
       ))}
     </div>

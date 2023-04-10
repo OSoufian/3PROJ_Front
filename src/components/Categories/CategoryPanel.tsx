@@ -1,25 +1,46 @@
-import "@/styles/CategoryPanel.css"
-// import { getCategoryList } from '../api/categories';
+import "@/styles/CategoryPanel.css";
+import { type VideoType } from '@/types';
 
-function CategoryPanel() {
-//   const [categories, setCategories] = useState([]);
+interface Category {
+  id: number;
+  name: string;
+}
 
-//   useEffect(() => {
-//     getCategoryList().then(data => {
-//       setCategories(data);
-//     });
-//   }, []);
-const categories = [{id: 1, name: "Lounes"},{id: 2, name: "Soufian"},{id: 3, name: "Cyp"},{id: 4, name: "Tous"}]
+interface CategoryPanelProps {
+  onFilterChange: (filteredVideos: VideoType[]) => void;
+  videos: VideoType[];
+}
+
+function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
+  const categories = [
+    {id: 1, name: "Musique"},
+    {id: 2, name: "Jeux vidéos"},
+    {id: 3, name: "Manga"},
+    {id: 4, name: "Comédie"}
+  ]
+
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
+
+  const handleCategoryClick = (category: Category) => {
+    setActiveCategory(category.id);
+    // const filtered = 
+    // setFilteredVideos(filtered);
+    // onFilterChange(filtered);
+  };
+
   return (
     <div className='panel'>
-      <h3>Categories</h3>
+      <div className='container'>
       <ul>
-        {categories.map(category => (
-          <li key={category.id}>
-            <a href={`/category/${category.id}`}>{category.name}</a>
-          </li>
+        {categories.map((category) => (
+          // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
+          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
+            {category.name}
+          </Link>
         ))}
-      </ul>
+        </ul>
+      </div>
     </div>
   );
 }
