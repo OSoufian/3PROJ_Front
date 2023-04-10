@@ -1,6 +1,6 @@
 import { type VideoType } from '@/types';
 
-const videoList: VideoType[] = [
+const tempVideoList: VideoType[] = [
     {
       Id: 1,
       Name: 'My First Video',
@@ -195,4 +195,4 @@ const videoList: VideoType[] = [
     }
   ];
 
-export default videoList;
+export default tempVideoList;

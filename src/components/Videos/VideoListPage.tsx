@@ -4,7 +4,7 @@ import "@/styles/VideoListPage.css"
 import { useGetVideos } from '@/apis';
 import { type VideoType } from '@/types';
 import SearchBar from "../NavBar/SearchBar";
-// import videoList from '@/data/videoList';
+import tempVideoList from '@/data/videoList';
 
 function VideoListPage() {
   const [videos, setVideos] = useState<VideoType[]>([]);
@@ -35,7 +35,7 @@ function VideoListPage() {
         <CategoryPanel videos={filteredVideos} onFilterChange={handleFilterChange} />
       </div>
       <div>
-        <VideoList videos={videos} filteredVideos={filteredVideos} onFilterChange={handleFilterChange} />
+        <VideoList videos={videos?.length ? videos : tempVideoList} filteredVideos={filteredVideos} onFilterChange={handleFilterChange} />
       </div>
     </div>
   );
