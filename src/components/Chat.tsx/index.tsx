@@ -32,13 +32,12 @@ function Chat() {
         <div className="chat-list">
           {chats.map((chat, index) => (
             <div className="chat" key={index}>
-              <b>{user?.Username}</b> {chat}
-            </div>
+            <b>{user?.Username ? user?.Username : "Guest"}</b> {chat}            </div>
           ))}
         </div>
         <div className="chat-form">
           <input
-          className="comment-input"
+          className="chat-input"
           type="text"
           placeholder="Add a chat..."
           value={chat}

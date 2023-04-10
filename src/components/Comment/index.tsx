@@ -36,43 +36,54 @@ function Comments() {
       }
 
     return (
-        <div className='comment-container'>
-          <div className='comment-box'>
-            <input
-              className='comment-input'
-              type='text'
-              placeholder='Add a comment...'
-              value={comment}
-              onChange={handleCommentChange}
-            />
-            { comment ? (
+        <div>
+            {!sessionStorage.token ? (
                 <div>
-                    <button
-                    className='comment-submit-button'
-                    onClick={handleCommentSubmit}
-                    >
-                    Add Comment
-                    </button>
-
-                    <button
-                    className='comment-cancel-button'
-                    onClick={handleCommentCancel}
-                    >
-                    Cancel
-                    </button>
+                <h1>You don't have access to the comments, you have to be connected</h1>
+                <Link to="/connect" className="connect-link">
+                Connect
+                </Link>
                 </div>
-            ): (<></>)}
-          </div>
-          <div className='comment-list'>
-            {comments.map((comment, index) => (
-              <div className='comment-item' key={index}>
-                <div className='comment-author'>{user?.Username}</div>
-                <div className='comment-content'>{comment}</div>
-              </div>
-            ))}
-          </div>
+            ) : (
+                <div className='comment-container'>
+                <div className='comment-box'>
+                    <input
+                    className='comment-input'
+                    type='text'
+                    placeholder='Add a comment...'
+                    value={comment}
+                    onChange={handleCommentChange}
+                    />
+                    { comment ? (
+                        <div>
+                            <button
+                            className='comment-submit-button'
+                            onClick={handleCommentSubmit}
+                            >
+                            Add Comment
+                            </button>
+
+                            <button
+                            className='comment-cancel-button'
+                            onClick={handleCommentCancel}
+                            >
+                            Cancel
+                            </button>
+                        </div>
+                    ): (<></>)}
+                </div>
+                <div className='comment-list'>
+                    {comments.map((comment, index) => (
+                    <div className='comment-item' key={index}>
+                        <div className='comment-author'>{user?.Username}</div>
+                        <div className='comment-content'>{comment}</div>
+                    </div>
+                    ))}
+                </div>
+                </div>
+            )}
         </div>
-      );    
+    );    
 }
 
 export default Comments;

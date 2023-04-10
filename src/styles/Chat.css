@@ -25,22 +25,6 @@
   align-items: center;
 }
 
-.chat-input {
-  width: 80%;
-  padding: 0.5rem;
-  border: none;
-  border-bottom: 2px solid #999;
-  outline: none;
-  font-size: 1rem;
-  margin-right: 0.5rem;
-  transition: border-color 0.2s ease-in-out;
-}
-
-.chat-input:hover,
-.chat-input:focus {
-  border-color: #333;
-}
-
 .chat-button {
   background-color: #4CAF50; /* Green */
   border: none;
@@ -60,7 +44,7 @@
   background-color: #3e8e41;
 }
 
-.comment-input {
+.chat-input {
   width: 100%;
   height: 40px;
   border: none;
@@ -72,11 +56,11 @@
   outline: none;
 }
 
-.comment-input:hover {
+.chat-input:hover {
   background-color: #e9e9e9;
 }
 
-.comment-input:focus {
+.chat-input:focus {
   background-color: #f9f9f9;
   outline: none;
 }

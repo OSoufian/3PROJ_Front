@@ -90,7 +90,7 @@ function WebAuthn() {
                   <button className='watch-btn'>Watch Now</button>
                 </Link>
                 <div className='dropdown'>
-                  <button className='dropdown-btn'>Options</button>
+                  <button className='dropdown-btn'/>
                   <div className='dropdown-content'>
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
