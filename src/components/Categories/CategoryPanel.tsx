@@ -1,11 +1,17 @@
-import "@/styles/CategoryPanel.css"
+import "@/styles/CategoryPanel.css";
+import { type VideoType } from '@/types';
 
 interface Category {
   id: number;
   name: string;
 }
 
-function CategoryPanel() {
+interface CategoryPanelProps {
+  onFilterChange: (filteredVideos: VideoType[]) => void;
+  videos: VideoType[];
+}
+
+function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
   const categories = [
     {id: 1, name: "Musique"},
     {id: 2, name: "Jeux vidéos"},
@@ -14,9 +20,13 @@ function CategoryPanel() {
   ]
 
   const [activeCategory, setActiveCategory] = useState(0);
+  const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
 
   const handleCategoryClick = (category: Category) => {
     setActiveCategory(category.id);
+    // const filtered = 
+    // setFilteredVideos(filtered);
+    // onFilterChange(filtered);
   };
 
   return (

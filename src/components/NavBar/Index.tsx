@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import videoList from "../../data/videoList"
+
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +21,10 @@ function Navbar() {
     setSearchQuery("");
   };
 
+  const filteredVideos = videoList.filter((video) => {
+    return video.Name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   return (
     <nav>
       <ul className="flex items-center justify-between px-8 py-4">
@@ -28,7 +34,7 @@ function Navbar() {
           </Link>
         </li>
 
-        <li>
+        {/* <li>
           <form onSubmit={handleSearchSubmit}>
             <input
               type="text"
@@ -44,7 +50,7 @@ function Navbar() {
               Search
             </button>
           </form>
-        </li>
+        </li> */}
         <li>
           {!sessionStorage.token ? (
             <Link to="/connect" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -80,6 +86,4 @@ function Navbar() {
   );
 };
 
-
 export default Navbar;
-
