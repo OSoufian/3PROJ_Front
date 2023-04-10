@@ -4,14 +4,14 @@ import "@/styles/VideoListPage.css"
 import { useGetVideos } from '@/apis';
 import { type VideoType } from '@/types';
 import SearchBar from "../NavBar/SearchBar";
-import videoList from '@/data/videoList';
+// import videoList from '@/data/videoList';
 
 function VideoListPage() {
   const [videos, setVideos] = useState<VideoType[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
 
   useEffect(() => {
-    useGetVideos(() => {
+    useGetVideos((videoList: VideoType[]) => {
       setVideos(videoList);
       setFilteredVideos(videoList);
     });

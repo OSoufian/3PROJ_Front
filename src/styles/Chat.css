@@ -1,0 +1,32 @@
+  .chats-container {
+  background-color: white;
+  box-shadow: 0px 0px 5px grey;
+  border-radius: 10px;
+  padding: 20px;
+}
+  
+  .chat-list {
+    height: 80vh;
+    overflow-y: scroll;
+  }
+  
+  .chat {
+    background-color: #f1f1f1;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+  }
+  
+  .chat-input {
+    margin-top: 10px;
+  }
+  
+  .chat-input input[type='text'] {
+    width: 100%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }

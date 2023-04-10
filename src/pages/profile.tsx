@@ -1,39 +1,41 @@
-import { useDeleteVideo, useGetUser, useGetVideo, useGetVideos, useLogin, useRegister, useVideoUpload } from '@/apis';
+import { useDeleteVideo, useGetUser, useGetVideos, useVideoUpload } from '@/apis';
 import useCreateChannel from '@/apis/Users/channels';
 import "@/styles/Profile.css"
-import { VideoType } from '~/types';
-
-interface User {
-  Id: number;
-  Icon: string;
-  Username: string;
-  Email: string;
-  Password: string;
-  Incredentials: string;
-  ValideAccount: boolean;
-  Disable: boolean;
-  Subscribtion?: any;
-  Role?: any;
-  Credentials?: any;
-}
-
+import { type User, type VideoType } from '@/types';
 function WebAuthn() {
 
   const [user, setUser] = useState<User | undefined>();
   const [videoList, setVideoList] = useState<VideoType[] | null>()
-  const [videoSrc, setVideoSrc] = useState<Blob>()
+
+  // const handleRetrieve = () => {
+  //   useGetVideos((c: VideoType[]) => {
+  //     const updatedVideoList = c.map((v: VideoType) => ({
+  //       ...v,
+  //       thumbnail: v.Icon,
+  //       channelName: v.Channel.Owner.Username,
+  //       channelIcon: v.Channel.Owner.Icon
+  //     }));
+  //     setVideoList(updatedVideoList)
+  //   })
+  // }
+
+  const [hiddenVideos, setHiddenVideos] = useState<string[]>([]);
+  const [blockedVideos, setBlockedVideos] = useState<string[]>([]);
 
   const handleRetrieve = () => {
     useGetVideos((c: VideoType[]) => {
-      const updatedVideoList = c.map((v: VideoType) => ({
-        ...v,
-        thumbnail: v.Icon,
-        channelName: v.Channel.Owner.Username,
-        channelIcon: v.Channel.Owner.Icon
-      }));
-      setVideoList(updatedVideoList)
-    })
-  }
+      const updatedVideoList = c
+        .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
+        .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
+        .map((v: VideoType) => ({
+          ...v,
+          thumbnail: v.Icon,
+          channelName: v.Channel.Owner.Username,
+          channelIcon: v.Channel.Owner.Icon
+        }));
+      setVideoList(updatedVideoList);
+    });
+  };
 
   const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -54,7 +56,7 @@ function WebAuthn() {
 
   return (
     <div style={{ marginBottom: 3 }}>
-      {sessionStorage.token ? (
+      {!sessionStorage.token ? (
         <div>
           <h1>Not logged</h1>
           <Link to="/connect" className="connect-link">
@@ -84,16 +86,20 @@ function WebAuthn() {
                 <p>{v.Description}</p>
                 <p>{v.Views}</p>
                 <p>{v.CreationDate}</p>
-                <button onClick={() => useGetVideo(v.VideoURL, (c: Blob) => setVideoSrc(c))} className='watch-btn'>Watch Now</button>
+                <Link to={`/watch/${v.Id}`} key={v.Id}>
+                  <button className='watch-btn'>Watch Now</button>
+                </Link>
+                <div className='dropdown'>
+                  <button className='dropdown-btn'>Options</button>
+                  <div className='dropdown-content'>
+                    <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
+                    <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
+                  </div>
+                </div>
                 <button onClick={() => useDeleteVideo(v.VideoURL, () => handleRetrieve())} className='delete-btn'>Delete</button>
               </div>
             ))}
 
-            {typeof videoList === "string" && (
-              <p>{videoList}</p>
-            )}
-
-            {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
           </div>
         </div>
       )}

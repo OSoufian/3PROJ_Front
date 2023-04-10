@@ -30,3 +30,17 @@ export type VideoType = {
   Views: number;
   CreationDate: string;
 };
+
+export type User = {
+  Id: number;
+  Icon: string;
+  Username: string;
+  Email: string;
+  Password: string;
+  Incredentials: string;
+  ValideAccount: boolean;
+  Disable: boolean;
+  Subscribtion?: any;
+  Role?: any;
+  Credentials?: any;
+};

@@ -1,0 +1,62 @@
+/* Comment container */
+.comment-container {
+  margin-top: 20px;
+}
+
+/* Comment box */
+.comment-box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+/* Comment input */
+.comment-input {
+  width: 100%;
+  padding: 10px;
+  width: 65%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* Comment submit button */
+.comment-submit-button {
+  width: 80px;
+  background-color: #065fd4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Comment list */
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Comment item */
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Comment author */
+.comment-author {
+  font-weight: bold;
+}
+
+/* Comment content */
+.comment-content {
+  font-size: 16px;
+}
