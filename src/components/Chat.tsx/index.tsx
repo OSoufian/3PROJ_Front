@@ -37,14 +37,15 @@ function Chat() {
           ))}
         </div>
         <div className="chat-form">
-              <input
-              type="text"
-              placeholder="Add a chat..."
-              value={chat}
-              onChange={handlechatChange}
-              />
-              <button onClick={handlechatSubmit}>Send</button>
-            </div>
+          <input
+          className="comment-input"
+          type="text"
+          placeholder="Add a chat..."
+          value={chat}
+          onChange={handlechatChange}
+          />
+          <button className="chat-button" onClick={handlechatSubmit}>Send</button>
+        </div>
       </div>
   );
 }
