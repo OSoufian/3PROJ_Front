@@ -1,4 +1,4 @@
-import { VideoType } from "~/types";
+import { VideoType } from "@/types";
 
 const baseURL = "http://127.0.0.1:3000"
 
@@ -12,7 +12,7 @@ export const useVideoUpload = (fileInput: File | null | undefined, channelId: nu
                 channelId
             }))
 
-            const response = await fetch(`${baseURL}/files/video?channelId=${channelId}`, {
+            const response = await fetch(`${baseURL}/files?channelId=${channelId}`, {
                 method: "POST",
                 body: formdata,
                 redirect: "follow",
@@ -94,7 +94,7 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 
 export const useEditVideo = (video: VideoType, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
-
+    
     const response = await fetch(`${baseURL}/files?path=${video.VideoURL}&channelId=${channId}`, {
         method: 'PATCH',
         redirect: 'follow',

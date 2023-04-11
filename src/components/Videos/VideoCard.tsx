@@ -11,7 +11,7 @@ function VideoCard(props: Props) {
 
   return (
     <div className="video-card">
-      <img src={thumbnail} alt={title} />
+      <img src={`http://127.0.0.1:3000/files?filename=${thumbnail}`} alt={title} />
       <h3>{title}</h3>
       <p>{description}</p>
     </div>
