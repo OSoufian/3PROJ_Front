@@ -28,7 +28,7 @@ export type VideoType = {
     Subscribers: any;
   };
   Views: number;
-  CreationDate: string;
+  CreatedAt: string;
 };
 
 export type User = {

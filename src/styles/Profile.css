@@ -67,12 +67,11 @@
   
   /* Style for video card */
   .video-card {
-    width: 300px;
     margin: 10px;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px #ccc;
     border-radius: 5px;
-    overflow: hidden;
+    overflow: visible;
   }
   
   .video-card img {
@@ -154,13 +153,13 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  z-index: 1;
   top: 30px;
   right: 0;
   min-width: 160px;
   padding: 8px 0;
   background-color: #fff;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index:99;
 }
 
 .dropdown-content a {

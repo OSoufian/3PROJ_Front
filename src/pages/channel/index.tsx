@@ -1,5 +1,4 @@
-import { useDeleteVideo, useGetUser, useGetVideos, useVideoUpload } from '@/apis';
-import { useCreateChannel, useGetChannelById, useGetMeChannel } from '@/apis/Users/channels';
+import { useDeleteVideo, useEditVideo, useGetUser, useGetVideo, useGetVideos, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel } from '@/apis';
 import "@/styles/Profile.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
@@ -9,9 +8,13 @@ function Channel() {
   const [hiddenVideos, setHiddenVideos] = useState<string[]>([]);
   const [blockedVideos, setBlockedVideos] = useState<string[]>([]);
   const [channel, setChannel] = useState<ChannelType | undefined>()
+  const [currentVideo, setCurrent] = useState<VideoType | undefined>()
+  const [videoSrc, setVideoSrc] = useState<Blob | undefined>()
+  const [iconFile, setIconFile] = useState<FileList | null>()
 
   useEffect(()=> {
     useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
+    console.log(channel)
   }, [])
 
   const handleRetreiveChannel = (video: VideoType, c: Function) => {
@@ -64,7 +67,7 @@ function Channel() {
     handleRetrieve()
   }
 
-  return (
+  return !currentVideo ? ( 
     <div style={{ marginBottom: 3 }}>
       {!sessionStorage.token ? (
         <div>
@@ -90,13 +93,19 @@ function Channel() {
                 <h3>{v.Name}</h3>
                 <p>{v.Description}</p>
                 <p>{v.Views}</p>
-                <p>{v.CreationDate}</p>
+                <p>{v.CreatedAt}</p>
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className='watch-btn'>Watch Now</button>
                 </Link>
                 <div className='dropdown'>
                   <button className='dropdown-btn'/>
                   <div className='dropdown-content'>
+                    <button className='watch-btn' onClick={() => {
+                      setCurrent(v)
+                      useGetVideo(v.VideoURL, (c:Blob)=> {
+                        setVideoSrc(c)
+                      })
+                      }}> Edit</button>
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
                   </div>
@@ -111,7 +120,32 @@ function Channel() {
         </div>
       )}
     </div>
-  );
+  ) : (
+    <div>
+      {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+      <img src={currentVideo.Icon} alt={currentVideo.Name} />
+      <div>
+        <h4>Name: </h4>
+        <input placeholder={currentVideo.Name} onChange={(e) => currentVideo.Name = e.target.value}/>
+      </div>
+      <div>
+        <h4>Descirption: </h4>
+        <input placeholder={currentVideo.Description} type="text" onChange={(e) => currentVideo.Description = e.target.value}/>
+      </div>
+      <div>
+        <h4>Icon: </h4>
+        <input placeholder={currentVideo.Icon} type="file" accept='png, jpeg, jpg, icon, webp' onChange={(e) => setIconFile(e.target.files) }/>
+      </div>
+
+      
+      <button onClick={() => {
+        useEditVideo(currentVideo, currentVideo.ChannelId, ()=>{})
+
+        console.log(iconFile)
+        setCurrent(undefined)
+      }}>Save</button>
+    </div>
+  )
 }
 
 export default Channel;
