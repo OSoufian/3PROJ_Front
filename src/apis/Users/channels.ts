@@ -44,8 +44,6 @@ export const useGetMeChannel = (token : string, callback: Function) => (async (t
 
 export const useEditChannel = (token: string, chann : ChannelType, callBack: Function) => (async () =>{
     
-   console.log(chann)
-    
     const response = await fetch(`${baseURL}/channel/${chann.Id}`, {
         method: 'PATCH',
         headers: {

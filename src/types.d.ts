@@ -10,6 +10,19 @@ export type VideoType = {
   CreatedAt: string;
 };
 
+
+export type Role = {
+  Id: number;
+  ChannelId: number
+  Channel: ChannelType;
+  Users: User
+  Weight: number
+  Permission: number
+  Name: string;
+  Description: string;
+
+}
+
 export type User = {
   Id: number;
   Icon: string;

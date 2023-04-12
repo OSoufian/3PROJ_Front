@@ -82,8 +82,8 @@ function Channel() {
             }} className='create-channel-btn'> Create a Channel</button>
             ) || (!!channel && (
               <div>
-                <h1>{channel.Banner}</h1>
-                <input type="image" onChange={(e) => {
+                <h1>Banner</h1>
+                <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
                       channel.Banner = c
@@ -92,7 +92,7 @@ function Channel() {
                 }}></input>
 
                 <h1>Icon</h1>
-                <input type="image" onChange={(e) => {
+                <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
                       channel.Icon = c
@@ -102,7 +102,7 @@ function Channel() {
 
                 <h1>Name</h1>
                 <input placeholder={channel.Name} type='string' onChange={
-                  (e) => channel.Description = e.target.value
+                  (e) => channel.Name = e.target.value
                 }></input>
 
                 <h1>SocialLink</h1>
@@ -130,7 +130,7 @@ function Channel() {
 
             {!!videoList && videoList.map((v: VideoType) => (
               <div key={v.Id} className='video-card'>
-                <img src={v.Icon} alt={v.Name} />
+                <img src={`http://127.0.0.1:3000/files?filename=${v.Icon}`} alt={v.Name} />
                 <h3>{v.Name}</h3>
                 <h1>{v.Id}</h1>
                 <p>{v.Description}</p>
