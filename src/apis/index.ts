@@ -3,7 +3,7 @@ import { useAddLiveChat, useUpdateLiveChat, useRemoveLiveChat } from "./chats/li
 import {useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
-import {useGetRoles, useEditRole} from "./Roles"
+import {useGetRoles, useEditRole, useCreateRole} from "./Roles"
 
 export {
     useLogin,
@@ -13,6 +13,7 @@ export {
     useGetVideos,
     useDeleteVideo,
     useEditVideo,
+    useCreateRole,
     useGetVideo,
     useGetRoles, 
     useEditRole,

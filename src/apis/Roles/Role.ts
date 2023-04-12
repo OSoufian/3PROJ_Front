@@ -19,10 +19,28 @@ export function useGetRoles (channelId: number, token: string, callBack: Functio
     }().then(c => callBack(c))
 } 
 
+export function useCreateRole(token: string,role: Role, channelId: number, callBack: Function) {
+    return async function() {
+        if (!sessionStorage.token) return
+
+    const response = await fetch(`${baseURL}/roles/${channelId}`, {
+        method: 'PUT',
+        redirect: 'follow',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+    })
+
+    return response.ok ? await response.json() : await response.text()
+    }().then(c => callBack(c))
+}
+
 export function useEditRole(role: Role, token: string, callBack: Function) {
 
     return async function() {
         if (!sessionStorage.token) return
+
+    
 
     const response = await fetch(`${baseURL}/roles/${role.Id}?channId=${role.ChannelId}`, {
         method: 'PATCH',
