@@ -8,10 +8,10 @@ interface Category {
 
 interface CategoryPanelProps {
   onFilterChange: (filteredVideos: VideoType[]) => void;
-  videos: VideoType[];
+  video: VideoType[];
 }
 
-function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
+function CategoryPanel({ onFilterChange, video }: CategoryPanelProps) {
   const categories = [
     {id: 1, name: "Musique"},
     {id: 2, name: "Jeux vidéos"},

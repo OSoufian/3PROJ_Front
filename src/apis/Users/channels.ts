@@ -1,3 +1,5 @@
+import { ChannelType } from "@/types"
+
 const baseURL = "http://127.0.0.1:3000"
 
 export function useCreateChannel(token: string, callback: Function) {
@@ -19,7 +21,10 @@ export const useGetChannelById = (id: number, callback: Function) => (async (id:
 
     const response = await fetch(`${baseURL}/channel/${id}`, {
         method: 'GET',
-        redirect: 'follow'
+        redirect: 'follow',
+        headers: {
+            "Authorization": `Bearer ${sessionStorage.token}`
+        },
     })
 
     return response.ok ? await response.json() : await response.text()
@@ -35,3 +40,18 @@ export const useGetMeChannel = (token : string, callback: Function) => (async (t
 
    return response.ok ? await response.json() : await response.text()
 })(token).then(c => callback(c))
+
+
+export const useEditChannel = (token: string, chann : ChannelType, callBack: Function) => (async () =>{
+    
+   console.log(chann)
+    
+    const response = await fetch(`${baseURL}/channel/${chann.Id}`, {
+        method: 'PATCH',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(chann)
+   }) 
+   return response.ok ? await response.json() : await response.text()
+})().then((c) => callBack(c))

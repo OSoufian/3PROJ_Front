@@ -7,7 +7,7 @@ import SearchBar from "../NavBar/SearchBar";
 import tempVideoList from '@/data/videoList';
 
 function VideoListPage() {
-  const [videos, setVideos] = useState<VideoType[]>([]);
+  const [video, setVideos] = useState<VideoType[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function VideoListPage() {
   };
 
   const handleSearch = (searchText: string) => {
-    const filteredVideos = videos.filter(video => video.Name.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredVideos = video.filter(video => video.Name.toLowerCase().includes(searchText.toLowerCase()));
     setFilteredVideos(filteredVideos);
   };
 
@@ -32,10 +32,10 @@ function VideoListPage() {
         <SearchBar onSearch={handleSearch} />
       </div>
       <div>
-        <CategoryPanel videos={filteredVideos} onFilterChange={handleFilterChange} />
+        <CategoryPanel video={filteredVideos} onFilterChange={handleFilterChange} />
       </div>
       <div>
-        <VideoList videos={videos?.length ? videos : tempVideoList} filteredVideos={filteredVideos} onFilterChange={handleFilterChange} />
+        <VideoList video={video?.length ? video : tempVideoList} filteredVideos={filteredVideos} onFilterChange={handleFilterChange} />
       </div>
     </div>
   );

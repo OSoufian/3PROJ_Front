@@ -2,13 +2,13 @@ import { type VideoType } from '@/types';
 import VideoCard from './VideoCard';
 
 type VideoListProps = {
-  videos: VideoType[];
+  video: VideoType[];
   filteredVideos: VideoType[];
   onFilterChange: (filteredVideos: VideoType[]) => void;
 };
 
-function VideoList({ videos, filteredVideos, onFilterChange }: VideoListProps) {
-  const displayVideos = filteredVideos && filteredVideos.length > 0 ? filteredVideos : videos;
+function VideoList({ video, filteredVideos, onFilterChange }: VideoListProps) {
+  const displayVideos = filteredVideos && filteredVideos.length > 0 ? filteredVideos : video;
   console.log(displayVideos);
 
   return (

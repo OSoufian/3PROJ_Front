@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const [videos, setVideos] = useState<VideoType[]>([]);
+  // const [video, setVideos] = useState<VideoType[]>([]);
   // const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
 
   const toggleMenu = () => {
@@ -22,7 +22,7 @@ function Navbar() {
   // }, []);
 
   // const handleSearch = (searchText: string) => {
-  //   const filteredVideos = videos.filter(video => video.Name.toLowerCase().includes(searchText.toLowerCase()));
+  //   const filteredVideos = video.filter(video => video.Name.toLowerCase().includes(searchText.toLowerCase()));
   //   setFilteredVideos(filteredVideos);
   // };
 

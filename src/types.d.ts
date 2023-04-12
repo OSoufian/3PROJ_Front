@@ -5,28 +5,7 @@ export type VideoType = {
   Icon: string;
   VideoURL: string;
   ChannelId: number;
-  Channel: {
-    Id: number;
-    OwnerId: number;
-    Owner: {
-      Id: number;
-      Icon: string;
-      Username: string;
-      Email: string;
-      Password: string;
-      Permission: number;
-      Incredentials: string;
-      ValideAccount: boolean;
-      Disable: boolean;
-      Subscribtion: any;
-      Role: any;
-    };
-    Description: string;
-    SocialLink: string;
-    Banner: string;
-    Icon: string;
-    Subscribers: any;
-  };
+  Channel: Channel;
   Views: number;
   CreatedAt: string;
 };
@@ -37,6 +16,7 @@ export type User = {
   Username: string;
   Email: string;
   Password: string;
+  Channel: Channel;
   Incredentials: string;
   ValideAccount: boolean;
   Disable: boolean;
@@ -46,11 +26,13 @@ export type User = {
 };
 
 export type ChannelType = {
-    Id: number;
-    OwnerId: number;
-    Description: string;
-    SocialLink: string;
-    Banner: string;
-    Icon: string;
-    Subscribers: null | number; // Subscribers can be null or a number
-}
+  Id: number;
+  Name: string
+  OwnerId: number;
+  Owner: User;
+  Description: string;
+  SocialLink: string;
+  Banner: string;
+  Icon: string;
+  Subscribers: User[];
+};

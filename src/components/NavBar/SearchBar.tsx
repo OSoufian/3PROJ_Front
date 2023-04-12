@@ -20,7 +20,7 @@ function SearchBar({ onSearch }: {onSearch: Function}) {
         type="text"
         value={searchText}
         onChange={handleInputChange}
-        placeholder="Search videos..."
+        placeholder="Search video..."
       />
       <button type="submit">Search</button>
     </form>
