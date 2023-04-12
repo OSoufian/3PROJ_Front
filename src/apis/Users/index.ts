@@ -3,6 +3,6 @@ import * as user from "./user"
 
 export default {
     ...channel,
-    user
+    ...user
 }
 
