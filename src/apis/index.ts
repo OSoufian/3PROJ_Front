@@ -3,9 +3,13 @@ import { useAddLiveChat, useUpdateLiveChat, useRemoveLiveChat } from "./chats/li
 import {useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
+import {useGetMe, useEditMe, useDeleteMe, useSubscribe} from "./Users/user"
 import {useGetRoles, useEditRole, useCreateRole} from "./Roles"
 
 export {
+    useSubscribe,
+    useDeleteMe,
+    useEditMe,
     useLogin,
     useRegister,
     useGetUser,
@@ -15,6 +19,7 @@ export {
     useEditVideo,
     useCreateRole,
     useGetVideo,
+    useGetMe,
     useGetRoles, 
     useEditRole,
     useGetMeChannel,

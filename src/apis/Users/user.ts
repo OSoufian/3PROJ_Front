@@ -3,14 +3,13 @@ import { User } from "@/types";
 const baseURL = "http://127.0.0.1:3000/"
 
 
-export const useGetMe = (token: string, user : User, callBack: Function) => (async () =>{
+export const useGetMe = (token: string, callBack: Function) => (async () =>{
     
     const response = await fetch(`${baseURL}/user`, {
         method: 'GET',
         headers: {
             "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(user)
+        }
    }) 
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))

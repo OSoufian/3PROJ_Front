@@ -12,15 +12,23 @@ export type VideoType = {
 
 
 export type Role = {
-  Id: number;
+  Id: number|undefined;
   ChannelId: number
   Channel: ChannelType;
-  Users: User
+  Users: User[]
   Weight: number
   Permission: number
   Name: string;
   Description: string;
 
+}
+
+export type PartialRole = {
+  ChannelId: number;
+  Weight: number
+  Permission: number
+  Name: string;
+  Description: string;
 }
 
 export type User = {
