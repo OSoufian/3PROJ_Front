@@ -1,4 +1,4 @@
-import { useEditRole, useGetMeChannel, useGetRoles } from "@/apis";
+import { useEditRole, useGetMeChannel, useGetRoles, useDeleteRole } from "@/apis";
 import { ChannelType, Role } from "@/types";
 
 export default function Roles() {
@@ -28,7 +28,7 @@ export default function Roles() {
     if (role.Weight !== weight) {
 
       role.Weight = weight;
-      useEditRole(role, sessionStorage.token, () => { })
+      useEditRole(role, () => { })
       setRoles([...roles]); // create a new copy of roles array to trigger a re-render
     }
   };
@@ -93,11 +93,20 @@ export default function Roles() {
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               onClick={() => {
-                useEditRole(selectedRole, sessionStorage.token, () => { })
+                useEditRole(selectedRole, () => { })
                 setSelectedRole(undefined)
               }}
             >
               Close
+            </button>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              onClick={()=> {
+                useDeleteRole(selectedRole,() =>{})
+                setSelectedRole(undefined)
+              }}
+            >
+              delete
             </button>
           </div>
         </div>

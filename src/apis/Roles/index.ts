@@ -1,7 +1,8 @@
-import {useGetRoles, useEditRole, useCreateRole} from "./Role"
+import {useGetRoles, useEditRole, useCreateRole, useDeleteRole} from "./Role"
 
 export {
     useGetRoles, 
     useEditRole,
-    useCreateRole
+    useCreateRole,
+    useDeleteRole
 }

@@ -4,13 +4,14 @@ import {useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
 import {useGetMe, useEditMe, useDeleteMe, useSubscribe} from "./Users/user"
-import {useGetRoles, useEditRole, useCreateRole} from "./Roles"
+import {useGetRoles, useEditRole, useCreateRole, useDeleteRole} from "./Roles"
 
 export {
     useSubscribe,
     useDeleteMe,
     useEditMe,
     useLogin,
+    useDeleteRole,
     useRegister,
     useGetUser,
     useVideoUpload,

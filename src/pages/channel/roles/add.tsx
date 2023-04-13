@@ -1,6 +1,6 @@
 import Permissions from "@/components/ComputePerms"
 import { ChannelType, PartialRole, Role } from "@/types"
-import { useCreateRole, useGetMeChannel } from "@/apis"
+import { useEditRole, useGetMeChannel } from "@/apis"
 
 export default function AddRoles() {
     const [permisions, setPermissions] = useState<number>(0)
@@ -12,10 +12,6 @@ export default function AddRoles() {
         Permission: 0,
         Weight: 0
     })
-
-    const token = sessionStorage.token
-
-
 
     useEffect(() => {
         useGetMeChannel(sessionStorage.token, (c: ChannelType) => {
@@ -49,13 +45,12 @@ export default function AddRoles() {
                         Id: undefined
                     }
 
-                    console.log(token)
-
-                    useCreateRole(r, channel.Id, (c: any)=>{console.log(c)})
+                    useEditRole(r, (c: any)=>{console.log(c)})
                 }
 
 
-            }}>Create</button>
+            }}>Create</button><br/>
+            <Link to="/channel/roles">Back</Link>
         </div>
     )
 }
