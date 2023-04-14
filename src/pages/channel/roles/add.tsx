@@ -1,6 +1,6 @@
 import Permissions from "@/components/ComputePerms"
 import { ChannelType, PartialRole, Role } from "@/types"
-import { useEditRole, useGetMeChannel } from "@/apis"
+import { useCreateChannel, useCreateRole, useEditRole, useGetMeChannel } from "@/apis"
 
 export default function AddRoles() {
     const [permisions, setPermissions] = useState<number>(0)
@@ -45,7 +45,7 @@ export default function AddRoles() {
                         Id: undefined
                     }
 
-                    useEditRole(r, (c: any)=>{console.log(c)})
+                    useCreateRole(r, (c: any)=>{console.log(c)})
                 }
 
 
