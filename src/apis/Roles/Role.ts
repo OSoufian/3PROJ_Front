@@ -23,7 +23,7 @@ export function useCreateRole(role: Role, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/roles/${role.ChannelId}`, {
+    const response = await fetch(`${baseURL}/roles/${role.ChannelId}?channId=${role.ChannelId}`, {
       method: 'PUT',
       redirect: 'follow',
       headers: {
