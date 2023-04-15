@@ -20,6 +20,29 @@ function Channel() {
 
   }, [])
 
+  useEffect(() => {
+    useGetVideos((c: VideoType[]) => {
+      const updatedVideoList = c
+        .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
+        .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
+        .filter((v: VideoType) => v.ChannelId == channel?.Id )
+        .map((v: VideoType) => {
+          let channel: ChannelType | undefined;
+
+          handleRetreiveChannel(v, (c: ChannelType) => {
+            channel = c
+          })
+
+          return {
+            ...v,
+            channelIcon: channel?.Icon
+          }
+
+        })
+      setVideoList(updatedVideoList);
+    });
+  })
+
   const handleRetreiveChannel = (video: VideoType, c: Function) => {
     return useGetChannelById(video.ChannelId, c)
   }
@@ -29,6 +52,7 @@ function Channel() {
       const updatedVideoList = c
         .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
         .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
+        .filter((v: VideoType) => v.ChannelId == channel?.Id )
         .map((v: VideoType) => {
           let channel: ChannelType | undefined;
 
@@ -82,7 +106,7 @@ function Channel() {
             }} className='create-channel-btn'> Create a Channel</button>
             ) || (!!channel && (
               <div>
-                <h1>Banner</h1>
+                <h2>Banner</h2>
                 <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
@@ -91,7 +115,7 @@ function Channel() {
                   }
                 }}></input>
 
-                <h1>Icon</h1>
+                <h2>Icon</h2>
                 <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
@@ -100,23 +124,24 @@ function Channel() {
                   }
                 }}></input>
 
-                <h1>Name</h1>
+                <h2>Name</h2>
                 <input placeholder={channel.Name} type='string' onChange={
                   (e) => channel.Name = e.target.value
                 }></input>
 
-                <h1>SocialLink</h1>
+                <h2>SocialLink</h2>
                 <input placeholder={channel.SocialLink} type='string' onChange={
                   (e) => channel.SocialLink = e.target.value
                 }></input>
 
-                <h1>Description</h1>
+                <h2>Description</h2>
                 <input placeholder={channel.Description} type='string' onChange={
                   (e) => channel.Description = e.target.value
                 }></input>
 
                 <br />
                 <button onClick={() => {
+
                   useEditChannel(sessionStorage.token, channel, () => { })
                 }}>SAVE Channel</button>
 
@@ -139,6 +164,9 @@ function Channel() {
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className='watch-btn'>Watch Now</button>
                 </Link>
+                {!!channel && (
+                  <button onClick={() => useDeleteVideo(v.VideoURL, channel.Id, () => handleRetrieve())} className='delete-btn'>Delete</button>
+                )}
                 <div className='dropdown'>
                   <button className='dropdown-btn' />
                   <div className='dropdown-content'>
@@ -152,10 +180,7 @@ function Channel() {
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
                   </div>
-                </div>
-                {!!channel && (
-                  <button onClick={() => useDeleteVideo(v.VideoURL, channel.Id, () => handleRetrieve())} className='delete-btn'>Delete</button>
-                )}
+                </div>                
               </div>
             ))}
 
@@ -165,7 +190,7 @@ function Channel() {
     </div>
   ) : (
     <div>
-      {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+      {/* {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)} */}
       <img src={`http://127.0.0.1:3000/files?filename=${currentVideo.Icon}`} alt={currentVideo.Name} />
       <div>
         <h4>Name: </h4>

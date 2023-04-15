@@ -5,7 +5,7 @@ export type VideoType = {
   Icon: string;
   VideoURL: string;
   ChannelId: number;
-  Channel: Channel;
+  Channel: ChannelType;
   Views: number;
   CreatedAt: string;
 };
@@ -37,7 +37,7 @@ export type User = {
   Username: string;
   Email: string;
   Password: string;
-  Channel: Channel;
+  Channel: ChannelType;
   Incredentials: string;
   ValideAccount: boolean;
   Disable: boolean;
