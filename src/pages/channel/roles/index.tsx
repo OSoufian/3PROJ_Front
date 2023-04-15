@@ -15,6 +15,7 @@ export default function Roles() {
   useEffect(() => {
     if (!!channel) {
       useGetRoles(channel.Id, sessionStorage.token, (c: Role[]) => {
+        c.sort((a, b)=> {return a.Weight < b.Weight? 1: a.Weight === b.Weight ? 0: -1})
         setRoles(c);
       });
     }
@@ -25,11 +26,13 @@ export default function Roles() {
   };
 
   const handleDrag = (role: Role, weight: number) => {
+    console.log(role, weight)
+    setRoles([...roles]); // create a new copy of roles array to trigger a re-render
     if (role.Weight !== weight) {
 
-      role.Weight = weight;
-      useEditRole(role, () => { })
-      setRoles([...roles]); // create a new copy of roles array to trigger a re-render
+      role.Weight = weight
+      useEditRole(role, ()=>{})
+
     }
   };
 

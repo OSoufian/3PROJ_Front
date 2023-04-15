@@ -1,6 +1,5 @@
 import { CategoryPanel }  from '@/components/Categories';
 import VideoList from './VideoList';
-import "@/styles/VideoListPage.css"
 import { useGetVideos } from '@/apis';
 import { type VideoType } from '@/types';
 import SearchBar from "../NavBar/SearchBar";
@@ -27,11 +26,11 @@ function VideoListPage() {
   };
 
   return (
-    <div className="container">
-      <div>
-        <SearchBar onSearch={handleSearch} />
-      </div>
-      <div>
+    <div>
+      {/* <div> */}
+        {/* <SearchBar onSearch={handleSearch} /> */}
+      {/* </div> */}
+      <div className="dark:bg-#121212 dark:text-#C2C2C2">
         <CategoryPanel video={filteredVideos} onFilterChange={handleFilterChange} />
       </div>
       <div>

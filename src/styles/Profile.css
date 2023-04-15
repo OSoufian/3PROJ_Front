@@ -202,7 +202,7 @@ h2 {
  margin: 1rem 0 0.5rem;
 }
 
-button {
+/* button {
  padding: 7.5px 15px;
  background-color: #4CAF50;
  color: white;
@@ -216,7 +216,7 @@ button {
 
 button:hover {
  background-color: #3E8E41;
-}
+} */
 
 .video-card {
  gap: 10px;

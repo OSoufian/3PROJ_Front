@@ -102,6 +102,20 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 })().then(c => callback(c))
 
 
+export const useGetVideoByChannel = (id: number, callback: Function) => (async () => {
+    if (!sessionStorage.token) return
+
+    const response = await fetch(`${baseURL}/video/channel/${id}?channId=${id}`, {
+        method: 'GET',
+        redirect: 'follow',
+        headers: {
+            "Authorization": `Bearer ${sessionStorage.token}`
+        }
+    })
+
+    return response.ok ? await response.json() : await response.text()
+})().then(c => callback(c))
+
 export const useEditVideo = (video: VideoType, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
     

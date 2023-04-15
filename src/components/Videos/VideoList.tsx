@@ -9,10 +9,9 @@ type VideoListProps = {
 
 function VideoList({ video, filteredVideos, onFilterChange }: VideoListProps) {
   const displayVideos = filteredVideos && filteredVideos.length > 0 ? filteredVideos : video;
-  console.log(displayVideos);
 
   return (
-    <div>
+    <div className="bg-white dark:bg-#121212">
       {displayVideos.map((video) => (
         <Link to={`/watch/${video.Id}`} key={video.Id}>
           <VideoCard

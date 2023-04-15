@@ -1,4 +1,4 @@
-import { useDeleteVideo, useEditVideo, useGetUser, useGetVideo, useGetVideos, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel } from '@/apis';
+import { useDeleteVideo, useEditVideo, useGetUser, useGetVideo, useGetVideos, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel, useGetVideoByChannel } from '@/apis';
 import "@/styles/Profile.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
@@ -48,7 +48,7 @@ function Channel() {
   }
 
   const handleRetrieve = () => {
-    useGetVideos((c: VideoType[]) => {
+    if(!!channel) useGetVideoByChannel(channel.Id,(c: VideoType[]) => {
       const updatedVideoList = c
         .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
         .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
@@ -177,6 +177,7 @@ function Channel() {
                       })
 
                     }}> Edit</button>
+                    {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
                   </div>

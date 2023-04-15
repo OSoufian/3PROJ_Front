@@ -28,8 +28,8 @@ function Chat() {
   }
 
   return (
-      <div className="chats-container">
-        <div className="chat-list">
+      <div className="chats-container dark:bg-#542367 dark:text-#C2C2C2">
+        <div className="chat-list ">
           {chats.map((chat, index) => (
             <div className="chat" key={index}>
             <b>{user?.Username ? user?.Username : "Guest"}</b> {chat}            </div>
@@ -37,7 +37,7 @@ function Chat() {
         </div>
         <div className="chat-form">
           <input
-          className="chat-input"
+          className="chat-input dark:bg-#542367 dark:text-#C2C2C2"
           type="text"
           placeholder="Add a chat..."
           value={chat}

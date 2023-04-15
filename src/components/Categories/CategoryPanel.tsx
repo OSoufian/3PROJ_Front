@@ -35,7 +35,7 @@ function CategoryPanel({ onFilterChange, video }: CategoryPanelProps) {
       <ul>
         {categories.map((category) => (
           // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
-          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
+          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
             {category.name}
           </Link>
         ))}

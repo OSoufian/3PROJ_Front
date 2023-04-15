@@ -1,5 +1,4 @@
-
-import '@/styles/Permissions.css';
+import { useState } from 'react';
 
 const Permissions = ({ action }: { action: Function|null|undefined }) => {
   const permissions = Object.freeze({
@@ -33,28 +32,27 @@ const Permissions = ({ action }: { action: Function|null|undefined }) => {
   };
 
   return (
-    <div className="permissions-container">
-      <h3 className="permissions-title">Calculated Permissions:</h3>
-      <ul className="permissions-list">
+    <div className="dark:bg-gray-800 bg-green-100 p-6 rounded-md flex flex-col">
+      <h3 className="dark:text-white font-medium text-lg mb-4">Calculated Permissions:</h3>
+      <ul className="flex flex-col justify-between list-none m-0 p-0">
         {Object.entries(permissions).map(([permission, value]) => (
-          <li key={permission} className="permissions-list-item">
-            <span className="permissions-list-item-text">{permission}</span>
+          <li key={permission} className="flex items-center mb-2 flex-basis-[calc(33.33%-10px)]">
+            <span className="dark:text-white font-medium text-base mr-4">{permission}</span>
             <input
               type="checkbox"
               checked={(result & value) === value}
               onChange={() => {
-                calculatePermissions(value)
+                calculatePermissions(value);
                 if (!!action) {
-                  action(value)
+                  action(value);
                 }
               }}
-              className="permissions-checkbox"
-
+              className="appearance-none h-6 w-6 border-2 border-blue-500 rounded-md cursor-pointer"
             />
           </li>
         ))}
       </ul>
-      <h1 className="permissions-result" onClick={() => navigator.clipboard.writeText(result.toString())} >{result}</h1>
+      <h1 className="cursor-pointer dark:text-white font-medium text-2xl font-medium mt-4" onClick={() => navigator.clipboard.writeText(result.toString())}>{result}</h1>
     </div>
   );
 };
