@@ -5,7 +5,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: ja\n"
+"Language: en\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: \n"
@@ -15,41 +15,41 @@ msgstr ""
 
 #: src/components/Footer.tsx:20
 msgid "Home"
-msgstr "ホーム"
+msgstr "Home"
 
 #: src/components/Footer.tsx:25
 msgid "Toggle dark mode"
-msgstr "ダークモード切り替え"
+msgstr "Toggle dark mode"
 
 #: src/components/Footer.tsx:30
 msgid "Change languages"
-msgstr "言語切り替え"
+msgstr "Change languages"
 
 #: src/pages/[...all].tsx:11
 msgid "Not Found"
-msgstr "見つかりませんでした"
+msgstr "Not Found"
 
 #: src/pages/[...all].tsx:14
 #: src/pages/hi/[name].tsx:20
 msgid "Back"
-msgstr "戻る"
+msgstr "Back"
 
 #: src/pages/hi/[name].tsx:11
 msgid "Hi, {0}"
-msgstr "こんにちは、{0}!"
+msgstr "Hi, {0}"
 
 #: src/pages/hi/[name].tsx:15
 msgid "Dynamic route!"
-msgstr "動的ルートのデモ"
+msgstr "Dynamic route!"
 
 #: src/pages/index.tsx:22
 msgid "Opinionated Vite Starter Template"
-msgstr "固執された Vite スターターテンプレート"
+msgstr "Opinionated Vite Starter Template"
 
 #: src/pages/index.tsx:28
 msgid "What's your name?"
-msgstr "君の名は。"
+msgstr "What's your name?"
 
 #: src/pages/index.tsx:42
 msgid "Go"
-msgstr "進む"
+msgstr "Go"

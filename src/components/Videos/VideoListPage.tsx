@@ -2,7 +2,7 @@ import { CategoryPanel }  from '@/components/Categories';
 import VideoList from './VideoList';
 import { useGetVideos } from '@/apis';
 import { type VideoType } from '@/types';
-import SearchBar from "../NavBar/SearchBar";
+// import SearchBar from "../NavBar/SearchBar";
 import tempVideoList from '@/data/videoList';
 
 function VideoListPage() {

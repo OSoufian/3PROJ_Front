@@ -1,5 +1,5 @@
 import { useEditRole, useGetMeChannel, useGetRoles, useDeleteRole } from "@/apis";
-import { ChannelType, Role } from "@/types";
+import { type ChannelType, type Role } from "@/types";
 
 export default function Roles() {
   const [channel, setChannel] = useState<ChannelType>();

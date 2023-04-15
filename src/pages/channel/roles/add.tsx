@@ -1,5 +1,5 @@
 import Permissions from "@/components/ComputePerms";
-import { ChannelType, PartialRole, Role } from "@/types";
+import { type ChannelType, type PartialRole, type Role } from "@/types";
 import { useGetMeChannel, useCreateRole } from "@/apis";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { ChannelType } from "@/types"
+import { type ChannelType } from "@/types"
 
 const baseURL = "http://127.0.0.1:3000"
 

@@ -1,4 +1,4 @@
-import { Role } from "@/types"
+import { type Role } from "@/types"
 
 const baseURL = "http://127.0.0.1:3000"
 
