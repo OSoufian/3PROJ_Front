@@ -1,4 +1,4 @@
-import { useDeleteVideo, useEditVideo, useGetUser, useGetVideo, useGetVideos, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel, useGetVideoByChannel } from '@/apis';
+import { useDeleteVideo, useGetUser, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel, useGetVideosByChannel } from '@/apis';
 import "@/styles/Profile.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
@@ -9,10 +9,6 @@ function Channel() {
   const [hiddenVideos, setHiddenVideos] = useState<string[]>([]);
   const [blockedVideos, setBlockedVideos] = useState<string[]>([]);
   const [channel, setChannel] = useState<ChannelType | undefined>()
-  const [currentVideo, setCurrent] = useState<VideoType | undefined>()
-  const [videoSrc, setVideoSrc] = useState<Blob | undefined>()
-  const [iconFile, setIconFile] = useState<FileList | null>()
-  const [iconPath, setIconPath] = useState<string | null>()
 
   useEffect(() => {
 
@@ -21,7 +17,7 @@ function Channel() {
   }, [])
 
   useEffect(() => {
-    useGetVideos((c: VideoType[]) => {
+    useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
       const updatedVideoList = c
         .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
         .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
@@ -48,7 +44,7 @@ function Channel() {
   }
 
   const handleRetrieve = () => {
-    if(!!channel) useGetVideoByChannel(channel.Id,(c: VideoType[]) => {
+    if(!!channel) useGetVideosByChannel(channel.Id,(c: VideoType[]) => {
       const updatedVideoList = c
         .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
         .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
@@ -89,7 +85,7 @@ function Channel() {
   }
 
 
-  return !currentVideo ? (
+  return (
     <div style={{ marginBottom: 3 }}>
       <h1>My Channel</h1>
       {!sessionStorage.token ? (
@@ -175,14 +171,9 @@ function Channel() {
                 <div className='dropdown'>
                   <button className='dropdown-btn' />
                   <div className='dropdown-content'>
-                    <button className='watch-btn' onClick={() => {
-                      setCurrent(v)
-                      useGetVideo(v.VideoURL, (c: Blob) => {
-                        setVideoSrc(c)
-                      })
-
-                    }}> Edit</button>
-                    {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+                    <Link to={`/channel/${v.Id}`} key={v.Id} className='watch-btn'>
+                      Edit
+                    </Link>
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
                     <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
                   </div>
@@ -195,46 +186,6 @@ function Channel() {
           </div>
         </div>
       )}
-    </div>
-  ) : (
-    <div>
-      {/* {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)} */}
-      <img src={`http://127.0.0.1:3000/files?filename=${currentVideo.Icon}`} alt={currentVideo.Name} />
-      <div>
-        <h4>Name: </h4>
-        <input placeholder={currentVideo.Name} onChange={(e) => currentVideo.Name = e.target.value} />
-      </div>
-      <div>
-        <h4>Descirption: </h4>
-        <input placeholder={currentVideo.Description} type="text" onChange={(e) => currentVideo.Description = e.target.value} />
-      </div>
-      <div>
-        <h4>Icon: </h4>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setIconFile(e.target.files)}
-        />
-      </div>
-
-
-      <button onClick={() => {
-
-        if (!!iconFile && !!channel) {
-
-          useImageUpload(iconFile[0], channel.OwnerId, (c: string) => {
-            setIconPath(c)
-          })
-        }
-
-        if (!!iconPath) {
-          currentVideo.Icon = iconPath
-        }
-
-        useEditVideo(currentVideo, currentVideo.ChannelId, () => { })
-
-        setCurrent(undefined)
-      }}>Save</button>
     </div>
   )
 }

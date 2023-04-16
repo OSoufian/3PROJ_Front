@@ -1,4 +1,4 @@
-import { useVideoUpload, useGetVideos, useDeleteVideo, useGetVideo, useGetVideoById, useEditVideo,useImageUpload, useGetVideoByChannel } from "./uploadVideo"
+import { useVideoUpload, useGetVideos, useDeleteVideo, useGetVideo, useGetVideoById, useEditVideo,useImageUpload, useGetVideosByChannel } from "./uploadVideo"
 
 export {
     useVideoUpload, 
@@ -8,5 +8,5 @@ export {
     useGetVideoById, 
     useEditVideo,
     useImageUpload,
-    useGetVideoByChannel
+    useGetVideosByChannel
 }

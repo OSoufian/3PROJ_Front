@@ -50,14 +50,10 @@ export const useImageUpload = (fileInput: File | null | undefined, channId: numb
 
 
 export const useGetVideos = (callback: Function) => (async () => {
-    if (!sessionStorage.token) return
 
     const response = await fetch(`${baseURL}/video`, {
         method: 'GET',
-        redirect: 'follow',
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
+        redirect: 'follow'
     })
 
     return response.ok ? await response.json() : await response.text()
@@ -102,10 +98,10 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 })().then(c => callback(c))
 
 
-export const useGetVideoByChannel = (id: number, callback: Function) => (async () => {
+export const useGetVideosByChannel = (id: number | undefined, callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/video/channel/${id}?channId=${id}`, {
+    const response = await fetch(`${baseURL}/video/chann/${id}`, {
         method: 'GET',
         redirect: 'follow',
         headers: {
