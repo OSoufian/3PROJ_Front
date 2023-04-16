@@ -91,6 +91,7 @@ function Channel() {
 
   return !currentVideo ? (
     <div style={{ marginBottom: 3 }}>
+      <h1>My Channel</h1>
       {!sessionStorage.token ? (
         <div>
           <h1>Not logged</h1>
@@ -140,16 +141,17 @@ function Channel() {
                 }></input>
 
                 <br />
-                <button onClick={() => {
-
+                <button className='save-channel-btn' onClick={() => {
                   useEditChannel(sessionStorage.token, channel, () => { })
-                }}>SAVE Channel</button>
+                }}>Save Channel</button>
 
               </div>
             ))
             }
             <br />
-            <div className='upload-btn'>
+
+            <h2>Upload a video</h2>
+            <div>
               <input type="file" accept="video/*" onChange={handleVideoUpload} />
             </div>
 
