@@ -155,6 +155,9 @@ function Channel() {
               <input type="file" accept="video/*" onChange={handleVideoUpload} />
             </div>
 
+
+            <h2 className='your-videos-title'>Your Videos</h2>
+            <div className='video-list'>
             {!!videoList && videoList.map((v: VideoType) => (
               <div key={v.Id} className='video-card'>
                 <img src={`http://127.0.0.1:3000/files?filename=${v.Icon}`} alt={v.Name} />
@@ -186,6 +189,8 @@ function Channel() {
                 </div>                
               </div>
             ))}
+
+            </div>
 
           </div>
         </div>
