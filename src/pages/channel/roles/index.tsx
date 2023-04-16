@@ -38,6 +38,7 @@ export default function Roles() {
 
   return (
     <div className="p-4">
+      <iframe allow="camera; microphone; fullscreen; display-capture; autoplay" src="https://meet.jit.si/3PROJ"></iframe>
       {!!channel && (
         <div className="flex items-center space-x-4 mb-4">
           <img
