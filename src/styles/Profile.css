@@ -165,6 +165,10 @@
   content: "\22EE";
 }
 
+
+
+
+
 /* Soufian (15 avril 2023) */
 
 h1 {
@@ -179,24 +183,23 @@ h1 {
   align-items: center;
 }
 
-h2 {
+.input-title {
   font-size: 1.2rem;
   margin: 1rem 0 0.5rem;
+  margin-top: 0px;
   font-weight: bold;
 }
 
-.save-channel-btn {
+.save-btn {
   padding: 5px 15px;
   background-color: #2196F3;
-  color: #fff;
-  font-size: 16px;
+  color: white;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
   margin-top: 20px;
 }
 
-.save-channel-btn:hover {
+.save-btn:hover {
   background-color: #006C9B;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
@@ -204,6 +207,7 @@ h2 {
 .your-videos-title {
   font-size: 28px;
   margin-top: 50px;
+  font-weight: bold;
 }
 
 .video-list {

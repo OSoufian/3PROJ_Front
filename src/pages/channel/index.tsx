@@ -103,7 +103,7 @@ function Channel() {
             }} className='create-channel-btn'> Create a Channel</button>
             ) || (!!channel && (
               <div>
-                <h2>Banner</h2>
+                <h3 className="input-title">Banner</h3>
                 <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
@@ -112,7 +112,7 @@ function Channel() {
                   }
                 }}></input>
 
-                <h2>Icon</h2>
+                <h3 className="input-title">Icon</h3>
                 <input type="file" accept="image/*" onChange={(e) => {
                   if (!!e.target.files) {
                     useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
@@ -121,23 +121,23 @@ function Channel() {
                   }
                 }}></input>
 
-                <h2>Name</h2>
+                <h3 className="input-title">Name</h3>
                 <input placeholder={channel.Name} type='string' onChange={
                   (e) => channel.Name = e.target.value
                 }></input>
 
-                <h2>SocialLink</h2>
+                <h3 className="input-title">SocialLink</h3>
                 <input placeholder={channel.SocialLink} type='string' onChange={
                   (e) => channel.SocialLink = e.target.value
                 }></input>
 
-                <h2>Description</h2>
+                <h3 className="input-title">Description</h3>
                 <input placeholder={channel.Description} type='string' onChange={
                   (e) => channel.Description = e.target.value
                 }></input>
 
                 <br />
-                <button className='save-channel-btn' onClick={() => {
+                <button className='save-btn' onClick={() => {
                   useEditChannel(sessionStorage.token, channel, () => { })
                 }}>Save Channel</button>
 
@@ -146,7 +146,7 @@ function Channel() {
             }
             <br />
 
-            <h2>Upload a video</h2>
+            <h3 className="input-title">Upload a video</h3>
             <div>
               <input type="file" accept="video/*" onChange={handleVideoUpload} />
             </div>
