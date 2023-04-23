@@ -1,5 +1,5 @@
 import { useDeleteVideo, useGetUser, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel, useGetVideosByChannel } from '@/apis';
-import "@/styles/Profile.css"
+import "@/styles/Channel.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
 
@@ -151,17 +151,19 @@ function Channel() {
               <input type="file" accept="video/*" onChange={handleVideoUpload} />
             </div>
 
-
             <h2 className='your-videos-title'>Your Videos</h2>
-            <div className='video-list'>
+            <div className='video-list'>              
             {!!videoList && videoList.map((v: VideoType) => (
               <div key={v.Id} className='video-card'>
                 <img src={`http://127.0.0.1:3000/files?filename=${v.Icon}`} alt={v.Name} />
-                <h3>{v.Name}</h3>
-                <h1>{v.Id}</h1>
+                <div className="video-title">
+                  <h3>{v.Name}</h3>
+                </div>
+                <div className="video-description">
                 <p>{v.Description}</p>
-                <p>{v.Views}</p>
-                <p>{v.CreatedAt}</p>
+                </div>                
+                <p>{`${v.Views} ${v.Views > 1 ? 'view' : 'views'}`}</p>
+                {/* remplacer <p>{v.CreationAt}</p> par <p>{v.CreationDate}</p> */}
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className='watch-btn'>Watch Now</button>
                 </Link>
@@ -171,7 +173,7 @@ function Channel() {
                 <div className='dropdown'>
                   <button className='dropdown-btn' />
                   <div className='dropdown-content'>
-                    <Link to={`/channel/${v.Id}`} key={v.Id} className='watch-btn'>
+                    <Link to={`/channel/${v.Id}`} key={v.Id}>
                       Edit
                     </Link>
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
