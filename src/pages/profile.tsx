@@ -1,58 +1,59 @@
-import { useDeleteVideo, useGetUser, useGetVideos, useVideoUpload } from '@/apis';
-import useCreateChannel from '@/apis/Users/channels';
+import { useGetUser, useImageUpload } from '@/apis';
 import "@/styles/Profile.css"
-import { type User, type VideoType } from '@/types';
+import { type User} from '@/types';
 function WebAuthn() {
 
   const [user, setUser] = useState<User | undefined>();
-  const [videoList, setVideoList] = useState<VideoType[] | null>()
-
-  // const handleRetrieve = () => {
-  //   useGetVideos((c: VideoType[]) => {
-  //     const updatedVideoList = c.map((v: VideoType) => ({
-  //       ...v,
-  //       thumbnail: v.Icon,
-  //       channelName: v.Channel.Owner.Username,
-  //       channelIcon: v.Channel.Owner.Icon
-  //     }));
-  //     setVideoList(updatedVideoList)
-  //   })
-  // }
-
-  const [hiddenVideos, setHiddenVideos] = useState<string[]>([]);
-  const [blockedVideos, setBlockedVideos] = useState<string[]>([]);
-
-  const handleRetrieve = () => {
-    useGetVideos((c: VideoType[]) => {
-      const updatedVideoList = c
-        .filter((v: VideoType) => !hiddenVideos.includes(`${v.Id}`))
-        .filter((v: VideoType) => !blockedVideos.includes(`${v.Id}`))
-        .map((v: VideoType) => ({
-          ...v,
-          thumbnail: v.Icon,
-          channelName: v.Channel.Owner.Username,
-          channelIcon: v.Channel.Owner.Icon
-        }));
-      setVideoList(updatedVideoList);
-    });
-  };
-
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      useVideoUpload(event.target.files[0], (c: any) => {
-        if (c === 200)
-          event.target.files = null
-        else
-          console.log("error")
-      });
-      handleRetrieve()
-    }
-  };
 
   if (!!sessionStorage.token && !user) {
     useGetUser(sessionStorage.token, (c: any) => setUser(c))
-    handleRetrieve()
   }
+
+  const openPopup = () => {
+    const popup = window.open("", "uploadPopup", "width=600,height=400");
+    if (popup) {
+      const channel = new BroadcastChannel("uploadChannel");
+
+      channel.onmessage = (event) => {
+        if (event.data.type === "image") {
+          const image = event.data.payload;
+          // Do something with the uploaded image here
+          useImageUpload(image, 3, (c: string)=>{
+            if (!!user) {
+              user.Icon = c
+              popup.close()
+            }
+          })
+        }
+      };
+
+      popup.document.write(`
+        <html>
+          <head>
+            <title>Upload Image</title>
+          </head>
+          <body>
+            <input type="file" accept="image/*" onchange="handleImageUpload(event)"/>
+            <script>
+              function handleImageUpload(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                  const image = reader.result;
+                  const channel = new BroadcastChannel("uploadChannel");
+                  channel.postMessage({
+                    type: "image",
+                    payload: image,
+                  });
+                };
+              }
+            </script>
+          </body>
+        </html>
+      `);
+    }
+  };
 
   return (
     <div style={{ marginBottom: 3 }}>
@@ -66,40 +67,11 @@ function WebAuthn() {
       ) : (
         <div className="profile-container">
           <div className="profile-header">
-            <img className="profile-icon" src={user?.Icon} alt="User icon" />
+            <img className="profile-icon" src={`http://127.0.0.1:3000/files?filename=${user?.Icon}`} alt="User icon" onClick={
+              (e) => openPopup()
+            }/>
             <h1 className="profile-username">{user?.Username}</h1>
             <p className="profile-email">{user?.Email}</p>
-          </div>
-          <div className="profile-body">
-            <button onClick={() => {
-              useCreateChannel(sessionStorage.token, () => { })
-            }} className='create-channel-btn'> Create a Channel</button>
-            <br/>
-            <div className='upload-btn'>
-              <input type="file" accept="video/*" onChange={handleVideoUpload} />
-            </div>
-
-            {!!videoList && videoList.map((v: VideoType) => (
-              <div key={v.Id} className='video-card'>
-                <img src={v.Icon} alt={v.Name} />
-                <h3>{v.Name}</h3>
-                <p>{v.Description}</p>
-                <p>{v.Views}</p>
-                <p>{v.CreationDate}</p>
-                <Link to={`/watch/${v.Id}`} key={v.Id}>
-                  <button className='watch-btn'>Watch Now</button>
-                </Link>
-                <div className='dropdown'>
-                  <button className='dropdown-btn'/>
-                  <div className='dropdown-content'>
-                    <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>
-                    <a href='#' onClick={() => setBlockedVideos([...blockedVideos, `${v.Id}`])}>Block</a>
-                  </div>
-                </div>
-                <button onClick={() => useDeleteVideo(v.VideoURL, () => handleRetrieve())} className='delete-btn'>Delete</button>
-              </div>
-            ))}
-
           </div>
         </div>
       )}

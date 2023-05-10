@@ -28,7 +28,7 @@ function LoginOrRegister() {
         <div className="form-container">
             <div className="form-group">
                 <h1>Connect</h1>
-                <input type="text"placeholder="Username" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
+                <input className="login-input" type="text" placeholder="Username" value={userInput} onChange={(e) => setUserInput(e.target.value)} />
             </div>
             <div className="form-group">
                 <button onClick={handleSubmit}>OK</button>

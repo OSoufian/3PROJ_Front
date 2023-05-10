@@ -3,11 +3,11 @@ import { type Role } from "@/types"
 const baseURL = "http://127.0.0.1:3000"
 
 
-export function useGetChats(channelId: number, token: string, callBack: Function) {
+export function useGetRoles(channelId: number, token: string, callBack: Function) {
   return async function () {
     if (!token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${channelId}`, {
+    const response = await fetch(`${baseURL}/roles/channel/${channelId}`, {
       method: 'GET',
       redirect: 'follow',
       headers: {
@@ -19,11 +19,11 @@ export function useGetChats(channelId: number, token: string, callBack: Function
   }().then(c => callBack(c))
 }
 
-export function useCreateChats(role: Role, callBack: Function) {
+export function useCreateRole(role: Role, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${role.ChannelId}`, {
+    const response = await fetch(`${baseURL}/roles/${role.ChannelId}?channId=${role.ChannelId}`, {
       method: 'PUT',
       redirect: 'follow',
       headers: {
@@ -36,12 +36,12 @@ export function useCreateChats(role: Role, callBack: Function) {
   }().then(c => callBack(c)).catch((err) => console.log(err))
 }
 
-export function useEditChats(role: Role, callBack: Function) {
+export function useEditRole(role: Role, callBack: Function) {
 
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${role.ChannelId}`, {
+    const response = await fetch(`${baseURL}/roles/${role.Id}?channId=${role.ChannelId}`, {
       method: 'PATCH',
       redirect: 'follow',
       headers: {
@@ -54,12 +54,12 @@ export function useEditChats(role: Role, callBack: Function) {
   }().then(c => callBack(c))
 }
 
-export function useDeleteChats(role: Role, callBack: Function) {
+export function useDeleteRole(role: Role, callBack: Function) {
 
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${role.ChannelId}`, {
+    const response = await fetch(`${baseURL}/roles/${role.Id}?channId=${role.ChannelId}`, {
       method: 'DELETE',
       redirect: 'follow',
       headers: {
