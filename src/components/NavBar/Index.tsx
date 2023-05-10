@@ -24,7 +24,7 @@ function Navbar() {
 
         <li>
           {!sessionStorage.token ? (
-            <Link to="/connect" className="block px-4 py-2 text-sm hover:bg-gray-100 dark:text-#212121">
+            <Link to="/connect" classname="block px-4 py-2 text-sm hover:bg-gray-100 dark:text-#fff">
               Connect
             </Link>
           ) : (

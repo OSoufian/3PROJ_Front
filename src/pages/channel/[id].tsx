@@ -17,7 +17,7 @@ function Channel() {
 
     useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
 
-  }, [])
+  }, [params.id])
 
   useEffect(() => {
     useGetVideosByChannel(channel?.Id, (c: VideoType[]) => {
@@ -56,25 +56,27 @@ function Channel() {
       </div>
 
 
-      <button className='save-btn' onClick={() => {
+      <Link to="/channel/">
+        <button className='save-btn' onClick={() => {
 
-        if (!!iconFile && !!channel) {
+          if (!!iconFile && !!channel) {
 
-          useImageUpload(iconFile[0], channel.OwnerId, (c: string) => {
-            setIconPath(c)
-          })
-        }
+            useImageUpload(iconFile[0], channel.OwnerId, (c: string) => {
+              setIconPath(c)
+            })
+          }
 
-        if (!!iconPath) {
-          currentVideo.Icon = iconPath
-        }
+          if (!!iconPath) {
+            currentVideo.Icon = iconPath
+          }
 
-        useEditVideo(currentVideo, currentVideo.ChannelId, () => { })
-      }}>Save</button>
+          useEditVideo(currentVideo, currentVideo.ChannelId, () => { })
+        }}>Save</button>  
+      </Link>
     </div>
   ) : (
     <h1>No video</h1>
   )
 }
 
-export default Channel;
+export default Channel;  

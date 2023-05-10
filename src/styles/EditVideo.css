@@ -42,3 +42,9 @@
     background-color: #006C9B;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

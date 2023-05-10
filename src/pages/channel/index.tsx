@@ -162,8 +162,8 @@ function Channel() {
                 <div className="video-description">
                 <p>{v.Description}</p>
                 </div>                
-                <p>{`${v.Views} ${v.Views > 1 ? 'view' : 'views'}`}</p>
-                {/* remplacer <p>{v.CreationAt}</p> par <p>{v.CreationDate}</p> */}
+                <p>{`${v.Views} ${v.Views > 1 ? 'views' : 'view'}`}</p>
+                {/* remplacer <p>{v.CreatedAt}</p> par <p>{v.CreationDate}</p> */}
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className='watch-btn'>Watch Now</button>
                 </Link>
@@ -173,7 +173,7 @@ function Channel() {
                 <div className='dropdown'>
                   <button className='dropdown-btn' />
                   <div className='dropdown-content'>
-                    <Link to={`/channel/${v.Id}`} key={v.Id}>
+                  <Link to={`/channel/${v.Id}&channId=${channel?.Id}`} key={v.Id} className='watch-btn'>
                       Edit
                     </Link>
                     <a href='#' onClick={() => setHiddenVideos([...hiddenVideos, `${v.Id}`])}>Hide</a>

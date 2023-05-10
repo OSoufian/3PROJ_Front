@@ -39,6 +39,8 @@ export const useGetMeChannel = (token : string, callback: Function) => (async (t
         }
    }) 
 
+//    console.log("");
+
    return response.ok ? await response.json() : await response.text()
 })(token).then(c => callback(c))
 

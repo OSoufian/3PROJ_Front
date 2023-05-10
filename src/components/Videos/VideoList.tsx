@@ -12,8 +12,8 @@ function VideoList({ videos }: VideoListProps) {
         <Link to={`/watch/${video.Id}`} key={video.Id}>
             <VideoCard
             title={video.Name}
-            description={video.Description}
             thumbnail={video.Icon}
+            views={video.Views}
             />
         </Link>
       ))}

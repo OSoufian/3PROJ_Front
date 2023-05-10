@@ -51,7 +51,7 @@ export const useImageUpload = (fileInput: File | null | undefined, channId: numb
 
 export const useGetVideos = (callback: Function) => (async () => {
 
-    const response = await fetch(`${baseURL}/video`, {
+    const response = await fetch(`${baseURL}/video/videos`, {
         method: 'GET',
         redirect: 'follow'
     })
@@ -63,7 +63,7 @@ export const useGetVideos = (callback: Function) => (async () => {
 export const useDeleteVideo = (name: string, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/files/?channId=${channId}&filename=${name}`, {
+    const response = await fetch(`${baseURL}/files/?channId=${channId}&videoname=${name}`, {
         method: 'DELETE',
         redirect: 'follow',
         headers: {
@@ -75,7 +75,7 @@ export const useDeleteVideo = (name: string, channId: number, callback: Function
 })().then(c => callback(c))
 
 export const useGetVideo = (video: string, callback: Function) => (async () => {
-    const response = await fetch(`${baseURL}/files?filename=${video}`, {
+    const response = await fetch(`${baseURL}/video?videoname=${video}`, {
         headers: {
             "Authorization": `Bearer ${sessionStorage.token}`
         }
