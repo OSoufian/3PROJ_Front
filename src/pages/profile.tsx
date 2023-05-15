@@ -67,7 +67,7 @@ function WebAuthn() {
       ) : (
         <div className="profile-container">
           <div className="profile-header">
-            <img className="profile-icon" src={`http://127.0.0.1:3000/files?filename=${user?.Icon}`} alt="User icon" onClick={
+            <img className="profile-icon" src={'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'} alt="User icon" onClick={
               (e) => openPopup()
             }/>
             <h1 className="profile-username">{user?.Username}</h1>

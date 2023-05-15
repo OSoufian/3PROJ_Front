@@ -51,7 +51,7 @@ export const useImageUpload = (fileInput: File | null | undefined, channId: numb
 
 export const useGetVideos = (callback: Function) => (async () => {
 
-    const response = await fetch(`${baseURL}/video/videos`, {
+    const response = await fetch(`${baseURL}/video/all`, {
         method: 'GET',
         redirect: 'follow'
     })
@@ -76,10 +76,13 @@ export const useDeleteVideo = (name: string, channId: number, callback: Function
 
 export const useGetVideo = (video: string, callback: Function) => (async () => {
     const response = await fetch(`${baseURL}/video?videoname=${video}`, {
+        method: "GET",
         headers: {
             "Authorization": `Bearer ${sessionStorage.token}`
         }
     })
+    console.log(response.status);
+    
     return response.blob()
 })().then(c => callback(c))
 

@@ -10,16 +10,22 @@ function Video() {
   const params = useParams();
 
   const [video, setVideo] = useState<VideoType|undefined>();
+  
+  useEffect(() => {
+    useGetVideoById(parseInt(params.id ?? ''), (video : VideoType)=> {
+      console.log(video)
+    })
+    console.log(video);
+    
+  }, [params.id]);
 
   useEffect(() => {
     if (!!video) {
       useGetVideo(video.VideoURL, setVideoSrc)
+      console.log("video is here");
     }
   }, [video]);
   
-  useEffect(() => {
-    useGetVideoById(parseInt(params.id ?? ''), setVideo)
-  }, [params.id]);
 
   return (
     <div>

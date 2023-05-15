@@ -48,7 +48,7 @@ function Comments() {
         <div className='comment-container dark:bg-#212121'>
           <div className='comment-box'>
             <input
-              className='comment-input dark:bg-#542367 dark:text-#C2C2C2'
+              className='comment-input dark:bg-#212121 dark:text-#C2C2C2'
               type='text'
               placeholder='Add a comment...'
               value={comment}
@@ -72,7 +72,7 @@ function Comments() {
               </div>
             ) : (<></>)}
           </div>
-          <div className='comment-list dark:bg-#542367 dark:text-#C2C2C2'>
+          <div className='comment-list dark:bg-#212121 dark:text-#C2C2C2'>
             {comments.map((comment, index) => (
               <div className='comment-item' key={index}>
                 <div className='comment-author'>{user?.Username}</div>
