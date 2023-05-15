@@ -1,23 +1,34 @@
-  .chats-container {
-  background-color: white;
+.chats-container {
+  background-color: #0f0f0f;
   box-shadow: 0px 0px 5px grey;
   border-radius: 10px;
   padding: 20px;
+  color: #fff;
 }
-  
-  .chat-list {
-    height: 80vh;
-    overflow-y: scroll;
-  }
-  
-  .chat {
-    background-color: #f1f1f1;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: left;
-  }
 
+.chat-list {
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+.chat {
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+.chat b {
+  color: #9147ff;
+  font-weight: 700;
+}
+
+.chat span {
+  color: #d6d6d6;
+}
 
 .chat-form {
   display: flex;
@@ -26,9 +37,9 @@
 }
 
 .chat-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #9147ff;
   border: none;
-  color: white;
+  color: #fff;
   padding: 0.5rem;
   text-align: center;
   text-decoration: none;
@@ -41,26 +52,83 @@
 }
 
 .chat-button:hover {
-  background-color: #3e8e41;
+  background-color: #6b3ab3;
 }
 
 .chat-input {
   width: 100%;
-  height: 40px;
+  height: auto;
+  min-height: 40px;
   border: none;
   padding: 0 10px;
-  background-color: #f9f9f9;
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 20px;
   box-shadow: none;
   transition: background-color 0.3s ease-in-out;
+  color: #fff;
   outline: none;
+  resize: vertical;
+}
+
+
+.chat-input.multi-line {
+  height: auto;
+}
+
+.chat-input.multi-line:focus {
+  height: 60px;
 }
 
 .chat-input:hover {
-  background-color: #e9e9e9;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .chat-input:focus {
-  background-color: #f9f9f9;
+  background-color: rgba(0, 0, 0, 0.6);
   outline: none;
+}
+
+/* Allow users to enter a new line by using Shift + Enter */
+.chat-input:focus:empty:not(:focus::before) {
+  content: attr(data-placeholder);
+}
+
+.chat-input:not(:empty):not([data-placeholder]):not(:focus):before {
+  content: '';
+}
+
+.chat-input:not(:empty):not(:focus):after {
+  content: attr(data-placeholder);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  pointer-events: none;
+}
+
+.chat-input:empty:focus::before {
+  content: '';
+}
+
+.chat-input:empty::before {
+  content: attr(data-placeholder);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  pointer-events: none;
+}
+
+.chat-input:not(:empty) {
+  margin: 5px 0;
+}
+
+.chat-input:not(:empty)::before {
+  display: none;
+}
+
+.chat-input:not(:empty):not([data-placeholder]):not(:focus)::after {
+  display: none;
 }

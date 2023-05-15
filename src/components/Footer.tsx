@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useDark } from '@/hooks';
 
-export default function Footer() {
+function Footer() {
   const { isDark, toggleDark } = useDark();
 
   return (
@@ -21,3 +21,5 @@ export default function Footer() {
     </nav>
   );
 }
+
+export default Footer;

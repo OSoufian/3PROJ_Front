@@ -1,17 +1,19 @@
 import "@/styles/CategoryPanel.css";
-import { type VideoType } from '@/types';
+// import { type VideoType } from '@/types';
 
 interface Category {
   id: number;
   name: string;
 }
 
-interface CategoryPanelProps {
-  onFilterChange: (filteredVideos: VideoType[]) => void;
-  videos: VideoType[];
-}
+// interface CategoryPanelProps {
+//   onFilterChange: (filteredVideos: VideoType[]) => void;
+//   video: VideoType[];
+// }
 
-function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
+// function CategoryPanel({ onFilterChange, video }: CategoryPanelProps) {
+
+function CategoryPanel() {
   const categories = [
     {id: 1, name: "Musique"},
     {id: 2, name: "Jeux vidéos"},
@@ -20,7 +22,7 @@ function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
   ]
 
   const [activeCategory, setActiveCategory] = useState(0);
-  const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
+  // const [filteredVideos, setFilteredVideos] = useState<VideoType[]>([]);
 
   const handleCategoryClick = (category: Category) => {
     setActiveCategory(category.id);
@@ -35,7 +37,7 @@ function CategoryPanel({ onFilterChange, videos }: CategoryPanelProps) {
       <ul>
         {categories.map((category) => (
           // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
-          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
+          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
             {category.name}
           </Link>
         ))}

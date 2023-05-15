@@ -29,9 +29,11 @@ export default function App() {
     <Suspense fallback={<p>Loading...</p>}>
       <QueryClientProvider client={queryClient}>
         <I18nProvider i18n={i18n}>
-          <main p="x-4 y-4" text="center gray-700">
+          <main text="center gray-700">
             <Navbar />
-            {useRoutes(routes)}
+            <div p="x-4 y-4">
+              {useRoutes(routes)}
+            </div>
             <Footer />
           </main>
         </I18nProvider>

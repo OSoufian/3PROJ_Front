@@ -1,5 +1,12 @@
-import * as video from "./uploadVideo"
+import { useVideoUpload, useGetVideos, useDeleteVideo, useGetVideo, useGetVideoById, useEditVideo,useImageUpload, useGetVideosByChannel } from "./uploadVideo"
 
-export default {
-    ...video
+export {
+    useVideoUpload, 
+    useGetVideos, 
+    useDeleteVideo, 
+    useGetVideo, 
+    useGetVideoById, 
+    useEditVideo,
+    useImageUpload,
+    useGetVideosByChannel
 }

@@ -3,49 +3,58 @@ import { useGetUser } from '@/apis';
 import { type User } from '@/types';
 
 function Chat() {
-  const [chat, setchat] = useState('');
-  const [chats, setchats] = useState<string[]>([]);
+  const [chat, setChat] = useState('');
+  const [chats, setChats] = useState<string[]>([]);
   const [user, setUser] = useState<User | undefined>();
 
-  const handleAddchat = (chat: string) => {
-    setchats([...chats, chat]);
+  const handleAddChat = (chat: string) => {
+    setChats([...chats, chat]);
   };
 
-  const handlechatChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setchat(e.target.value);
+  const handleChatChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChat(event.target.value);
   };
 
-  const handlechatSubmit = () => {
-    if (chat) { // check if chat is not empty
-        handleAddchat(chat);
-        // Clear the chat input field after submitting the chat
-        setchat('');
-      }
+  const handleChatSubmit = () => {
+    if (chat) {
+      handleAddChat(chat);
+      setChat('');
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleChatSubmit();
+    }
   };
 
   if (!!sessionStorage.token && !user) {
-    useGetUser(sessionStorage.token, (c: any) => setUser(c))
+    useGetUser(sessionStorage.token, (c: any) => setUser(c));
   }
 
   return (
-      <div className="chats-container">
-        <div className="chat-list">
-          {chats.map((chat, index) => (
-            <div className="chat" key={index}>
-            <b>{user?.Username ? user?.Username : "Guest"}</b> {chat}            </div>
-          ))}
-        </div>
-        <div className="chat-form">
-          <input
-          className="chat-input"
+    <div className="chats-container dark:bg-#1F2937 dark:text-#C2C2C2">
+      <div className="chat-list">
+        {chats.map((chat, index) => (
+          <div className="chat" key={index}>
+            <b>{user?.Username ? user?.Username : 'Guest'}</b> {chat}
+          </div>
+        ))}
+      </div>
+      <div className="chat-form">
+        <input
+          className="chat-input dark:bg-#1F2937 dark:text-#C2C2C2"
           type="text"
           placeholder="Add a chat..."
           value={chat}
-          onChange={handlechatChange}
-          />
-          <button className="chat-button" onClick={handlechatSubmit}>Send</button>
-        </div>
+          onChange={handleChatChange}
+          onKeyDown={handleKeyDown}
+        />
+        <button className="chat-button" onClick={handleChatSubmit}>
+          Send
+        </button>
       </div>
+    </div>
   );
 }
 
