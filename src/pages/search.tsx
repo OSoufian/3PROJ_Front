@@ -1,17 +1,23 @@
 import { CategoryPanel }  from '@/components/Categories';
-import VideoList from './VideoList';
-import { useGetVideos } from '@/apis';
+import VideoList from '@/components/Videos/VideoList';
 import { type VideoType } from '@/types';
 import tempVideoList from '@/data/videoList';
+import { useGetSearchVideos } from '@/apis/Video/uploadVideo';
 
 function VideoListPage() {
   const [video, setVideos] = useState<VideoType[]>([]);
+  const location = useLocation();
 
   useEffect(() => {
-    useGetVideos((videoList: VideoType[]) => {
-      setVideos(videoList);
-    });
-  }, []);
+    const currentUrl = window.location.href;
+    const parsedUrl = new URL(currentUrl);
+    const searchParams = new URLSearchParams(parsedUrl.search);
+    const query = searchParams.get('q');
+
+    useGetSearchVideos(query ?? "", (videoList: VideoType[]) => {
+        setVideos(videoList);
+      })
+  }, [location.search]);
 
   return (
     <div>

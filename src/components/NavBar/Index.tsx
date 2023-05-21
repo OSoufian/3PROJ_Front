@@ -19,7 +19,7 @@ function Navbar() {
         </li>
 
         <li className="flex-grow text-center ">
-          <SearchBar onSearch={() => { }} />
+          <SearchBar />
         </li>
 
         <li>

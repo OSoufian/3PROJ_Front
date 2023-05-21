@@ -12,10 +12,7 @@ function Video() {
   const [video, setVideo] = useState<VideoType|undefined>();
   
   useEffect(() => {
-    useGetVideoById(parseInt(params.id ?? ''), (video : VideoType)=> {
-      console.log(video)
-    })
-    console.log(video);
+    useGetVideoById(parseInt(params.id ?? ''), setVideo)
     
   }, [params.id]);
 

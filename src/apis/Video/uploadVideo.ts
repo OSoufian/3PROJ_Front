@@ -59,6 +59,16 @@ export const useGetVideos = (callback: Function) => (async () => {
     return response.ok ? await response.json() : await response.text()
 })().then(c => callback(c))
 
+export const useGetSearchVideos = (search: string, callback: Function) => (async () => {
+
+    const response = await fetch(`${baseURL}/video/all?q=${search}`, {
+        method: 'GET',
+        redirect: 'follow'
+    })
+
+    return response.ok ? await response.json() : await response.text()
+})().then(c => callback(c))
+
 
 export const useDeleteVideo = (name: string, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
@@ -87,7 +97,7 @@ export const useGetVideo = (video: string, callback: Function) => (async () => {
 })().then(c => callback(c))
 
 export const useGetVideoById = (id: number, callback: Function) => (async () => {
-    if (!sessionStorage.token) return
+    // if (!sessionStorage.token) return
 
     const response = await fetch(`${baseURL}/video/${id}`, {
         method: 'GET',
