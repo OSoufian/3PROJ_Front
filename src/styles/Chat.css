@@ -1,5 +1,5 @@
 .chats-container {
-  background-color: #0f0f0f;
+  background-color: #999;
   box-shadow: 0px 0px 5px grey;
   border-radius: 10px;
   padding: 20px;
@@ -22,7 +22,7 @@
 }
 
 .chat b {
-  color: #9147ff;
+  color: #212121;
   font-weight: 700;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .chat-button {
-  background-color: #9147ff;
+  background-color: #212121;
   border: none;
   color: #fff;
   padding: 0.5rem;
@@ -52,7 +52,7 @@
 }
 
 .chat-button:hover {
-  background-color: #6b3ab3;
+  background-color: #212121;
 }
 
 .chat-input {
@@ -61,11 +61,11 @@
   min-height: 40px;
   border: none;
   padding: 0 10px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #000000;
   border-radius: 20px;
   box-shadow: none;
   transition: background-color 0.3s ease-in-out;
-  color: #fff;
+  color: #ffffff;
   outline: none;
   resize: vertical;
 }

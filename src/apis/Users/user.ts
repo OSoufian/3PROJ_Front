@@ -1,6 +1,6 @@
 import { type User } from "@/types";
 
-const baseURL = "http://127.0.0.1:3000/"
+const baseURL = "http://127.0.0.1:3000"
 
 
 export const useGetMe = (token: string, callBack: Function) => (async () =>{
@@ -50,3 +50,10 @@ export const useSubscribe = (token: string, user : User, channelId: number, call
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
+export const useGetAllUsers = (callBack: Function) => (async () =>{
+    
+    const response = await fetch(`${baseURL}/user/admin/all`, {
+        method: 'GET'
+   }) 
+   return response.ok ? await response.json() : await response.text()
+})().then((c) => callBack(c))

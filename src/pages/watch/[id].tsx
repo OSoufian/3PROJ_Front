@@ -28,7 +28,7 @@ function Video() {
     <div>
       <div className="video-page">
         <div className="video-container">
-          {!!videoSrc && (<video src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
+          {!!videoSrc && (<video class="video-content" src={URL.createObjectURL(videoSrc as (Blob | MediaSource))} controls crossOrigin='true' />)}
         </div>
         <div className="chat-container">
           <Chat />

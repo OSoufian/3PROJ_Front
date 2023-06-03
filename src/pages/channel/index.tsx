@@ -1,6 +1,7 @@
 import { useDeleteVideo, useGetUser, useVideoUpload, useCreateChannel, useGetChannelById, useGetMeChannel, useImageUpload, useEditChannel, useGetVideosByChannel } from '@/apis';
 import "@/styles/Channel.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
+// import { useEffectOnce } from 'usehooks-ts';
 
 
 function Channel() {
@@ -11,11 +12,10 @@ function Channel() {
   const [channel, setChannel] = useState<ChannelType | undefined>()
 
   useEffect(() => {
-
     useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
-
-  }, [])
-
+    // sessionStorage.setItem("channel", JSON.stringify(channel))
+  })
+  // (channel?? sessionStorage.channel)
   useEffect(() => {
     useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
       const updatedVideoList = c
@@ -155,7 +155,7 @@ function Channel() {
             <div className='video-list'>              
             {!!videoList && videoList.map((v: VideoType) => (
               <div key={v.Id} className='video-card'>
-                <img src={v.Icon ? `http://127.0.0.1:3000/files?filename=${v.Icon}` : "placeholder-image-url"}
+                <img className="w-full h-40 sm:h-52 object-cover" src={v.Icon ? `http://127.0.0.1:3000/image?imagename=${v.Icon}` : "https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png"}
                   alt={v.Name}
                 />
                 <div className="video-title">

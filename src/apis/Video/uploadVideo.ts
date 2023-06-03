@@ -73,7 +73,7 @@ export const useGetSearchVideos = (search: string, callback: Function) => (async
 export const useDeleteVideo = (name: string, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/files/?channId=${channId}&videoname=${name}`, {
+    const response = await fetch(`${baseURL}/files/?channId=${channId}&filename=${name}`, {
         method: 'DELETE',
         redirect: 'follow',
         headers: {

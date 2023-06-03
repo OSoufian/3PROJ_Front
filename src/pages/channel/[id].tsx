@@ -7,17 +7,13 @@ import { useParams } from 'react-router-dom';
 function Channel() {
   const [user, setUser] = useState<User | undefined>()
   const [channel, setChannel] = useState<ChannelType | undefined>()
-  const [iconFile, setIconFile] = useState<FileList | null>()
   const [iconPath, setIconPath] = useState<string | null>()
   const [currentVideo, setCurrentVideo] = useState<VideoType | undefined>()
   const params = useParams();
 
-
   useEffect(() => {
-
     useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
-
-  }, [params.id])
+  }, [])
 
   useEffect(() => {
     useGetVideosByChannel(channel?.Id, (c: VideoType[]) => {
@@ -25,12 +21,13 @@ function Channel() {
         .filter((v: VideoType) => v.Id == parseInt(params.id ?? ""))
       setCurrentVideo(updatedVideos[0]);
     });
+  }, [channel?.Id, params.id]);
+
+  useEffect(() => {
+    if (!!sessionStorage.token && !user) {
+      useGetUser(sessionStorage.token, (c: any) => setUser(c))
+    }
   }, []);
-
-  if (!!sessionStorage.token && !user) {
-    useGetUser(sessionStorage.token, (c: any) => setUser(c))
-  }
-
 
   return currentVideo ? (
     <div>
@@ -49,22 +46,24 @@ function Channel() {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => setIconFile(e.target.files)}
+            onChange={(e) => {
+              if (!!e.target.files && !!channel) {
+
+                useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
+                  setIconPath(c)
+                })
+              }
+            }}
           />
         </div>
-        <img className="video-thumbnail" src={`http://127.0.0.1:3000/files?filename=${currentVideo.Icon}`} alt={currentVideo.Name} />
+        <img className="video-thumbnail" src={`http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}`} alt={currentVideo.Name} />
       </div>
 
 
       <Link to="/channel/">
         <button className='save-btn' onClick={() => {
 
-          if (!!iconFile && !!channel) {
-
-            useImageUpload(iconFile[0], channel.OwnerId, (c: string) => {
-              setIconPath(c)
-            })
-          }
+          console.log(iconPath)
 
           if (!!iconPath) {
             currentVideo.Icon = iconPath
@@ -79,4 +78,4 @@ function Channel() {
   )
 }
 
-export default Channel;  
+export default Channel;

@@ -8,6 +8,10 @@
     margin-right: 2%;
   }
 
+  .video-content {
+    width: 100%;
+  }
+
   .chat-container {
     width: 35%;
     margin-right: 2%;
