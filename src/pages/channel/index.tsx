@@ -155,7 +155,9 @@ function Channel() {
             <div className='video-list'>              
             {!!videoList && videoList.map((v: VideoType) => (
               <div key={v.Id} className='video-card'>
-                <img src={`http://127.0.0.1:3000/files?filename=${v.Icon}`} alt={v.Name} />
+                <img src={v.Icon ? `http://127.0.0.1:3000/files?filename=${v.Icon}` : "placeholder-image-url"}
+                  alt={v.Name}
+                />
                 <div className="video-title">
                   <h3>{v.Name}</h3>
                 </div>
