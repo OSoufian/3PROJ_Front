@@ -1,0 +1,103 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-color: #f1f1f1;
+}
+
+.profile-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.user-list {
+  width: 25vw;
+  background-color: white;
+  padding: 2vh 3vw;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-list h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.user-item:hover {
+  background-color: #f1f1f1;
+}
+
+.user-item.selected {
+  background-color: #e0e0e0;
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  width: 50vw;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.user-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.user-details p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.user-actions {
+  margin-top: 20px;
+}
+
+.edit-btn,
+.delete-btn,
+.ban-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+}
+
+.edit-btn:hover {
+  background-color: #45a049;
+}
+
+.ban-btn {
+  background-color: #ff9800;
+}
+
+.ban-btn:hover {
+  background-color: #f57c00;
+}
+
+.delete-btn {
+  background-color: #f44336;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
