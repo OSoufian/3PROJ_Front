@@ -114,3 +114,27 @@
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Dark mode styles */
+.dark .profile-container {
+  background-color: #222;
+  color: #fff;
+}
+
+.dark .user-list {
+  background-color: #222;
+  color: #fff;
+}
+
+.dark .user-item {
+  border: 1px solid #fff;
+}
+
+.dark .user-item:hover {
+  color: #222;
+}
+
+.dark .user-details {
+  background-color: #333;
+  color: #fff;
+}
