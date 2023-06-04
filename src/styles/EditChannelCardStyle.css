@@ -1,0 +1,36 @@
+/* Soufian (15 avril 2023) */
+
+h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.channel-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.input-title {
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem;
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+.save-btn {
+    padding: 5px 15px;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.save-btn:hover {
+    background-color: #006C9B;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}

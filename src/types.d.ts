@@ -8,6 +8,8 @@ export type VideoType = {
   Channel: ChannelType;
   Views: number;
   CreatedAt: string;
+  IsHide: boolean;
+  IsBlock: boolean;
 };
 
 

@@ -1,14 +1,33 @@
-import EditChannelCard from './EditChannelCard';
-import ChannelVideos from './ChannelVideos';
-import { ChannelType } from '@/types';
-import { useCreateChannel, useGetMeChannel } from '@/apis';
+import "@/styles/Channel.css";
+import ChannelVideos from "./ChannelVideos";
+import { type ChannelType } from "@/types";
+import { useCreateChannel, useGetMeChannel } from "@/apis";
+import EditChannelCard from "./EditChannelCard";
+import UploadVideoCard from "./UploadVideoCard";
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 function Channel() {
+  const categories = [
+    {id: 1, name: "Vidéos"},
+    {id: 2, name: "A propos"},
+    {id: 3, name: "Modifier"},
+    {id: 4, name: "Ajouter une vidéo"}
+  ]
+
+  const [activeCategory, setActiveCategory] = useState(1);
   const [channel, setChannel] = useState<ChannelType | undefined>()
   
   useEffect(() => {
-    useGetMeChannel(sessionStorage.token ?? "", (c: ChannelType) => setChannel(c))
-  }, [])
+    useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => setChannel(c));
+  }, [channel?.Id]);
+  
+  const handleCategoryClick = (category: Category) => {
+    setActiveCategory(category.id);
+  };
 
   return (
     <div style={{ marginBottom: 3 }}>
@@ -21,8 +40,8 @@ function Channel() {
           </Link>
         </div>
       ) : (
-        <div className="profile-container">
-          <div className="profile-body">
+        <div className="channel-container">
+          <div className="channel-body">
             {!channel && (
               <button
                 onClick={() => {
@@ -33,17 +52,34 @@ function Channel() {
                 Create a Channel
               </button>
             )}
-            {!!channel && (
-              <div className="about-section">
-                <EditChannelCard
-                  channel={channel}
-                />
+            <div>
+              <div className='panel'>
+                <div className='container'>
+                  <ul>
+                    {categories.map((category) => (
+                    // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
+                    <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
+                        {category.name}
+                    </Link>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            )}
+              {activeCategory === 1 && (
+                  <ChannelVideos />
+              )
+              }
 
-            <ChannelVideos
-              channel={channel}
-            />
+              {activeCategory === 3 && (
+                  <EditChannelCard />
+              )
+              }
+
+              {activeCategory === 4 && (
+                <UploadVideoCard />
+              )}
+
+            </div>
           </div>
         </div>
       )}

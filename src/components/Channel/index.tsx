@@ -1,4 +1,8 @@
-import ChannelCard from "./Channel"
+import Channel from "./Channel"
+import ChannelVideos from "./ChannelVideos"
+import EditChannelCard from "./EditChannelCard"
 export {
-    ChannelCard
+    Channel,
+    ChannelVideos,
+    EditChannelCard
 }

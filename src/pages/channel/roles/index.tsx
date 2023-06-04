@@ -43,7 +43,7 @@ export default function Roles() {
         <div className="flex items-center space-x-4 mb-4">
           <img
             className="h-16 w-16 object-cover rounded-full"
-            src={`http://localhost:3000/files?filename=${channel.Icon}`}
+            src={`http://localhost:3000/image?imagename=${channel.Icon}`}
             alt=""
           />
           <div>

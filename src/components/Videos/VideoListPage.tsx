@@ -16,7 +16,6 @@ function VideoListPage() {
   return (
     <div>
       <div className="dark:bg-#121212 dark:text-#C2C2C2">
-        {/* <CategoryPanel video={filteredVideos} onFilterChange={handleFilterChange} /> */}
         <CategoryPanel />
       </div>
       <div>

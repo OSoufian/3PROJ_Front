@@ -29,16 +29,29 @@ function Channel() {
     }
   }, []);
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (currentVideo) {
+      const updatedVideo = { ...currentVideo, Name: e.target.value };
+      setCurrentVideo(updatedVideo);
+    }
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (currentVideo) {
+      const updatedVideo = { ...currentVideo, Description: e.target.value };
+      setCurrentVideo(updatedVideo);
+    }
+  };
+
   return currentVideo ? (
     <div>
-      {/* {!!CurrentVideo && (<video src={URL.createObjectURL(CurrentVideo as (Blob | MediaSource))} controls crossOrigin='true' />)} */}
       <div className="input-div">
         <h4 className="input-title">Name: </h4>
-        <input className="input" placeholder={currentVideo.Name} type="text" onChange={(e) => currentVideo.Name = e.target.value} />
+        <input className="input" placeholder="Name" type="text" value={currentVideo.Name} onChange={handleNameChange} />
       </div>
       <div className="input-div">
         <h4 className="input-title">Description: </h4>
-        <input className="input" placeholder={currentVideo.Description} type="text" onChange={(e) => currentVideo.Description = e.target.value} />
+        <input className="input" placeholder="Description" type="text" value={currentVideo.Description} onChange={handleDescriptionChange} />
       </div>
       <div className="icon-div">
         <div className="input-div">
@@ -56,15 +69,13 @@ function Channel() {
             }}
           />
         </div>
-        <img className="video-thumbnail" src={`http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}`} alt={currentVideo.Name} />
+        <img className="video-thumbnail" src={currentVideo.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}` : "https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png"} alt={currentVideo.Name} />
       </div>
 
 
       <Link to="/channel/">
         <button className='save-btn' onClick={() => {
-
-          console.log(iconPath)
-
+          
           if (!!iconPath) {
             currentVideo.Icon = iconPath
           }

@@ -10,18 +10,33 @@
   border: 1px solid #ccc;
   padding: 5px;
   width: 65%;
-  margin-top: 20px;
+  margin-top: -145px; /* Adjust the margin-top value as desired */
 }
 
-.comment-header {
+.comment-list {
+  text-align: left;
+  margin: auto;
+}
+
+.comment-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: flex-start; /* Updated to flex-start */
+  align-items: left; /* Added */
+  margin: 10px 0; /* Updated margin */
 }
 
 .comment-author {
   font-weight: bold;
+  margin-right: 1000px;
 }
+
+.comment-content {
+  flex-grow: 1;
+  text-align: left; /* Updated to left */
+  margin-right: 700px;
+}
+
 
 .comment-date {
   font-size: 12px;
@@ -29,7 +44,7 @@
 }
 
 .comment-input {
-  display: flex; /* Added */
+  display: flex;
   flex-grow: 1;
   border: none;
   outline: none;
@@ -47,7 +62,6 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
-  /* Removed margin-right */
 }
 
 .comment-cancel-button {
@@ -62,9 +76,9 @@
 }
 
 .comment-actions {
-  display: flex; /* Added */
-  align-items: center; /* Added */
-  margin-top: 5px; /* Added */
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
 }
 
 .connect-link {

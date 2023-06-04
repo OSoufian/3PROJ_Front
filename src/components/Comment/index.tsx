@@ -72,7 +72,7 @@ function Comments() {
               </div>
             ) : (<></>)}
           </div>
-          <div className='comment-list dark:bg-#212121 dark:text-#C2C2C2'>
+          <div className='comment-list dark:text-#C2C2C2'>
             {comments.map((comment, index) => (
               <div className='comment-item' key={index}>
                 <div className='comment-author'>{user?.Username}</div>
