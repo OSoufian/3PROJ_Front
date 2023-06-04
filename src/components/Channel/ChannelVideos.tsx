@@ -67,7 +67,7 @@ function ChannelVideos() {
               <div key={v.Id} className="video-card">
                 <img
                   className="w-full h-40 sm:h-52 object-cover"
-                  src={v.Icon ? `http://127.0.0.1:3000/image?imagename=${v.Icon}` : 'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'}
+                  src={v.Icon ? `http://127.0.0.1:3000/image?imagename=${v.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
                   alt={v.Name}
                 />
                 <div className="video-title">

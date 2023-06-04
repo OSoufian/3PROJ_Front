@@ -43,6 +43,16 @@ function Channel() {
     }
   };
 
+  const handleIconChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!!event.target.files && !!channel) {
+      useImageUpload(event.target.files[0], channel.OwnerId, (c: string) => {
+        setIconPath(c)
+        const updateVideo = { ...currentVideo, Icon: c } as VideoType;
+        setCurrentVideo(updateVideo);
+      });
+    }
+  };
+
   return currentVideo ? (
     <div>
       <div className="input-div">
@@ -54,22 +64,18 @@ function Channel() {
         <input className="input" placeholder="Description" type="text" value={currentVideo.Description} onChange={handleDescriptionChange} />
       </div>
       <div className="icon-div">
-        <div className="input-div">
-          <h4 className="input-title">Icon: </h4>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              if (!!e.target.files && !!channel) {
-
-                useImageUpload(e.target.files[0], channel.OwnerId, (c: string) => {
-                  setIconPath(c)
-                })
-              }
-            }}
-          />
+        <h3 className="input-title">Icon</h3>
+        <img
+          className="video-thumbnail"
+          src={currentVideo.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}` : "http://127.0.0.1:3000/image?imagename=default.png"}
+          alt={currentVideo.Name}
+        />
+        <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>
+        <div className="upload-icon">
+          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
+            document.getElementById('icon-upload')?.click();
+          }}></img>
         </div>
-        <img className="video-thumbnail" src={currentVideo.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}` : "https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png"} alt={currentVideo.Name} />
       </div>
 
 

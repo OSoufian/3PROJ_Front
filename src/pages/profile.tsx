@@ -31,7 +31,7 @@ function Profile() {
         <div className="profile-container">
           <div className="profile-header">
             <label htmlFor="upload-input">
-              <img className="profile-icon" src={user?.Icon ? `http://127.0.0.1:3000/image?imagename=${user?.Icon}` : 'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'} alt="User icon" />
+              <img className="profile-icon" src={user?.Icon ? `http://127.0.0.1:3000/image?imagename=${user?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'} alt="User icon" />
               <input id="upload-input" type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
             </label>
             <h1 className="profile-username">{user?.Username}</h1>

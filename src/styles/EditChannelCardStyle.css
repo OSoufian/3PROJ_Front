@@ -6,14 +6,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-.channel-icon {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: auto;
-}
-
 .input-title {
     font-size: 1.2rem;
     margin: 1rem 0 0.5rem;
@@ -33,4 +25,55 @@ h1 {
 .save-btn:hover {
     background-color: #006C9B;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.banner-container {
+    width: 50%;
+    position: relative;
+    display: inline-block;
+}
+
+.icon-container {
+    width: 20%;
+    position: relative;
+    display: inline-block;
+}
+
+.banner-image {
+    margin: auto;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.channel-icon {
+    object-fit: cover;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.channel-icon ~ .upload-icon {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.banner-image ~ .upload-icon {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 35%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+.banner-container:hover .upload-icon,
+.icon-container:hover .upload-icon {
+  opacity: 1;
 }

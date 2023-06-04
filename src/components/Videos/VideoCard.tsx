@@ -16,7 +16,7 @@ function VideoCard(props: Props) {
        {thumbnail ? (
           <img className="w-full h-40 sm:h-52 object-cover" src={`http://127.0.0.1:3000/image?imagename=${thumbnail}`} alt={title} />
         ) : (
-          <img className="w-full h-40 sm:h-52 object-cover" src="https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png" alt="Placeholder" />
+          <img className="w-full h-40 sm:h-52 object-cover" src="http://127.0.0.1:3000/image?imagename=default.png" alt="Placeholder" />
         )}
       
       <h3 className="text-lg font-medium my-2 mx-3 text-gray-900 dark:text-white video-title">{title}</h3>

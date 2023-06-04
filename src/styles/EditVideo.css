@@ -23,10 +23,12 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: 35%;
+    margin: auto;
 }
 
 .video-thumbnail {
-    width: 500px;
+    width: 200px;
 }
 
 .save-btn {
@@ -48,3 +50,17 @@ h1 {
     font-weight: bold;
     margin-bottom: 20px;
 }
+
+.video-thumbnail ~ .upload-icon {
+    position: absolute;
+    top: 67%;
+    left: 50%;
+    width: 15%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .icon-div:hover .upload-icon {
+    opacity: 1;
+  }

@@ -93,7 +93,7 @@ function UploadVideoCard() {
         <h3 className="input-title">Thumbnail</h3>
         <img
           className="Thumbnail-image"
-          src={currentVideo?.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo?.Icon}` : 'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'}
+          src={currentVideo?.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
           alt="Thumbnail"
         />
         <input type="file" accept="image/*" onChange={handleThumbnailChange} />

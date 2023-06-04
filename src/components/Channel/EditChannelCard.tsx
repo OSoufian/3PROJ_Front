@@ -54,19 +54,30 @@ function EditChannelCard() {
         <h3 className="input-title">Banner</h3>
         <img
           className="banner-image"
-          src={channel?.Banner ? `http://127.0.0.1:3000/image?imagename=${channel?.Banner}` : 'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'}
+          src={channel?.Banner ? `http://127.0.0.1:3000/image?imagename=${channel?.Banner}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
           alt="Banner"
         />
-        <input type="file" accept="image/*" onChange={handleBannerChange} />
+        <input id="banner-upload" type="file" accept="image/*" onChange={handleBannerChange} style={{display:'none'}}/>
+        <div className="upload-icon">
+          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
+            document.getElementById('banner-upload')?.click();
+          }}></img>
+        </div>
       </div>
-      <div className="Icon-container">
+      <br />
+      <div className="icon-container">
         <h3 className="input-title">Icon</h3>
         <img
           className="channel-icon"
-          src={channel?.Icon ? `http://127.0.0.1:3000/image?imagename=${channel?.Icon}` : 'https://www.feteduviolon.com/wp-content/uploads/2023/02/placeholder-1.png'}
+          src={channel?.Icon ? `http://127.0.0.1:3000/image?imagename=${channel?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
           alt="Icon"
         />
-        <input type="file" accept="image/*" onChange={handleIconChange} />
+        <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>
+        <div className="upload-icon">
+          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
+            document.getElementById('icon-upload')?.click();
+          }}></img>
+        </div>
       </div>
 
       <h3 className="input-title">Name</h3>
