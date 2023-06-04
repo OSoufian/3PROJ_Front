@@ -42,7 +42,7 @@ function Channel() {
       ) : (
         <div className="channel-container">
           <div className="channel-body">
-            {!channel && (
+            {!channel || channel.Id == 0 && (
               <button
                 onClick={() => {
                   useCreateChannel(sessionStorage.token, () => {});
@@ -52,13 +52,16 @@ function Channel() {
                 Create a Channel
               </button>
             )}
-            <div>
+            {channel?.Id != 0 && <div>
               <div className='panel'>
                 <div className='container'>
                   <ul>
                     {categories.map((category) => (
                     // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
-                    <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
+                    <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => {
+                      handleCategoryClick(category)
+                      console.log(channel)
+                      }}>
                         {category.name}
                     </Link>
                     ))}
@@ -79,7 +82,7 @@ function Channel() {
                 <UploadVideoCard />
               )}
 
-            </div>
+            </div>}
           </div>
         </div>
       )}

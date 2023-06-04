@@ -12,9 +12,9 @@ function ChannelVideos() {
     }, [channel?.Id]);
 
     useEffect(() => {
-      useGetVideosByChannel(18,(c: VideoType[]) => {
+      useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
         const updatedVideoList = c
-          .filter((v: VideoType) => v.ChannelId == 18 )
+          .filter((v: VideoType) => v.ChannelId == channel?.Id )
           .map((v: VideoType) => {
             let channel: ChannelType | undefined;
   
@@ -37,9 +37,9 @@ function ChannelVideos() {
     }
     
     const handleRetrieve = () => {
-        useGetVideosByChannel(18,(c: VideoType[]) => {
+        useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
             const updatedVideoList = c
-            .filter((v: VideoType) => v.ChannelId == 18 )
+            .filter((v: VideoType) => v.ChannelId == channel?.Id )
             .map((v: VideoType) => {
                 let channel: ChannelType | undefined;
         

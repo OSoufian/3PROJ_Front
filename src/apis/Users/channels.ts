@@ -11,7 +11,6 @@ export function useCreateChannel(token: string, callback: Function) {
             },
             method: "PUT"
         })
-        console.log("hello ali")
         
         return await response.json()
     })().then(c => callback(c))

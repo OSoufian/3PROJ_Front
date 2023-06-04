@@ -19,7 +19,6 @@ function Video() {
   useEffect(() => {
     if (!!video) {
       useGetVideo(video.VideoURL, setVideoSrc)
-      console.log("video is here");
     }
   }, [video]);
   
@@ -35,7 +34,9 @@ function Video() {
         </div>
       </div>
       <div>
-        <Comments />
+        {!!video?.Id && 
+          <Comments videoId={video?.Id}/>
+        }
       </div>
     </div>
   );

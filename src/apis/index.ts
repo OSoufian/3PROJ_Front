@@ -1,4 +1,4 @@
-import { useGetChats, useCreateChats, useEditChats, useDeleteChats } from "./chats/chat"
+import { useGetChats, useCreateChats, useCreateChat, useEditChats, useDeleteChats } from "./chats/chat"
 import { useAddLiveChat, useUpdateLiveChat, useRemoveLiveChat } from "./chats/livechat"
 import {useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload, useGetVideosByChannel } from "./Video"
@@ -34,6 +34,7 @@ export {
     useRemoveLiveChat,
     useGetChats,
     useCreateChats,
+    useCreateChat,
     useEditChats,
     useDeleteChats,
     useImageUpload

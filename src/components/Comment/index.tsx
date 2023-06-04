@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import '@/styles/Comment.css';
-import { useGetUser } from '@/apis';
+import { useCreateChat, useGetUser } from '@/apis';
 import { type User } from '@/types';
 
-function Comments() {
+function Comments({ videoId }: { videoId: number }) {
   const [comment, setcomment] = useState('');
   const [comments, setcomments] = useState<string[]>([]);
   const [user, setUser] = useState<User | undefined>();
@@ -19,6 +19,7 @@ function Comments() {
   const handleCommentSubmit = () => {
     if (comment) { // check if comment is not empty
       handleAddcomment(comment);
+      user ? useCreateChat(videoId, user.Id, comment, new Date(), () => {}) : console.log("Not connected")
       // Clear the comment input field after submitting the comment
       setcomment('');
     }
