@@ -72,10 +72,13 @@ function ChannelVideos() {
                 />
                 <div className="video-title">
                   <h3>{v.Name}</h3>
-                </div>
+                </div>  
+                <div className="video-hidden"> <p>{v.IsHide ? "[Hidden]" : ""}</p>                
+                  </div>              
+                
                 <div className="video-description">
                   <p>{v.Description}</p>
-                </div>
+                </div>                
                 <p>{`${v.Views} ${v.Views > 1 ? 'views' : 'view'}`}</p>
                 {/* remplacer <p>{v.CreatedAt}</p> par <p>{v.CreationDate}</p> */}
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
@@ -93,14 +96,29 @@ function ChannelVideos() {
                       Edit
                     </Link>
                     {!!channel && (
-                      <button
-                        onClick={() => {
-                          v.IsHide = true;
-                          useEditVideo(v, channel.Id, () => handleRetrieve());
-                        }}
-                      >
-                        Hide
-                      </button>
+                      <div>
+                        {v.IsHide ? (
+                          <button
+                            onClick={() => {
+                              v.IsHide = false;
+                              // TODO: mettre hide à false
+                              // useEditVideo(v, channel.Id, () => handleRetrieve()); 
+                            }}
+                          >
+                            Unhide
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              v.IsHide = true;
+                              useEditVideo(v, channel.Id, () => handleRetrieve());
+                            }}
+                          >
+                            Hide
+                          </button>
+                        )}
+                      </div>
+                      
                     )}
                     <br />
                     {!!channel && (

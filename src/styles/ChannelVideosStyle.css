@@ -42,16 +42,13 @@ h1 {
     width: 47%;
 }
 
-.video-title {
-    /* height: 10%;     */
-}
-
 .video-card h3 {
     margin: 10px;
 }
 
-.video-description {
-    /* height: 15%; */
+.video-hidden p {
+    font-style: italic;
+    color: #999 !important;
 }
 
 .video-card p {
