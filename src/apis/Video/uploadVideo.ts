@@ -21,7 +21,8 @@ export const useVideoUpload = (fileInput: File | null | undefined, channId: numb
                 }
             })
             
-            return response.status
+            const data = await response.json();
+            return data
         }
     }
 })(fileInput, channId).then(c => callback(c))
@@ -50,7 +51,10 @@ export const useImageUpload = (fileInput: File | null | undefined, channId: numb
 
 
 export const useGetVideos = (callback: Function) => (async () => {
-
+// export const useGetVideos = (orderBy: string[], callback: Function) => (async () => {
+    
+    // const orderByParams = orderBy.join(",");
+    // ?orderBy=${orderByParams}
     const response = await fetch(`${baseURL}/video/all`, {
         method: 'GET',
         redirect: 'follow'
@@ -60,7 +64,10 @@ export const useGetVideos = (callback: Function) => (async () => {
 })().then(c => callback(c))
 
 export const useGetSearchVideos = (search: string, callback: Function) => (async () => {
-
+// export const useGetSearchVideos = (search: string, orderBy: string[], callback: Function) => (async () => {
+    
+    // const orderByParams = orderBy.join(",");
+    // &orderBy=${orderByParams}
     const response = await fetch(`${baseURL}/video/all?q=${search}`, {
         method: 'GET',
         redirect: 'follow'
@@ -91,7 +98,6 @@ export const useGetVideo = (video: string, callback: Function) => (async () => {
             "Authorization": `Bearer ${sessionStorage.token}`
         }
     })
-    console.log(response.status);
     
     return response.blob()
 })().then(c => callback(c))
@@ -111,19 +117,20 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 })().then(c => callback(c))
 
 
-export const useGetVideosByChannel = (id: number | undefined, callback: Function) => (async () => {
-    if (!sessionStorage.token) return
+export const useGetVideosByChannel = (id: number | undefined, orderBy: string[], callback: Function) => (async () => {
+    if (!sessionStorage.token) return;
 
-    const response = await fetch(`${baseURL}/video/chann/${id}`, {
+    const orderByParams = orderBy.join(",");
+    const response = await fetch(`${baseURL}/video/chann/${id}?orderBy=${orderByParams}`, {
         method: 'GET',
         redirect: 'follow',
         headers: {
             "Authorization": `Bearer ${sessionStorage.token}`
         }
-    })
+    });
 
-    return response.ok ? await response.json() : await response.text()
-})().then(c => callback(c))
+    return response.ok ? await response.json() : await response.text();
+})().then(c => callback(c));
 
 export const useEditVideo = (video: VideoType, channId: number, callback: Function) => (async () => {
     if (!sessionStorage.token) return

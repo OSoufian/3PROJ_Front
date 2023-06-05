@@ -8,10 +8,20 @@ export type VideoType = {
   Channel: ChannelType;
   Views: number;
   CreatedAt: string;
+  CreationDate: string;
   IsHide: boolean;
   IsBlock: boolean;
 };
 
+export type Message = {
+  Id: number;
+  Content: string;
+  UserId: number;
+  User: User;
+  VideoId: number;
+  // Video: VideoType;
+  Created: string;
+};
 
 export type Role = {
   Id: number|undefined;

@@ -1,40 +1,72 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useCreateChat, useGetChats, useGetUser, useGetUserById } from '@/apis';
+import { type Message, type User } from '@/types';
 import '@/styles/Comment.css';
-import { useCreateChat, useGetUser } from '@/apis';
-import { type User } from '@/types';
 
 function Comments({ videoId }: { videoId: number }) {
-  const [comment, setcomment] = useState('');
-  const [comments, setcomments] = useState<string[]>([]);
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState<Message[]>([]);
   const [user, setUser] = useState<User | undefined>();
 
-  const handleAddcomment = (comment: string) => {
-    setcomments([...comments, comment]);
+  useEffect(() => {
+    useGetChats(videoId, (c: Message[]) => {
+      const updatedComments = c.map((message: Message) => {
+        const updatedMessage = { ...message };
+        useGetUserById(message.UserId, (user: User) => {
+          updatedMessage.User = user;
+        });
+        return updatedMessage;
+      });
+      setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
+    });
+  }, [videoId]);
+
+  const handleRetrieveChats = () => {
+    useGetChats(videoId, (c: Message[]) => {
+      const updatedComments = c.map((message: Message) => {
+        const updatedMessage = { ...message };
+        useGetUserById(message.UserId, (user: User) => {
+          updatedMessage.User = user;
+        });
+        return updatedMessage;
+      });
+      setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
+    });
+  };
+
+  const handleAddComment = (comment: string) => {
+    if (user) {
+      useCreateChat(videoId, user.Id, comment, new Date(), () => {
+        handleRetrieveChats();
+      });
+    } else {
+      console.log('Not connected');
+    }
   };
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setcomment(e.target.value);
+    setComment(e.target.value);
   };
 
   const handleCommentSubmit = () => {
-    if (comment) { // check if comment is not empty
-      handleAddcomment(comment);
-      user ? useCreateChat(videoId, user.Id, comment, new Date(), () => {}) : console.log("Not connected")
-      // Clear the comment input field after submitting the comment
-      setcomment('');
+    if (comment) {
+      handleAddComment(comment);
+      setComment('');
     }
   };
 
   const handleCommentCancel = () => {
-    if (comment) { // check if comment is not empty
-      // Clear the comment input field after submitting the comment
-      setcomment('');
-    }
+    setComment('');
   };
 
-  if (!!sessionStorage.token && !user) {
-    useGetUser(sessionStorage.token, (c: any) => setUser(c))
-  }
+  useEffect(() => {
+    if (sessionStorage.token && !user) {
+      useGetUser(sessionStorage.token, (c: any) => {
+        setUser(c);
+      });
+    }
+  }, [user]);
 
   return (
     <div>
@@ -46,38 +78,49 @@ function Comments({ videoId }: { videoId: number }) {
           </Link>
         </div>
       ) : (
-        <div className='comment-container dark:bg-#212121'>
-          <div className='comment-box'>
+        <div className="comment-container dark:bg-#212121">
+          <div className="comment-box">
             <input
-              className='comment-input dark:bg-#212121 dark:text-#C2C2C2'
-              type='text'
-              placeholder='Add a comment...'
+              className="comment-input dark:bg-#212121 dark:text-#C2C2C2"
+              type="text"
+              placeholder="Add a comment..."
               value={comment}
               onChange={handleCommentChange}
             />
             {comment ? (
               <div>
-                <button
-                  className='comment-submit-button'
-                  onClick={handleCommentSubmit}
-                >
+                <button className="comment-submit-button" onClick={handleCommentSubmit}>
                   Add Comment
                 </button>
-
-                <button
-                  className='comment-cancel-button'
-                  onClick={handleCommentCancel}
-                >
+                <button className="comment-cancel-button" onClick={handleCommentCancel}>
                   Cancel
                 </button>
               </div>
-            ) : (<></>)}
+            ) : (
+              <></>
+            )}
           </div>
-          <div className='comment-list dark:text-#C2C2C2'>
+          <div className="comment-list dark:text-#C2C2C2">
             {comments.map((comment, index) => (
-              <div className='comment-item' key={index}>
-                <div className='comment-author'>{user?.Username}</div>
-                <div className='comment-content'>{comment}</div>
+              <div className="comment-item" key={index}>
+                <div className="comment-info-container">
+                  <div className="profile-icon-wrapper">
+                    <img
+                      className="profile-icon"
+                      src={
+                        comment.User.Icon
+                          ? `http://127.0.0.1:3000/image?imagename=${comment.User.Icon}`
+                          : 'http://127.0.0.1:3000/image?imagename=default.png'
+                      }
+                      alt="User icon"
+                    />
+                  </div>
+                  <div className="comment-info-wrapper">
+                    <div className="comment-author">{comment.User.Username}</div>
+                    <div className="comment-content">{comment.Content}</div>
+                    <div className="comment-date">{comment.Created.split('T')[0]}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

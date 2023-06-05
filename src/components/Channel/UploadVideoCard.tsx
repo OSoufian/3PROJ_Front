@@ -2,66 +2,60 @@ import "@/styles/UploadVideo.css";
 import { type ChannelType, type VideoType } from "@/types";
 import { useEditVideo, useGetMeChannel, useGetVideosByChannel, useImageUpload, useVideoUpload } from "@/apis";
 
-interface PartialVideo {
-    Name: string;
-    Description: string;
-    Icon: string;
-    VideoURL: string;
-    ChannelId: number;
-}
-
 function UploadVideoCard() {
 
   const [channel, setChannel] = useState<ChannelType | undefined>()
+  const [uploadedVideo, setuploadedVideo] = useState<FileList>()
   const [currentVideo, setCurrentVideo] = useState<VideoType | undefined>()
   const [videoName, setVideoName] = useState('');
   const [videoDescription, setVideoDescription] = useState('');
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
-
-  var newVideo : PartialVideo;
+  const [thumbnail, setThumbnail] = useState<string>('');
   
   const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && !!channel) {
-      useVideoUpload(event.target.files[0], channel.Id, (c: any) => {
-        if (c === 200) {
-        //   newVideo.VideoURL = `${Date.now()}-${event.target.files[0].name}`
-          event.target.files = null;
-        } else {
-          console.log('error');
-        }
-      });
+      setuploadedVideo(event.target.files)
     }
   };
 
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!!event.target.files && !!channel) {
-      useImageUpload(event.target.files[0], channel.OwnerId, () => {
-        if (event.target.files) {
-            setThumbnail(event.target.files[0]);
-            // thumbnail? newVideo.Icon = thumbnail.name : ""
-        }
+      useImageUpload(event.target.files[0], channel.OwnerId, (c: string) => {
+        const updatedVideo = { ...currentVideo, Thumbnail: c } as VideoType;
+        setCurrentVideo(updatedVideo);
       });
-      console.log(newVideo)
     }
   };
 
-  useEffect(() => {
-    useGetVideosByChannel(channel?.Id, (c: VideoType[]) => {
-      const updatedVideos = c
-        .filter((v: VideoType) => v.Name == newVideo.Name)
-      setCurrentVideo(updatedVideos[0]);
-    });
-  });
-
   const handleSubmit = () => {
-    if (currentVideo && channel) {
-      useEditVideo(currentVideo, channel.Id, (response: any) => {
-        if (response === 200) {
-          setVideoName('');
-          setVideoDescription('');
-          setThumbnail(null);
+    if (uploadedVideo && channel) {
+      useVideoUpload(uploadedVideo[0], channel.Id, (c: any) => {
+        console.log(c)
+        if (c.status === 200) {
+          const id = c.id
+          console.log(id)
+          useGetVideosByChannel(channel?.Id, ["creation_date"], (c: VideoType[]) => {
+            const updatedVideos = c
+            .filter((v: VideoType) => v.Id == id)
+            setCurrentVideo(updatedVideos[0]);
+            console.log(updatedVideos[0])
+            const video = { ...updatedVideos[0], Icon: thumbnail, Name: videoName, Description: videoDescription } as VideoType;
+            console.log(video)
+            if (updatedVideos[0] && channel) {
+              
+              useEditVideo(video, channel.Id, (response: any) => {
+                if (response === 202) {
+                  setVideoName('');
+                  setVideoDescription('');
+                  setThumbnail('');
+                  setuploadedVideo(undefined)
+                } else {
+                  console.log('Error uploading video');
+                }
+              });
+            }
+          });
         } else {
-          console.log('Error uploading video');
+          console.log('error');
         }
       });
     }
@@ -73,12 +67,10 @@ function UploadVideoCard() {
 
   const handleVideoNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVideoName(event.target.value);
-    // newVideo.Name = videoName;
   };
 
   const handleVideoDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVideoDescription(event.target.value);
-    // newVideo.Description = videoDescription;
   };
 
   return (
@@ -89,21 +81,26 @@ function UploadVideoCard() {
       <h3 className="input-title">Description</h3>
       <input placeholder="Description" type="string" onChange={handleVideoDescriptionChange} />
 
-      <div className="Thumbnail-container">
+      <div className="thumbnail-container">
         <h3 className="input-title">Thumbnail</h3>
         <img
           className="Thumbnail-image"
           src={currentVideo?.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
           alt="Thumbnail"
         />
-        <input type="file" accept="image/*" onChange={handleThumbnailChange} />
+        <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}}/>
+        <div className="upload-icon">
+          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
+            document.getElementById('Thumbnail-upload')?.click();
+          }}></img>
+        </div>
       </div>
 
       <h3 className="input-title">Video File</h3>
       <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
       <br />
-      { currentVideo && <button className="save-btn" onClick={handleSubmit}>Save Video</button> }
+      { uploadedVideo && <button className="save-btn" onClick={handleSubmit}>Save Video</button> }
     </div>
   );
 }

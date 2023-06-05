@@ -1,10 +1,10 @@
-import { useGetChats, useCreateChats, useCreateChat, useEditChats, useDeleteChats } from "./chats/chat"
+import { useGetChats, useCreateChats, useGetChat, useCreateChat, useEditChats, useDeleteChat } from "./chats/chat"
 import { useAddLiveChat, useUpdateLiveChat, useRemoveLiveChat } from "./chats/livechat"
-import {useGetUser, useLogin, useRegister} from "./LoginRegister"
+import { useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload, useGetVideosByChannel } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
-import {useGetMe, useEditMe, useDeleteMe, useSubscribe} from "./Users/user"
-import {useGetRoles, useEditRole, useCreateRole, useDeleteRole} from "./Roles"
+import { useGetMe, useGetUserById, useEditMe, useDeleteMe, useSubscribe} from "./Users/user"
+import { useGetRoles, useEditRole, useCreateRole, useDeleteRole} from "./Roles"
 
 export {
     useSubscribe,
@@ -14,6 +14,7 @@ export {
     useDeleteRole,
     useRegister,
     useGetUser,
+    useGetUserById,
     useVideoUpload,
     useGetVideos,
     useDeleteVideo,
@@ -33,9 +34,10 @@ export {
     useUpdateLiveChat,
     useRemoveLiveChat,
     useGetChats,
+    useGetChat,
     useCreateChats,
     useCreateChat,
     useEditChats,
-    useDeleteChats,
+    useDeleteChat,
     useImageUpload
 }

@@ -12,7 +12,7 @@ function ChannelVideos() {
     }, [channel?.Id]);
 
     useEffect(() => {
-      useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
+      useGetVideosByChannel(channel?.Id,["created_at DESC"],(c: VideoType[]) => {
         const updatedVideoList = c
           .filter((v: VideoType) => v.ChannelId == channel?.Id )
           .map((v: VideoType) => {
@@ -37,7 +37,7 @@ function ChannelVideos() {
     }
     
     const handleRetrieve = () => {
-        useGetVideosByChannel(channel?.Id,(c: VideoType[]) => {
+        useGetVideosByChannel(channel?.Id,["created_at DESC"],(c: VideoType[]) => {
             const updatedVideoList = c
             .filter((v: VideoType) => v.ChannelId == channel?.Id )
             .map((v: VideoType) => {
@@ -73,14 +73,13 @@ function ChannelVideos() {
                 <div className="video-title">
                   <h3>{v.Name}</h3>
                 </div>  
-                <div className="video-hidden"> <p>{v.IsHide ? "[Hidden]" : ""}</p>                
-                  </div>              
-                
+                <div className="video-hidden"> <p>{v.IsHide ? "[Hidden]" : ""}</p></div>
+                <div className="video-hidden"> <p>{v.IsBlock ? "[Blocked]" : ""}</p></div>
                 <div className="video-description">
                   <p>{v.Description}</p>
                 </div>                
                 <p>{`${v.Views} ${v.Views > 1 ? 'views' : 'view'}`}</p>
-                {/* remplacer <p>{v.CreatedAt}</p> par <p>{v.CreationDate}</p> */}
+                <p>{v.CreationDate.split('T')[0]}</p>
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className="watch-btn">Watch Now</button>
                 </Link>
@@ -97,12 +96,11 @@ function ChannelVideos() {
                     </Link>
                     {!!channel && (
                       <div>
-                        {v.IsHide ? (
+                        {!!v.IsHide ? (
                           <button
                             onClick={() => {
                               v.IsHide = false;
-                              // TODO: mettre hide à false
-                              // useEditVideo(v, channel.Id, () => handleRetrieve()); 
+                              useEditVideo(v, channel.Id, () => handleRetrieve()); 
                             }}
                           >
                             Unhide
@@ -122,14 +120,27 @@ function ChannelVideos() {
                     )}
                     <br />
                     {!!channel && (
-                      <button
-                        onClick={() => {
-                          v.IsBlock = true;
-                          useEditVideo(v, channel.Id, () => handleRetrieve());
-                        }}
-                      >
-                        Block
-                      </button>
+                      <div>
+                        {!!v.IsBlock ? (
+                          <button
+                            onClick={() => {
+                              v.IsBlock = false;
+                              useEditVideo(v, channel.Id, () => handleRetrieve()); 
+                            }}
+                          >
+                            Unblock
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              v.IsBlock = true;
+                              useEditVideo(v, channel.Id, () => handleRetrieve());
+                            }}
+                          >
+                            Block
+                          </button>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>

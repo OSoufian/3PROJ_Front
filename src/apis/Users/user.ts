@@ -14,6 +14,20 @@ export const useGetMe = (token: string, callBack: Function) => (async () =>{
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
+export const useGetUserById = (id: number, callback: Function) => (async () => {
+    if (!sessionStorage.token) return
+
+    const response = await fetch(`${baseURL}/user/${id}`, {
+        method: 'GET',
+        redirect: 'follow',
+        headers: {
+            "Authorization": `Bearer ${sessionStorage.token}`
+        }
+    })
+
+    return response.ok ? await response.json() : await response.text()
+})().then(c => callback(c))
+
 export const useEditMe = (token: string, user : User, callBack: Function) => (async () =>{
     
     const response = await fetch(`${baseURL}/user`, {
@@ -23,6 +37,7 @@ export const useEditMe = (token: string, user : User, callBack: Function) => (as
         },
         body: JSON.stringify(user)
    }) 
+   console.log(response)
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 

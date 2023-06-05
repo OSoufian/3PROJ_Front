@@ -3,11 +3,23 @@ import { type Role } from "@/types"
 const baseURL = "http://127.0.0.1:3000"
 
 
-export function useGetChats(channelId: number, token: string, callBack: Function) {
+export function useGetChats(video: number, callBack: Function) {
+  return async function () {
+
+    const response = await fetch(`${baseURL}/chats/messages?q=${video}`, {
+      method: 'GET',
+      redirect: 'follow',
+    })
+
+    return response.ok ? await response.json() : await response.text()
+  }().then(c => callBack(c))
+}
+
+export function useGetChat(channelId: number, token: string, callBack: Function) {
   return async function () {
     if (!token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${channelId}`, {
+    const response = await fetch(`${baseURL}/chats/messages${channelId}`, {
       method: 'GET',
       redirect: 'follow',
       headers: {
@@ -39,12 +51,11 @@ export function useCreateChats(role: Role, callBack: Function) {
 export function useCreateChat(videoId: number, userId: number, content: string, creationDate: Date, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return;
-
     const response = await fetch(`${baseURL}/chats/messages`, {
       method: 'POST',
       redirect: 'follow',
       headers: {
-        "Authorization": `Bearer ${sessionStorage.token}`,
+        // "Authorization": `Bearer ${sessionStorage.token}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -77,18 +88,17 @@ export function useEditChats(role: Role, callBack: Function) {
   }().then(c => callBack(c))
 }
 
-export function useDeleteChats(role: Role, callBack: Function) {
+export function useDeleteChat(id: number, callBack: Function) {
 
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/chats?channId${role.ChannelId}`, {
+    const response = await fetch(`${baseURL}/chats/messages/${id}`, {
       method: 'DELETE',
       redirect: 'follow',
       headers: {
           "Authorization": `Bearer ${sessionStorage.token}`
       },
-      body: JSON.stringify(role)
     })
 
     return response.ok ? await response.text() : await response.text()

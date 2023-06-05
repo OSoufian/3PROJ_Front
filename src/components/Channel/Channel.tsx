@@ -31,6 +31,7 @@ function Channel() {
 
   return (
     <div style={{ marginBottom: 3 }}>
+      <div className="h1 dark:bg-#fff"></div>
       <h1>My Channel</h1>
       {!sessionStorage.token ? (
         <div>

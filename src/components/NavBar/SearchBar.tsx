@@ -2,7 +2,6 @@ import { ChangeEvent } from 'react';
 
 function SearchBar() {
   const [searchText, setSearchText] = useState('');
-  // const [refresh, setRefresh] = useState(false)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event?.target.value);
@@ -12,11 +11,6 @@ function SearchBar() {
     event.preventDefault();
     console.log('Search submitted:', searchText);
   };
-
-  // const handleButtonClick = () => {
-  //   // setRefresh(true);
-  //   window.location.reload();
-  // };
 
   return searchText ? (
     <form onSubmit={handleFormSubmit} className="flex items-center w-1/2 max-w-md mx-auto search-bar dark:bg-gray-700">

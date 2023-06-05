@@ -16,7 +16,7 @@ function Channel() {
   }, [])
 
   useEffect(() => {
-    useGetVideosByChannel(channel?.Id, (c: VideoType[]) => {
+    useGetVideosByChannel(channel?.Id, ["creation_date"], (c: VideoType[]) => {
       const updatedVideos = c
         .filter((v: VideoType) => v.Id == parseInt(params.id ?? ""))
       setCurrentVideo(updatedVideos[0]);

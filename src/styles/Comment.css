@@ -10,37 +10,54 @@
   border: 1px solid #ccc;
   padding: 5px;
   width: 65%;
-  margin-top: -145px; /* Adjust the margin-top value as desired */
+  margin-top: -145px;
 }
 
 .comment-list {
   text-align: left;
-  margin: auto;
+  padding-right: auto;
+  width: 65%;
 }
 
 .comment-item {
   display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.comment-content {
+  text-align: left;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  hyphens: auto;
+}
+
+.comment-info {
+  display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Updated to flex-start */
-  align-items: left; /* Added */
-  margin: 10px 0; /* Updated margin */
+  align-items: flex-start;
+}
+
+.profile-icon {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .comment-author {
   font-weight: bold;
-  margin-right: 1000px;
+  margin-right: 10px;
+  align-self: flex-start; /* Added to align author at the top */
 }
-
-.comment-content {
-  flex-grow: 1;
-  text-align: left; /* Updated to left */
-  margin-right: 700px;
-}
-
 
 .comment-date {
   font-size: 12px;
   color: #999;
+  align-self: flex-start; /* Added to align date at the top */
 }
 
 .comment-input {
@@ -92,4 +109,27 @@
   color: #fff;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* New CSS */
+
+.comment-info-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.comment-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.comment-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon-wrapper {
+  flex-shrink: 0;
+  margin-right: 10px;
 }

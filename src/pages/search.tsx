@@ -13,7 +13,8 @@ function VideoListPage() {
     const parsedUrl = new URL(currentUrl);
     const searchParams = new URLSearchParams(parsedUrl.search);
     const query = searchParams.get('q');
-
+    // const order = searchParams.get('orderBy');
+    // , order  ? [order] : ["created_at"]
     useGetSearchVideos(query ?? "", (videoList: VideoType[]) => {
         setVideos(videoList);
       })
