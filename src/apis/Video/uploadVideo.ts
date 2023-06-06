@@ -20,7 +20,6 @@ export const useVideoUpload = (fileInput: File | null | undefined, channId: numb
                     "Authorization": `Bearer ${sessionStorage.token}`
                 }
             })
-            
             const data = await response.json();
             return data
         }
@@ -144,5 +143,8 @@ export const useEditVideo = (video: VideoType, channId: number, callback: Functi
         body: JSON.stringify(video)
     })
 
-    return response.ok ? await response.json() : await response.text()
+    const data = await response.json();
+    console.log(data)
+    return data
+    // return response.ok ? await response.json() : await response.text()
 })().then(c => callback(c))

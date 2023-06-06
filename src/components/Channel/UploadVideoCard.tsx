@@ -6,7 +6,6 @@ function UploadVideoCard() {
 
   const [channel, setChannel] = useState<ChannelType | undefined>()
   const [uploadedVideo, setuploadedVideo] = useState<FileList>()
-  const [currentVideo, setCurrentVideo] = useState<VideoType | undefined>()
   const [videoName, setVideoName] = useState('');
   const [videoDescription, setVideoDescription] = useState('');
   const [thumbnail, setThumbnail] = useState<string>('');
@@ -20,8 +19,7 @@ function UploadVideoCard() {
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!!event.target.files && !!channel) {
       useImageUpload(event.target.files[0], channel.OwnerId, (c: string) => {
-        const updatedVideo = { ...currentVideo, Thumbnail: c } as VideoType;
-        setCurrentVideo(updatedVideo);
+        setThumbnail(c)
       });
     }
   };
@@ -29,25 +27,31 @@ function UploadVideoCard() {
   const handleSubmit = () => {
     if (uploadedVideo && channel) {
       useVideoUpload(uploadedVideo[0], channel.Id, (c: any) => {
-        console.log(c)
         if (c.status === 200) {
           const id = c.id
-          console.log(id)
-          useGetVideosByChannel(channel?.Id, ["creation_date"], (c: VideoType[]) => {
+          useGetVideosByChannel(channel?.Id, ["created_at"], (c: VideoType[]) => {
             const updatedVideos = c
             .filter((v: VideoType) => v.Id == id)
-            setCurrentVideo(updatedVideos[0]);
-            console.log(updatedVideos[0])
             const video = { ...updatedVideos[0], Icon: thumbnail, Name: videoName, Description: videoDescription } as VideoType;
-            console.log(video)
             if (updatedVideos[0] && channel) {
               
-              useEditVideo(video, channel.Id, (response: any) => {
-                if (response === 202) {
+              useEditVideo(video, channel.Id, (e: any) => {
+                if (e.Id !== 0) {
                   setVideoName('');
                   setVideoDescription('');
                   setThumbnail('');
                   setuploadedVideo(undefined)
+
+                  // Reset form fields visually
+                  const thumbnailUpload = document.getElementById('Thumbnail-upload') as HTMLInputElement;
+                  if (thumbnailUpload) {
+                    thumbnailUpload.value = '';
+                  }
+
+                  const videoUpload = document.getElementById('Video-upload') as HTMLInputElement;
+                  if (videoUpload) {
+                    videoUpload.value = '';
+                  }
                 } else {
                   console.log('Error uploading video');
                 }
@@ -76,16 +80,16 @@ function UploadVideoCard() {
   return (
     <div>
       <h3 className="input-title">Name</h3>
-      <input placeholder="Name" type="string" onChange={handleVideoNameChange} />
+      <input placeholder="Name" type="string" className="videoName" value={videoName} onChange={handleVideoNameChange} />
 
       <h3 className="input-title">Description</h3>
-      <input placeholder="Description" type="string" onChange={handleVideoDescriptionChange} />
+      <input placeholder="Description" type="string" value={videoDescription} onChange={handleVideoDescriptionChange} />
 
       <div className="thumbnail-container">
         <h3 className="input-title">Thumbnail</h3>
         <img
           className="Thumbnail-image"
-          src={currentVideo?.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+          src={thumbnail ? `http://127.0.0.1:3000/image?imagename=${thumbnail}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
           alt="Thumbnail"
         />
         <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}}/>
@@ -97,7 +101,7 @@ function UploadVideoCard() {
       </div>
 
       <h3 className="input-title">Video File</h3>
-      <input type="file" accept="video/*" onChange={handleVideoUpload} />
+      <input type="file" accept="video/*" id="Video-upload" onChange={handleVideoUpload} />
 
       <br />
       { uploadedVideo && <button className="save-btn" onClick={handleSubmit}>Save Video</button> }

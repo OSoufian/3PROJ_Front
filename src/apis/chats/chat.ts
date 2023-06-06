@@ -97,7 +97,7 @@ export function useDeleteChat(id: number, callBack: Function) {
       method: 'DELETE',
       redirect: 'follow',
       headers: {
-          "Authorization": `Bearer ${sessionStorage.token}`
+          // "Authorization": `Bearer ${sessionStorage.token}`
       },
     })
 

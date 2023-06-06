@@ -31,7 +31,6 @@ function Channel() {
 
   return (
     <div style={{ marginBottom: 3 }}>
-      <div className="h1 dark:bg-#fff"></div>
       <h1>My Channel</h1>
       {!sessionStorage.token ? (
         <div>
@@ -60,8 +59,8 @@ function Channel() {
                     {categories.map((category) => (
                     // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
                     <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => {
-                      handleCategoryClick(category)
-                      console.log(channel)
+                      handleCategoryClick(category);
+                      console.log(channel);
                       }}>
                         {category.name}
                     </Link>

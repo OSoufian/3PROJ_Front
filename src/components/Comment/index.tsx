@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useCreateChat, useGetChats, useGetUser, useGetUserById } from '@/apis';
+import { useCreateChat, useDeleteChat, useGetChats, useGetUser, useGetUserById } from '@/apis';
 import { type Message, type User } from '@/types';
 import '@/styles/Comment.css';
 
@@ -37,9 +37,7 @@ function Comments({ videoId }: { videoId: number }) {
 
   const handleAddComment = (comment: string) => {
     if (user) {
-      useCreateChat(videoId, user.Id, comment, new Date(), () => {
-        handleRetrieveChats();
-      });
+      useCreateChat(videoId, user.Id, comment, new Date(), () => { handleRetrieveChats() });
     } else {
       console.log('Not connected');
     }
@@ -67,6 +65,10 @@ function Comments({ videoId }: { videoId: number }) {
       });
     }
   }, [user]);
+
+  const handleDeleteComment = (commentId: number) => {
+    useDeleteChat(commentId, () => {handleRetrieveChats()})
+  };
 
   return (
     <div>
@@ -119,6 +121,14 @@ function Comments({ videoId }: { videoId: number }) {
                     <div className="comment-author">{comment.User.Username}</div>
                     <div className="comment-content">{comment.Content}</div>
                     <div className="comment-date">{comment.Created.split('T')[0]}</div>
+                    {comment.User.Id === user?.Id && (
+                      <button
+                        className="comment-delete-button"
+                        onClick={() => handleDeleteComment(comment.Id)}
+                      >
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

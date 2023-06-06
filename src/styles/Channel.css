@@ -3,15 +3,23 @@
 .channel-container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #f8f8f8;
+    background-color: #1f2937;
     padding: 20px;
     border-radius: 5px;
 }
+
 
 h1 {
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+.dark h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
 }
 
 .channel-body {
