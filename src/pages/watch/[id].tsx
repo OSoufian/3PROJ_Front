@@ -51,7 +51,8 @@ function Video() {
           )}
         </div>
         <div className="chat-container">
-          <Chat />
+        {!!video?.Id && <Chat />}
+        {/* {!!video?.Id && <Chat videoId={video?.Id} />} */}
         </div>
       </div>
       <div>

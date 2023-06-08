@@ -1,5 +1,5 @@
-import { useGetChats, useCreateChats, useGetChat, useCreateChat, useEditChats, useDeleteChat } from "./chats/chat"
-import { useAddLiveChat, useUpdateLiveChat, useRemoveLiveChat } from "./chats/livechat"
+import { useGetChats, useGetChat, useCreateChat, useEditChats, useDeleteChat } from "./chats/chat"
+import { useAddLiveChat, useRemoveLiveChat } from "./chats/livechat"
 import { useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById,useEditVideo, useImageUpload, useGetVideosByChannel } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
@@ -31,11 +31,9 @@ export {
     useGetChannelById,
     useGetVideoById,
     useAddLiveChat,
-    useUpdateLiveChat,
     useRemoveLiveChat,
     useGetChats,
     useGetChat,
-    useCreateChats,
     useCreateChat,
     useEditChats,
     useDeleteChat,

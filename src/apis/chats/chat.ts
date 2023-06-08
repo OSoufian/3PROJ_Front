@@ -31,23 +31,6 @@ export function useGetChat(channelId: number, token: string, callBack: Function)
   }().then(c => callBack(c))
 }
 
-export function useCreateChats(role: Role, callBack: Function) {
-  return async function () {
-    if (!sessionStorage.token) return
-
-    const response = await fetch(`${baseURL}/chats?channId${role.ChannelId}`, {
-      method: 'PUT',
-      redirect: 'follow',
-      headers: {
-          "Authorization": `Bearer ${sessionStorage.token}`
-      },
-      body: JSON.stringify(role)
-    })
-
-    return response.ok ? await response.json() : await response.text()
-  }().then(c => callBack(c)).catch((err) => console.log(err))
-}
-
 export function useCreateChat(videoId: number, userId: number, content: string, creationDate: Date, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return;
