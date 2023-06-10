@@ -184,3 +184,65 @@
 .dropdown-btn::before {
   content: "\22EE";
 }
+
+/* Soufian - 10 juin 2023 : Profile Design */
+
+.profile-container {
+  background-color: #f2f2f2;
+}
+
+.profile-infos {
+  display: flex;
+  flex-direction: column;  
+}
+
+.account-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-username {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.deactivate-button,
+.delete-button {
+  margin-bottom: 10px;
+  margin-right: 20px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #f44336;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deactivate-button {
+  background-color: #ff9800;
+}
+
+.delete-confirmation {
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+}
+
+.confirm-delete-button,
+.cancel-delete-button {
+  padding: 8px 20px;
+  margin: 0 5px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #2196f3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-delete-button {
+  background-color: #f44336;
+}
