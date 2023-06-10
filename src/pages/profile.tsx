@@ -1,9 +1,12 @@
-import { useEditMe, useGetUser, useImageUpload } from '@/apis';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useEditMe, useGetUser, useImageUpload, useDeleteMe } from '@/apis';
 import "@/styles/Profile.css"
 import { type User } from '@/types';
 
 function Profile() {
   const [user, setUser] = useState<User | undefined>();
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
   if (!!sessionStorage.token && !user) {
     useGetUser(sessionStorage.token, (c: any) => setUser(c))
@@ -17,6 +20,27 @@ function Profile() {
         useEditMe(sessionStorage.token, updatedUser, () => {})
       });
     }
+  };
+
+  const handleDeactivateAccount = () => {
+    // Implement the logic to deactivate the account here
+    // You can use API calls or update the state accordingly
+    console.log('Deactivate Account');
+  };
+
+  const handleDeleteAccount = () => {
+    console.log('Delete Account');
+    if (user) useDeleteMe(sessionStorage.token, user, () => {
+      console.log("deleted")
+    });
+  };
+
+  const openDeleteConfirmation = () => {
+    setIsDeleteConfirmationOpen(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setIsDeleteConfirmationOpen(false);
   };
 
   return (
@@ -44,8 +68,35 @@ function Profile() {
                 }}></img>
               </div>
             </div>
-            <h1 className="profile-username">{user?.Username}</h1>
+            <div>
+              <h1 className="profile-username">{user?.Username}</h1>
             <p className="profile-email">{user?.Email}</p>
+            <div>
+              <div>
+                <button className="deactivate-button" onClick={handleDeactivateAccount}>
+                  Deactivate Account
+                </button>
+                <button className="delete-button" onClick={openDeleteConfirmation}>
+                  Delete Account
+                </button>
+                {isDeleteConfirmationOpen && (
+                  <div className="delete-confirmation">
+                    <p>Are you sure you want to delete your account?</p>
+                    <div>
+                      <button className="confirm-delete-button" onClick={handleDeleteAccount}>
+                        Confirm
+                      </button>
+                      <button className="cancel-delete-button" onClick={closeDeleteConfirmation}>
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+            </div>
+            
+            </div>
           </div>
         </div>
       )}
