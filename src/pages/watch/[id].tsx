@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { type VideoType } from '@/types';
-import { useGetVideoById, useGetVideo, useEditVideo } from '@/apis';
+import { ChannelType, type VideoType } from '@/types';
+import { Link } from 'react-router-dom';
+import { useGetVideoById, useGetVideo, useEditVideo, useGetChannelById } from '@/apis';
 import "@/styles/VideoPage.css";
 import Chat from '@/components/Chat.tsx';
 import Comments from '@/components/Comment';
@@ -12,12 +13,12 @@ interface ChatMessage {
 }
 
 function Video() {
-  const [videoSrc, setVideoSrc] = useState<Blob>()
+  const [videoSrc, setVideoSrc] = useState<Blob>();
   const params = useParams();
   
-  const [chats, setChats] = useState<ChatMessage[]>([]); // Changed initial state to array of ChatMessage objects
+  const [chats, setChats] = useState<ChatMessage[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [video, setVideo] = useState<VideoType|undefined>();
+  const [video, setVideo] = useState<VideoType | undefined>();
 
   useEffect(() => {
     // Connect to the websocket server
@@ -28,9 +29,9 @@ function Video() {
   
       // Handle incoming messages
       newSocket.onmessage = (event) => {
-        const { Username : receivedUsername, message: receivedChat, VideoId: receivedVideoId } = JSON.parse(event.data);
+        const { Username: receivedUsername, message: receivedChat, VideoId: receivedVideoId } = JSON.parse(event.data);
         if (receivedVideoId === video?.Id) {
-          setChats(prevChats => [...prevChats, { username : receivedUsername, chat: receivedChat }]);
+          setChats(prevChats => [...prevChats, { username: receivedUsername, chat: receivedChat }]);
         }
       };
   
@@ -41,11 +42,17 @@ function Video() {
         }
       };
     }
-
   }, [video?.Id]);
 
   useEffect(() => {
-    useGetVideoById(parseInt(params.id ?? ''), setVideo);
+    useGetVideoById(parseInt(params.id ?? ''), (video: VideoType) => {
+      setVideo(video);
+      useGetChannelById(video.ChannelId, (channel: ChannelType) => {
+      const updatedVideo = {...video, Channel: channel}
+      // Get the channel information for the video
+        setVideo(updatedVideo);
+      });
+    });
   }, [params.id]);
 
   useEffect(() => {
@@ -56,9 +63,9 @@ function Video() {
 
   const handleAddViews = () => {
     if (video) {
-      const views = video.Views + 1
+      const views = video.Views + 1;
       const updatedVideo = { ...video, Views: views };
-      useEditVideo(updatedVideo, video.ChannelId, () => {})
+      useEditVideo(updatedVideo, video.ChannelId, () => {});
     }
   };
 
@@ -81,9 +88,29 @@ function Video() {
               }}
             />
           )}
+          {!!video && (
+            <div className="video-details">
+              <h2 className="video-title">{video.Name}</h2>
+              <p className="video-views">Views: {video.Views}</p>
+              <button className="channel-icon-button">
+                <Link to={`/channel/${video.ChannelId}`}>
+                  <img className="channel-icon" 
+                  src={video.Channel.Icon ? `http://127.0.0.1:3000/image?imagename=${video.Channel.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+                  alt="Channel Icon" />
+                </Link>
+              </button>
+              <br/>
+              <button className="channel-name-button" onClick={() => console.log(video.Channel)}>
+                <Link to={`/channel/${video.ChannelId}`}>
+                  {video.Channel.Name}
+                </Link>
+              </button>
+              <p className="video-description">Description: {video.Description}</p>
+            </div>
+          )}
         </div>
         <div className="chat-container">
-        {!!video?.Id && <Chat socket={socket} videoId={video?.Id} chats={chats}/>}
+          {!!video?.Id && <Chat socket={socket} videoId={video?.Id} chats={chats} />}
         </div>
       </div>
       <div>

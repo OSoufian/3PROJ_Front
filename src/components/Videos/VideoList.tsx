@@ -14,6 +14,7 @@ function VideoList({ videos }: VideoListProps) {
             title={video.Name}
             thumbnail={video.Icon}
             views={video.Views}
+            creationDate={video.CreationDate}
             />
         </Link>
       ))}

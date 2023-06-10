@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useEditMe, useGetUser, useImageUpload, useDeleteMe } from '@/apis';
+import { useEditMe, useGetUser, useImageUpload, useDeleteMe, useDeleteMeMessages, useDeleteMeVideos, useDeleteMeChannel, useGetMeChannel, useDeleteMeUser } from '@/apis';
 import "@/styles/Profile.css"
-import { type User } from '@/types';
+import { type ChannelType, type User } from '@/types';
+import { useLogoutUser } from '@/apis/LoginRegister';
 
 function Profile() {
   const [user, setUser] = useState<User | undefined>();
+  // const [channel, setChannel] = useState<ChannelType | undefined>();
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
   if (!!sessionStorage.token && !user) {
     useGetUser(sessionStorage.token, (c: any) => setUser(c))
+    // useGetMeChannel(sessionStorage.token, setChannel)
   }
+
 
   const handleIconChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!!event.target.files && !!user) {
@@ -28,6 +32,9 @@ function Profile() {
 
   const handleDeleteAccount = () => {
     console.log('Delete Account');
+    // if (user) useDeleteMeUser(sessionStorage.token, user, () => {
+    //   useLogoutUser(sessionStorage.token, () => {})
+    // })
     if (user) useDeleteMe(sessionStorage.token, user, () => {
       console.log("deleted")
     });

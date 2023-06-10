@@ -43,7 +43,10 @@ function WebAuthn() {
                 className={`user-item ${selectedUser?.Id === user.Id ? 'selected' : ''}`}
                 onClick={() => handleUserClick(user)}
               >
-                <img src={user.Icon} alt={user.Username} className="user-icon" />
+                <img 
+                src={user.Icon ? `http://127.0.0.1:3000/image?imagename=${user.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'} 
+                alt={user.Username} 
+                className="user-icon" />
                 <span className="user-name">{user.Username}</span>
               </div>
             ))}

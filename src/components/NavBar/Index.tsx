@@ -30,7 +30,7 @@ function Navbar() {
           ) : (
             <div className="relative inline-block text-left">
               <button
-                className="p-2 rounded-md bg-gray-200 hover:bg-gray-300 dark:text-#C2C2C2"
+                className="p-2 rounded-md bg-gray-200 hover:bg-gray-300 dark:text-#000000"
                 onClick={toggleMenu}
               >
                 User

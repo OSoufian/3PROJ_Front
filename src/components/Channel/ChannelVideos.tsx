@@ -91,7 +91,7 @@ function ChannelVideos() {
                 <div className="dropdown">
                   <button className="dropdown-btn" />
                   <div className="dropdown-content">
-                    <Link to={`/channel/${v.Id}&channId=${channel?.Id}`} key={v.Id} className="watch-btn">
+                    <Link to={`/channel/edit/${v.Id}&channId=${channel?.Id}`} key={v.Id} className="watch-btn">
                       Edit
                     </Link>
                     {!!channel && (

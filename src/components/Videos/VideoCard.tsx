@@ -4,10 +4,11 @@ interface Props {
   title: string;
   thumbnail: string;
   views: number;
+  creationDate: string;
 }
 
 function VideoCard(props: Props) {
-  const { title, thumbnail, views } = props;
+  const { title, thumbnail, views, creationDate } = props;
 
   // Pouvoir récupérer les infos de l'utilisateur pour pouvoir afficher son logo et son nom sur la vidéo
 
@@ -21,6 +22,7 @@ function VideoCard(props: Props) {
       
       <h3 className="text-lg font-medium my-2 mx-3 text-gray-900 dark:text-white video-title">{title}</h3>
       <p>{`${views} ${views > 1 ? 'views' : 'view'}`}</p>
+      <p>{creationDate ? creationDate.split("T")[0] : ""}</p>
     </div>
   );
 }

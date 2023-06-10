@@ -17,13 +17,13 @@ export function useCreateChannel(token: string, callback: Function) {
 }
 
 export const useGetChannelById = (id: number, callback: Function) => (async (id: number) => {
-    if (!sessionStorage.token) return
+    // if (!sessionStorage.token) return
 
     const response = await fetch(`${baseURL}/channel/${id}`, {
         method: 'GET',
         redirect: 'follow',
         headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
+            // "Authorization": `Bearer ${sessionStorage.token}`
         },
     })
 

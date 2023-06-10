@@ -12,7 +12,15 @@
   margin-bottom: 20px;
 }
 
+.dark h1 {
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
 h1 {
+  color: black;
   font-size: 25px;
   font-weight: bold;
   margin-bottom: 24px;
