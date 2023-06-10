@@ -15,21 +15,21 @@ export function useGetChats(video: number, callBack: Function) {
   }().then(c => callBack(c))
 }
 
-export function useGetChat(channelId: number, token: string, callBack: Function) {
-  return async function () {
-    if (!token) return
+// export function useGetChat(channelId: number, token: string, callBack: Function) {
+//   return async function () {
+//     if (!token) return
 
-    const response = await fetch(`${baseURL}/chats/messages${channelId}`, {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {
-          "Authorization": `Bearer ${token}`
-      },
-    })
+//     const response = await fetch(`${baseURL}/chats/messages${channelId}`, {
+//       method: 'GET',
+//       redirect: 'follow',
+//       headers: {
+//           "Authorization": `Bearer ${token}`
+//       },
+//     })
 
-    return response.ok ? await response.json() : await response.text()
-  }().then(c => callBack(c))
-}
+//     return response.ok ? await response.json() : await response.text()
+//   }().then(c => callBack(c))
+// }
 
 export function useCreateChat(videoId: number, userId: number, content: string, creationDate: Date, callBack: Function) {
   return async function () {

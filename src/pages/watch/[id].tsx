@@ -6,11 +6,43 @@ import "@/styles/VideoPage.css";
 import Chat from '@/components/Chat.tsx';
 import Comments from '@/components/Comment';
 
+interface ChatMessage {
+  username?: string;
+  chat: string;
+}
+
 function Video() {
   const [videoSrc, setVideoSrc] = useState<Blob>()
   const params = useParams();
-
+  
+  const [chats, setChats] = useState<ChatMessage[]>([]); // Changed initial state to array of ChatMessage objects
+  const [socket, setSocket] = useState<WebSocket | null>(null);
   const [video, setVideo] = useState<VideoType|undefined>();
+
+  useEffect(() => {
+    // Connect to the websocket server
+    if (video?.Id) {
+      const newSocket = new WebSocket(`ws://localhost:3002/ws`);
+      // Set the socket object
+      setSocket(newSocket);
+  
+      // Handle incoming messages
+      newSocket.onmessage = (event) => {
+        const { Username : receivedUsername, message: receivedChat, VideoId: receivedVideoId } = JSON.parse(event.data);
+        if (receivedVideoId === video?.Id) {
+          setChats(prevChats => [...prevChats, { username : receivedUsername, chat: receivedChat }]);
+        }
+      };
+  
+      // Clean up the socket connection on component unmount
+      return () => {
+        if (newSocket.readyState === WebSocket.OPEN) {
+          newSocket.close();
+        }
+      };
+    }
+
+  }, [video?.Id]);
 
   useEffect(() => {
     useGetVideoById(parseInt(params.id ?? ''), setVideo);
@@ -42,7 +74,7 @@ function Video() {
               crossOrigin="true"
               onTimeUpdate={(e) => {
                 const currentTime = e.currentTarget.currentTime;
-                if (currentTime >= 20) {
+                if (currentTime == 20) {
                   handleAddViews();
                   e.currentTarget.removeEventListener('timeupdate', handleAddViews);
                 }
@@ -51,8 +83,7 @@ function Video() {
           )}
         </div>
         <div className="chat-container">
-        {!!video?.Id && <Chat />}
-        {/* {!!video?.Id && <Chat videoId={video?.Id} />} */}
+        {!!video?.Id && <Chat socket={socket} videoId={video?.Id} chats={chats}/>}
         </div>
       </div>
       <div>

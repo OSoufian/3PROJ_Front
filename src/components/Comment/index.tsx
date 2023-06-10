@@ -15,10 +15,10 @@ function Comments({ videoId }: { videoId: number }) {
         const updatedMessage = { ...message };
         useGetUserById(message.UserId, (user: User) => {
           updatedMessage.User = user;
+          setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
         });
         return updatedMessage;
       });
-      setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
     });
   }, [videoId]);
 
@@ -28,10 +28,10 @@ function Comments({ videoId }: { videoId: number }) {
         const updatedMessage = { ...message };
         useGetUserById(message.UserId, (user: User) => {
           updatedMessage.User = user;
+          setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
         });
         return updatedMessage;
       });
-      setComments(updatedComments.filter((v: Message) => v.VideoId === videoId));
     });
   };
 
