@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useCreateChat, useDeleteChat, useGetChats, useGetUser, useGetUserById } from '@/apis';
 import { type Message, type User } from '@/types';
 import '@/styles/Comment.css';
@@ -8,6 +10,7 @@ function Comments({ videoId }: { videoId: number }) {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Message[]>([]);
   const [user, setUser] = useState<User | undefined>();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
     useGetChats(videoId, (c: Message[]) => {
@@ -70,6 +73,10 @@ function Comments({ videoId }: { videoId: number }) {
     useDeleteChat(commentId, () => {handleRetrieveChats()})
   };
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <div>
       <div>
@@ -125,12 +132,19 @@ function Comments({ videoId }: { videoId: number }) {
                   <div className="comment-content">{comment.Content}</div>
                   <div className="comment-date">{comment.Created.split('T')[0]}</div>
                   {comment.User.Username === user?.Username && (
-                    <button
-                      className="comment-delete-button"
-                      onClick={() => handleDeleteComment(comment.Id)}
-                    >
-                      Delete
-                    </button>
+                    <div className="comment-dropdown">
+                      <button className="comment-dropdown-button" onClick={toggleDropdown}>
+                        <FontAwesomeIcon icon={faEllipsisV} />
+                      </button>
+                      {showDropdown && (
+                        <div className="comment-dropdown-menu">
+                          <button className="comment-dropdown-item" onClick={() => handleDeleteComment(comment.Id)}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
