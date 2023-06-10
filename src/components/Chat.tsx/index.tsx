@@ -52,19 +52,28 @@ function Chat(props: Props) {
           </div>
         ))}
       </div>
-      <div className="chat-form">
-        <input
-          className="chat-input dark:bg-#1F2937 dark:text-#C2C2C2"
-          type="text"
-          placeholder="Add a chat..."
-          value={chat}
-          onChange={handleChatChange}
-          onKeyDown={handleKeyDown}
-        />
-        <button className="chat-button" onClick={handleChatSubmit}>
-          Send
-        </button>
-      </div>
+      {!sessionStorage.token ? (
+        <div>
+          <h1>You Have to be connected</h1>
+          <Link to="/connect" className="connect-link">
+            Connect
+          </Link>
+        </div>
+      ) : (
+        <div className="chat-form">
+          <input
+            className="chat-input dark:bg-#1F2937 dark:text-#C2C2C2"
+            type="text"
+            placeholder="Add a chat..."
+            value={chat}
+            onChange={handleChatChange}
+            onKeyDown={handleKeyDown}
+          />
+          <button className="chat-button" onClick={handleChatSubmit}>
+            Send
+          </button>
+        </div>
+      )}
     </div>
   );
 }

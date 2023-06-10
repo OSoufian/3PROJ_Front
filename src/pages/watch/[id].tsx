@@ -74,7 +74,7 @@ function Video() {
               crossOrigin="true"
               onTimeUpdate={(e) => {
                 const currentTime = e.currentTarget.currentTime;
-                if (currentTime == 20) {
+                if (currentTime >= 20) {
                   handleAddViews();
                   e.currentTarget.removeEventListener('timeupdate', handleAddViews);
                 }

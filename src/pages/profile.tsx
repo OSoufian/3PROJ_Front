@@ -14,7 +14,7 @@ function Profile() {
       useImageUpload(event.target.files[0], user.Id, (c: string) => {
         const updatedUser = { ...user, Icon: c };
         setUser(updatedUser);
-        useEditMe(sessionStorage.token, user, () => {})
+        useEditMe(sessionStorage.token, updatedUser, () => {})
       });
     }
   };

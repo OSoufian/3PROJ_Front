@@ -72,70 +72,72 @@ function Comments({ videoId }: { videoId: number }) {
 
   return (
     <div>
-      {!sessionStorage.token ? (
-        <div>
-          <h1>You don't have access to the comments, you have to be connected</h1>
-          <Link to="/connect" className="connect-link">
-            Connect
-          </Link>
-        </div>
-      ) : (
+      <div>
         <div className="comment-container dark:bg-#212121">
-          <div className="comment-box">
-            <input
-              className="comment-input dark:bg-#212121 dark:text-#C2C2C2"
-              type="text"
-              placeholder="Add a comment..."
-              value={comment}
-              onChange={handleCommentChange}
-            />
-            {comment ? (
-              <div>
-                <button className="comment-submit-button" onClick={handleCommentSubmit}>
-                  Add Comment
-                </button>
-                <button className="comment-cancel-button" onClick={handleCommentCancel}>
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <></>
-            )}
+            <div className="comment-box">
+              <input
+                className="comment-input dark:bg-#212121 dark:text-#C2C2C2"
+                type="text"
+                placeholder="Add a comment..."
+                value={comment}
+                onChange={handleCommentChange}
+              />
+              {comment ? (
+                !sessionStorage.token ? (
+                  <div>
+                    <h1>You Have to be connected</h1>
+                    <Link to="/connect" className="connect-link">
+                      Connect
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    <button className="comment-submit-button" onClick={handleCommentSubmit}>
+                      Add Comment
+                    </button>
+                    <button className="comment-cancel-button" onClick={handleCommentCancel}>
+                      Cancel
+                    </button>
+                  </div>
+                )
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
-          <div className="comment-list dark:text-#C2C2C2">
-            {comments.map((comment, index) => (
-              <div className="comment-item" key={index}>
-                <div className="comment-info-container">
-                  <div className="profile-icon-wrapper">
-                    <img
-                      className="profile-icon"
-                      src={
-                        comment.User.Icon
-                          ? `http://127.0.0.1:3000/image?imagename=${comment.User.Icon}`
-                          : 'http://127.0.0.1:3000/image?imagename=default.png'
-                      }
-                      alt="User icon"
-                    />
-                  </div>
-                  <div className="comment-info-wrapper">
-                    <div className="comment-author">{comment.User.Username}</div>
-                    <div className="comment-content">{comment.Content}</div>
-                    <div className="comment-date">{comment.Created.split('T')[0]}</div>
-                    {comment.User.Id === user?.Id && (
-                      <button
-                        className="comment-delete-button"
-                        onClick={() => handleDeleteComment(comment.Id)}
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
+        <div className="comment-list dark:text-#C2C2C2">
+          {comments.map((comment, index) => (
+            <div className="comment-item" key={index}>
+              <div className="comment-info-container">
+                <div className="profile-icon-wrapper">
+                  <img
+                    className="profile-icon"
+                    src={
+                      comment.User.Icon
+                        ? `http://127.0.0.1:3000/image?imagename=${comment.User.Icon}`
+                        : 'http://127.0.0.1:3000/image?imagename=default.png'
+                    }
+                    alt="User icon"
+                  />
+                </div>
+                <div className="comment-info-wrapper">
+                  <div className="comment-author">{comment.User.Username}</div>
+                  <div className="comment-content">{comment.Content}</div>
+                  <div className="comment-date">{comment.Created.split('T')[0]}</div>
+                  {comment.User.Username === user?.Username && (
+                    <button
+                      className="comment-delete-button"
+                      onClick={() => handleDeleteComment(comment.Id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }

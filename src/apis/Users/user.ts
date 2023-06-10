@@ -15,13 +15,11 @@ export const useGetMe = (token: string, callBack: Function) => (async () =>{
 })().then((c) => callBack(c))
 
 export const useGetUserById = (id: number, callback: Function) => (async () => {
-    if (!sessionStorage.token) return
 
     const response = await fetch(`${baseURL}/user/chat/${id}`, {
         method: 'GET',
         redirect: 'follow',
         headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
         }
     })
 
@@ -37,7 +35,8 @@ export const useEditMe = (token: string, user : User, callBack: Function) => (as
         },
         body: JSON.stringify(user)
    }) 
-   console.log(response)
+   console.log(user)
+   console.log(JSON.stringify(user))
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
