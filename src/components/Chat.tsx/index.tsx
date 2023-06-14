@@ -11,14 +11,34 @@ interface ChatMessage {
 interface Props {
   socket: WebSocket | null;
   videoId: number;
-  chats: ChatMessage[];
 }
 
 function Chat(props: Props) {
-  const { socket, videoId, chats } = props;
+  const { socket, videoId } = props;
   const [chat, setChat] = useState('');
   const [user, setUser] = useState<User | undefined>();
+  const [chats, setChats] = useState<ChatMessage[]>([]);
   const chatListRef = useRef<HTMLDivElement>(null); // Ref for chat list container
+
+  useEffect(() => {
+    
+    if (videoId && !!socket) {
+
+      socket.onmessage = (event) => {
+        const { Username: receivedUsername, message: receivedChat, VideoId: receivedVideoId } = JSON.parse(event.data);
+        if (receivedVideoId === videoId) {
+          setChats(prevChats => [...prevChats, { username: receivedUsername, chat: receivedChat }]);
+        }
+      };
+   
+      // Clean up the socket connection on component unmount
+      return () => {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.close();
+        }
+      };
+    }
+  }, [socket])
 
   const handleChatChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChat(event.target.value);

@@ -4,6 +4,8 @@ import { useEditMe, useGetUser, useImageUpload, useDeleteMe, useDeleteMeMessages
 import "@/styles/Profile.css"
 import { type ChannelType, type User } from '@/types';
 import { useLogoutUser } from '@/apis/LoginRegister';
+import envVars from "../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function Profile() {
   const [user, setUser] = useState<User | undefined>();
@@ -63,7 +65,7 @@ function Profile() {
             <div className="icon-container">
               <img
                 className="profile-icon"
-                src={user?.Icon ? `http://127.0.0.1:3000/image?imagename=${user?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+                src={user?.Icon ? `${baseURL}/image?imagename=${user?.Icon}` : `${baseURL}/image?imagename=default.png`}
                 alt="Icon"
               />
               <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>

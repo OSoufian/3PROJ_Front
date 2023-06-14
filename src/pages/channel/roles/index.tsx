@@ -1,5 +1,7 @@
 import { useEditRole, useGetMeChannel, useGetRoles, useDeleteRole } from "@/apis";
 import { type ChannelType, type Role } from "@/types";
+import envVars from "../../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 export default function Roles() {
   const [channel, setChannel] = useState<ChannelType>();
@@ -38,12 +40,12 @@ export default function Roles() {
 
   return (
     <div className="p-4">
-      <iframe allow="camera; microphone; fullscreen; display-capture; autoplay" src="https://meet.jit.si/3PROJ"></iframe>
+      {/* <iframe allow="camera; microphone; fullscreen; display-capture; autoplay" src="https://meet.jit.si/3PROJ"></iframe> */}
       {!!channel && (
         <div className="flex items-center space-x-4 mb-4">
           <img
             className="h-16 w-16 object-cover rounded-full"
-            src={`http://localhost:3000/image?imagename=${channel.Icon}`}
+            src={`${baseURL}/image?imagename=${channel.Icon}`}
             alt=""
           />
           <div>

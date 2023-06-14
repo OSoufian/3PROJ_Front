@@ -1,11 +1,13 @@
 import { bufferDecode, bufferEncode } from './tool';
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 
 export default function useLogin(username: string, callback: Function) {
     return (async (username: string) => {
 
 
-        const response = await fetch(`http://localhost:3000/login/start/${username}`, {
+        const response = await fetch(`${baseURL}/login/start/${username}`, {
             method: 'POST',
         });
         if (response.status === 401 || response.status === 403) {
@@ -31,7 +33,7 @@ export default function useLogin(username: string, callback: Function) {
         let sig = assertion.response.signature;
         let userHandle = assertion.response.userHandle;
 
-        const response2 = await fetch(`http://localhost:3000/login/end/${username}`, {
+        const response2 = await fetch(`${baseURL}/login/end/${username}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -54,13 +56,13 @@ export default function useLogin(username: string, callback: Function) {
 
         sessionStorage.setItem("token", cred.token);
 
-        await fetch(`http://localhost:3000/user/cred`, {
+        await fetch(`${baseURL}/user/cred`, {
             method: 'DELETE',
             headers: {
                 Authorization: "Bearer " + sessionStorage.getItem("token")
             },
         });
-        const userResponse = await fetch(`http://localhost:3000/user`, {
+        const userResponse = await fetch(`${baseURL}/user`, {
             headers: {
                 Authorization: "Bearer " + sessionStorage.getItem("token")
             }

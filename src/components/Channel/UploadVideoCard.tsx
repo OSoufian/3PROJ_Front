@@ -1,6 +1,8 @@
 import "@/styles/UploadVideo.css";
 import { type ChannelType, type VideoType } from "@/types";
 import { useEditVideo, useGetMeChannel, useGetVideosByChannel, useImageUpload, useVideoUpload } from "@/apis";
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function UploadVideoCard() {
 
@@ -89,7 +91,7 @@ function UploadVideoCard() {
         <h3 className="input-title">Thumbnail</h3>
         <img
           className="Thumbnail-image"
-          src={thumbnail ? `http://127.0.0.1:3000/image?imagename=${thumbnail}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+          src={thumbnail ? `${baseURL}/image?imagename=${thumbnail}` : `${baseURL}/image?imagename=default.png`}
           alt="Thumbnail"
         />
         <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}}/>

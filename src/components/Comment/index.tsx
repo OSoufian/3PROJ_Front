@@ -5,6 +5,8 @@ import { faEllipsisV, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useCreateChat, useDeleteChat, useGetChats, useGetUser, useGetUserById } from '@/apis';
 import { type Message, type User } from '@/types';
 import '@/styles/Comment.css';
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function Comments({ videoId }: { videoId: number }) {
   const [comment, setComment] = useState('');
@@ -121,8 +123,8 @@ function Comments({ videoId }: { videoId: number }) {
                     className="profile-icon"
                     src={
                       comment.User.Icon
-                        ? `http://127.0.0.1:3000/image?imagename=${comment.User.Icon}`
-                        : 'http://127.0.0.1:3000/image?imagename=default.png'
+                        ? `${baseURL}/image?imagename=${comment.User.Icon}`
+                        : `${baseURL}/image?imagename=default.png`
                     }
                     alt="User icon"
                   />

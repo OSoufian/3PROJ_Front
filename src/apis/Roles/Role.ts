@@ -1,7 +1,7 @@
 import { type Role } from "@/types"
+import envVars from "../../../public/env-vars.json"
 
-const baseURL = "http://127.0.0.1:3000"
-
+const baseURL = envVars["user-url"]
 
 export function useGetRoles(channelId: number, token: string, callBack: Function) {
   return async function () {

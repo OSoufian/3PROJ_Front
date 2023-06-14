@@ -1,6 +1,6 @@
 import { type VideoType } from "@/types";
-
-const baseURL = "http://127.0.0.1:3000"
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 export const useVideoUpload = (fileInput: File | null | undefined, channId: number, callback: Function) => (async (fileInput: File | null | undefined, channId: number) => {
     if (fileInput) {

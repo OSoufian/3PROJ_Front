@@ -6,41 +6,22 @@ import { useGetVideoById, useGetVideo, useEditVideo, useGetChannelById } from '@
 import "@/styles/VideoPage.css";
 import Chat from '@/components/Chat.tsx';
 import Comments from '@/components/Comment';
-
-interface ChatMessage {
-  username?: string;
-  chat: string;
-}
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
+const chatUrl = envVars["chat-url"]
 
 function Video() {
   const [videoSrc, setVideoSrc] = useState<Blob>();
   const params = useParams();
   
-  const [chats, setChats] = useState<ChatMessage[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [video, setVideo] = useState<VideoType | undefined>();
 
   useEffect(() => {
-    // Connect to the websocket server
     if (video?.Id) {
-      const newSocket = new WebSocket(`ws://localhost:3002/ws`);
+      const newSocket = new WebSocket(`${chatUrl}`);
       // Set the socket object
       setSocket(newSocket);
-  
-      // Handle incoming messages
-      newSocket.onmessage = (event) => {
-        const { Username: receivedUsername, message: receivedChat, VideoId: receivedVideoId } = JSON.parse(event.data);
-        if (receivedVideoId === video?.Id) {
-          setChats(prevChats => [...prevChats, { username: receivedUsername, chat: receivedChat }]);
-        }
-      };
-  
-      // Clean up the socket connection on component unmount
-      return () => {
-        if (newSocket.readyState === WebSocket.OPEN) {
-          newSocket.close();
-        }
-      };
     }
   }, [video?.Id]);
 
@@ -95,7 +76,7 @@ function Video() {
               <button className="channel-icon-button">
                 <Link to={`/channel/${video.ChannelId}`}>
                   <img className="channel-icon" 
-                  src={video.Channel.Icon ? `http://127.0.0.1:3000/image?imagename=${video.Channel.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+                  src={video.Channel.Icon ? `${baseURL}/image?imagename=${video.Channel.Icon}` : `${baseURL}/image?imagename=default.png`}
                   alt="Channel Icon" />
                 </Link>
               </button>
@@ -110,7 +91,7 @@ function Video() {
           )}
         </div>
         <div className="chat-container">
-          {!!video?.Id && <Chat socket={socket} videoId={video?.Id} chats={chats} />}
+          {!!video?.Id && <Chat socket={socket} videoId={video?.Id} />}
         </div>
       </div>
       <div>

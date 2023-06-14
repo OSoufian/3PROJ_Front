@@ -1,10 +1,10 @@
-
-
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 export default function useGetUser(token: string, callback: Function) {
     return (async () => {
         if(!token) return
-        const response = await fetch("http://127.0.0.1:3000/user",{
+        const response = await fetch(`${baseURL}/user`,{
             headers: {
                 "Authorization": `Bearer ${token}`
             }

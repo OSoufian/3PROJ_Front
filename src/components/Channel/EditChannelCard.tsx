@@ -1,6 +1,8 @@
 import { useImageUpload, useEditChannel, useGetMeChannel } from '@/apis';
 import { type ChannelType } from '@/types';
 import "@/styles/EditChannelCardStyle.css"
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function EditChannelCard() {
   const [channel, setChannel] = useState<ChannelType | undefined>();
@@ -54,7 +56,7 @@ function EditChannelCard() {
         <h3 className="input-title">Banner</h3>
         <img
           className="banner-image"
-          src={channel?.Banner ? `http://127.0.0.1:3000/image?imagename=${channel?.Banner}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+          src={channel?.Banner ? `${baseURL}/image?imagename=${channel?.Banner}` : `${baseURL}/image?imagename=default.png`}
           alt="Banner"
         />
         <input id="banner-upload" type="file" accept="image/*" onChange={handleBannerChange} style={{display:'none'}}/>
@@ -69,7 +71,7 @@ function EditChannelCard() {
         <h3 className="input-title">Icon</h3>
         <img
           className="channel-icon"
-          src={channel?.Icon ? `http://127.0.0.1:3000/image?imagename=${channel?.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+          src={channel?.Icon ? `${baseURL}/image?imagename=${channel?.Icon}` : `${baseURL}/image?imagename=default.png`}
           alt="Icon"
         />
         <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>

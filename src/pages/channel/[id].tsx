@@ -3,6 +3,8 @@ import "@/styles/EditVideo.css"
 import { type User, type VideoType, type ChannelType } from '@/types';
 
 import { useParams } from 'react-router-dom';
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function Channel() {
   const [user, setUser] = useState<User | undefined>()
@@ -67,7 +69,7 @@ function Channel() {
         <h3 className="input-title">Icon</h3>
         <img
           className="video-thumbnail"
-          src={currentVideo.Icon ? `http://127.0.0.1:3000/image?imagename=${currentVideo.Icon}` : "http://127.0.0.1:3000/image?imagename=default.png"}
+          src={currentVideo.Icon ? `${baseURL}/image?imagename=${currentVideo.Icon}` : `${baseURL}/image?imagename=default.png`}
           alt={currentVideo.Name}
         />
         <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>

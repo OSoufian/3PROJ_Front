@@ -1,6 +1,6 @@
 import { type ChannelType } from "@/types"
-
-const baseURL = "http://127.0.0.1:3000"
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 export function useCreateChannel(token: string, callback: Function) {
     return (async () => {

@@ -1,6 +1,8 @@
 import { type VideoType, type ChannelType } from "@/types";
 import { useDeleteVideo, useGetChannelById, useGetVideosByChannel, useGetMeChannel, useEditVideo } from '@/apis';
 import "@/styles/ChannelVideosStyle.css"
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 
 function ChannelVideos() {
@@ -67,7 +69,7 @@ function ChannelVideos() {
               <div key={v.Id} className="video-card">
                 <img
                   className="w-full h-40 sm:h-52 object-cover"
-                  src={v.Icon ? `http://127.0.0.1:3000/image?imagename=${v.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'}
+                  src={v.Icon ? `${baseURL}/image?imagename=${v.Icon}` : `${baseURL}/image?imagename=default.png`}
                   alt={v.Name}
                 />
                 <div className="video-title">

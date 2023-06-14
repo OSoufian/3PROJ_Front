@@ -10,10 +10,19 @@
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
 
+  .dark .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #374151;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
   .profile-container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: #212121;
+    background-color: #f2f2f2;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -66,7 +75,17 @@
 /* Style for video upload button */  
   
   /* Style for video card */
+  .dark .video-card {
+    background-color: #212121;
+    margin: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px #ccc;
+    border-radius: 5px;
+    overflow: visible;
+  }
+
   .video-card {
+    background-color: #212121;
     margin: 10px;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px #ccc;
@@ -76,16 +95,23 @@
   
   .video-card img {
     width: 100%;
-    height: 150px;
+    height: 250px;
     object-fit: cover;
   }
   
   .video-card h3 {
     font-size: 16px;
     margin: 10px;
+    color: white;
   }
   
-  .video-card p {
+ .dark .video-card p {
+    font-size: 14px;
+    margin: 10px;
+    color: #ffffff;
+  }
+
+   .video-card p {
     font-size: 14px;
     margin: 10px;
     color: #777;

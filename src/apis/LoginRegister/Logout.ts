@@ -1,7 +1,10 @@
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
+
 export default function useLogoutUser(token: string, callback: Function) {
     return (async () => {
         if(!token) return
-        const response = await fetch("http://127.0.0.1:3000/user/Logout",{
+        const response = await fetch(`${baseURL}/user/Logout`,{
             headers: {
                 "Authorization": `Bearer ${token}`
             }

@@ -1,6 +1,7 @@
 import { type Role } from "@/types"
+import envVars from "../../../public/env-vars.json"
 
-const baseURL = "http://127.0.0.1:3000"
+const baseURL = envVars["user-url"]
 
 
 export function useGetChats(video: number, callBack: Function) {
@@ -38,7 +39,7 @@ export function useCreateChat(videoId: number, userId: number, content: string, 
       method: 'POST',
       redirect: 'follow',
       headers: {
-        // "Authorization": `Bearer ${sessionStorage.token}`,
+        "Authorization": `Bearer ${sessionStorage.token}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

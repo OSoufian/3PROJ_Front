@@ -1,7 +1,7 @@
 import { ChannelType, type User } from "@/types";
 import { useGetMeChannel } from "./channels";
-
-const baseURL = "http://127.0.0.1:3000"
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 
 export const useGetMe = (token: string, callBack: Function) => (async () =>{
@@ -41,36 +41,37 @@ export const useEditMe = (token: string, user : User, callBack: Function) => (as
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
-export const useDeleteMe = (token:string, user: User, callBack: Function) => (async () => {
-    console.log("user got")
+export const useDeleteMe = async (token: string, user: User, callBack: Function) => {
+    console.log("user got");
     if (user.Channel) {
-        console.log("has channel")
-        useGetMeChannel(token, (c: ChannelType) => {
-            console.log("channel got")
-            useDeleteMeMessages(user.Id, () => {
-                console.log("messages deleted")
-                useDeleteMeVideos(c.Id, () => {
-                    console.log("videos deleted")
-                    useDeleteMeChannel(user.Id, () => {
-                        console.log("channel deleted")
-                        useDeleteMeUser(token, user, () => {
-                            console.log("user deleted")
-                        })
-                    })
-                })
-            })
-        })
+      console.log("has channel");
+      await useGetMeChannel(token, async (c: ChannelType) => {
+        console.log("channel got");
+        await useDeleteMeMessages(user.Id, async () => {
+          console.log("messages deleted");
+          await useDeleteMeVideos(c.Id, async () => {
+            console.log("videos deleted");
+            await useDeleteMeChannel(user.Id, async () => {
+              console.log("channel deleted");
+              await useDeleteMeUser(token, user, () => {
+                console.log("user deleted");
+              });
+            });
+          });
+        });
+      });
+    } else {
+      console.log("no channel");
+      await useDeleteMeMessages(user.Id, async () => {
+        console.log("messages deleted");
+        await useDeleteMeUser(token, user, () => {
+          console.log("user deleted");
+        });
+      });
     }
-    else {
-        console.log("no channel")
-        useDeleteMeMessages(user.Id, () => {
-            console.log("messages deleted")
-            useDeleteMeUser(token, user, () => {
-                console.log("user deleted")
-            })
-        })
-    }
-})().then((c) => callBack(c))
+    
+    callBack();
+  };
 
 export const useDeleteMeUser = (token: string, user : User, callBack: Function) => (async () =>{
     

@@ -1,11 +1,13 @@
 import { bufferDecode, bufferEncode } from './tool';
+import envVars from "../../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 let lock: Boolean = false
 
 export default function useRegister(username: string, callback: Function) {
     return (async (username: string) => {
 
-        const response = await fetch(`http://localhost:3000/register/start/${username}`, {
+        const response = await fetch(`${baseURL}/register/start/${username}`, {
             method: 'POST'
         });
 
@@ -50,7 +52,7 @@ export default function useRegister(username: string, callback: Function) {
         console.log("Second request")
 
 
-        const response2 = await fetch(`http://localhost:3000/register/end/${username}`, {
+        const response2 = await fetch(`${baseURL}/register/end/${username}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -73,7 +75,7 @@ export default function useRegister(username: string, callback: Function) {
         console.log(response2)
         sessionStorage.setItem("token", cred.token);
 
-        const response3 = await fetch(`http://localhost:3000/user`, {
+        const response3 = await fetch(`${baseURL}/user`, {
             headers: {
                 Authorization: "Bearer " + sessionStorage.getItem("token")
             }

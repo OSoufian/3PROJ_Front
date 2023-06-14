@@ -4,6 +4,8 @@ import { useGetUser } from '@/apis';
 import { useGetAllUsers } from '@/apis/Users/user';
 import { User } from '@/types';
 import '@/styles/admin.css';
+import envVars from "../../public/env-vars.json"
+const baseURL = envVars["user-url"]
 
 function WebAuthn() {
   const [user, setUser] = useState<User | undefined>();
@@ -44,7 +46,7 @@ function WebAuthn() {
                 onClick={() => handleUserClick(user)}
               >
                 <img 
-                src={user.Icon ? `http://127.0.0.1:3000/image?imagename=${user.Icon}` : 'http://127.0.0.1:3000/image?imagename=default.png'} 
+                src={user.Icon ? `${baseURL}/image?imagename=${user.Icon}` : `${baseURL}/image?imagename=default.png`} 
                 alt={user.Username} 
                 className="user-icon" />
                 <span className="user-name">{user.Username}</span>

@@ -1,0 +1,4 @@
+{
+    "user-url": "http://localhost:3000",
+    "chat-url": "ws://localhost:3002/ws"
+}
