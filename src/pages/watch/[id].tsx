@@ -19,6 +19,7 @@ function Video() {
 
   useEffect(() => {
     if (video?.Id) {
+      sessionStorage.videoId = video?.Id
       const newSocket = new WebSocket(`${chatUrl}`);
       // Set the socket object
       setSocket(newSocket);

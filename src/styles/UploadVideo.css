@@ -10,9 +10,9 @@
 
 .Thumbnail-image ~ .upload-icon {
     position: absolute;
-    top: 84%;
+    top: 70%;
     left: 50%;
-    width: 36%;
+    width: 10%;
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.3s ease-in-out;

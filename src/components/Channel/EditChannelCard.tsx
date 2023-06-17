@@ -94,8 +94,6 @@ function EditChannelCard() {
       <br />
       {!!channel && (
         <button className="save-btn" onClick={() => {
-			console.log(channel)
-			console.log(channel.Id)
           useEditChannel(sessionStorage.token, channel, () => {});
         }}>Save Channel</button>
       )}

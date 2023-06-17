@@ -2,6 +2,7 @@ import "@/styles/UploadVideo.css";
 import { type ChannelType, type VideoType } from "@/types";
 import { useEditVideo, useGetMeChannel, useGetVideosByChannel, useImageUpload, useVideoUpload } from "@/apis";
 import envVars from "../../../public/env-vars.json"
+// import FileDropZone from "../DropDown";
 const baseURL = envVars["user-url"]
 
 function UploadVideoCard() {
@@ -31,6 +32,7 @@ function UploadVideoCard() {
       useVideoUpload(uploadedVideo[0], channel.Id, (c: any) => {
         if (c.status === 200) {
           const id = c.id
+          console.log(c.id)
           useGetVideosByChannel(channel?.Id, ["created_at"], (c: VideoType[]) => {
             const updatedVideos = c
             .filter((v: VideoType) => v.Id == id)
@@ -94,7 +96,15 @@ function UploadVideoCard() {
           src={thumbnail ? `${baseURL}/image?imagename=${thumbnail}` : `${baseURL}/image?imagename=default.png`}
           alt="Thumbnail"
         />
-        <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}}/>
+        {/* <div>
+          <h1>TEST</h1>
+        <FileDropZone />
+        </div> */}
+        <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}} onDragOver={(event) => {
+            event.preventDefault(); // Prevent default behavior to allow dropping
+
+            console.log(event.target)
+        }}/>
         <div className="upload-icon">
           <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
             document.getElementById('Thumbnail-upload')?.click();
@@ -106,7 +116,7 @@ function UploadVideoCard() {
       <input type="file" accept="video/*" id="Video-upload" onChange={handleVideoUpload} />
 
       <br />
-      { uploadedVideo && <button className="save-btn" onClick={handleSubmit}>Save Video</button> }
+      { uploadedVideo && videoName && thumbnail && <button className="save-btn" onClick={handleSubmit}>Save Video</button> }
     </div>
   );
 }

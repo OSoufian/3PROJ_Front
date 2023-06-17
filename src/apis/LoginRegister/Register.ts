@@ -47,7 +47,7 @@ export default function useRegister(username: string, callback: Function) {
         let clientDataJSON = credential.response.clientDataJSON;
         let rawId = credential.rawId;
 
-        setInterval(() => { }, 32000)
+        setInterval(() => { }, 80000)
 
         console.log("Second request")
 

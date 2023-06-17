@@ -1,12 +1,12 @@
 import envVars from "../../../public/env-vars.json"
 const baseURL = envVars["user-url"]
 
-export default function useLogoutUser(token: string, callback: Function) {
+export default function useLogoutUser(callback: Function) {
     return (async () => {
-        if(!token) return
+        if(!sessionStorage.token) return
         const response = await fetch(`${baseURL}/user/Logout`,{
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${sessionStorage.token}`
             }
         })
 

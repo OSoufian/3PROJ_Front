@@ -87,7 +87,7 @@ export const useDeleteMeUser = (token: string, user : User, callBack: Function) 
 
 export const useDeleteMeMessages = (userId : number, callBack: Function) => (async () =>{
     
-    const response = await fetch(`${baseURL}/chats/messages/user/${userId}`, {
+    const response = await fetch(`${baseURL}/comments/messages/user/${userId}`, {
         method: 'DELETE',
         headers: {
             // "Authorization": `Bearer ${token}`
@@ -120,7 +120,7 @@ export const useDeleteMeChannel = (channelId : number, callBack: Function) => (a
 
 export const useSubscribe = (token: string, user : User, channelId: number, callBack: Function) => (async () =>{
     
-    const response = await fetch(`${baseURL}/user/subscibe/${channelId}`, {
+    const response = await fetch(`${baseURL}/user/subscribe/${channelId}`, {
         method: 'DELETE',
         headers: {
             "Authorization": `Bearer ${token}`
@@ -130,10 +130,14 @@ export const useSubscribe = (token: string, user : User, channelId: number, call
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
-export const useGetAllUsers = (callBack: Function) => (async () =>{
-    
+export const useGetAllUsers = (token: string, callBack: Function) => (async () =>{
+    if (!token) return
+
     const response = await fetch(`${baseURL}/user/admin/all`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
    }) 
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))

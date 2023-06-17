@@ -1,19 +1,20 @@
-import { Trans } from '@lingui/macro';
 
 export default function NotFound() {
   const navigate = useNavigate();
 
+  const handleGoBack = () => {
+    navigate(-1)
+  };
+
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center h-screen">
       <div className="text-4xl">
         <div className="i-carbon-warning inline-block" />
       </div>
-      <Trans>Not Found</Trans>
-      <div>
-        <button className="btn m-3 text-sm mt-8" onClick={() => navigate(-1)}>
-          <Trans>Back</Trans>
-        </button>
-      </div>
+      <h1 className="text-3xl mt-4">Not Found</h1>
+      <button className="btn mt-8" onClick={handleGoBack}>
+        Go Back
+      </button>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export default function Logout() {
     const navigate = useNavigate()
     useLayoutEffect(() => {
         if (sessionStorage.token) {
-            useLogoutUser(sessionStorage.token, () => {
+            useLogoutUser(() => {
                 navigate("/")
             })
             sessionStorage.clear()

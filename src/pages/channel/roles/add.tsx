@@ -71,7 +71,7 @@ export default function AddRoles() {
         Create
       </button>
       <br />
-      <Link to="/channel/roles" className="text-blue-500 hover:underline">
+      <Link to="/channel" className="text-blue-500 hover:underline">
         Back
       </Link>
     </div>

@@ -37,7 +37,7 @@ const tempVideoList: VideoType[] = [
           Username: "CatFan",
           Email: "catfan@example.com",
           Password: "********",
-          Channel: null,
+          Channel: {},
           Incredentials: "",
           ValideAccount: true,
           Disable: false,

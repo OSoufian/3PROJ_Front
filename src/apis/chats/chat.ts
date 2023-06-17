@@ -7,7 +7,7 @@ const baseURL = envVars["user-url"]
 export function useGetChats(video: number, callBack: Function) {
   return async function () {
 
-    const response = await fetch(`${baseURL}/chats/messages?q=${video}`, {
+    const response = await fetch(`${baseURL}/comments/messages?q=${video}`, {
       method: 'GET',
       redirect: 'follow',
     })
@@ -20,7 +20,7 @@ export function useGetChats(video: number, callBack: Function) {
 //   return async function () {
 //     if (!token) return
 
-//     const response = await fetch(`${baseURL}/chats/messages${channelId}`, {
+//     const response = await fetch(`${baseURL}/comments/messages${channelId}`, {
 //       method: 'GET',
 //       redirect: 'follow',
 //       headers: {
@@ -35,7 +35,7 @@ export function useGetChats(video: number, callBack: Function) {
 export function useCreateChat(videoId: number, userId: number, content: string, creationDate: Date, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return;
-    const response = await fetch(`${baseURL}/chats/messages`, {
+    const response = await fetch(`${baseURL}/comments/messages`, {
       method: 'POST',
       redirect: 'follow',
       headers: {
@@ -77,11 +77,11 @@ export function useDeleteChat(id: number, callBack: Function) {
   return async function () {
     if (!sessionStorage.token) return
 
-    const response = await fetch(`${baseURL}/chats/messages/${id}`, {
+    const response = await fetch(`${baseURL}/comments/messages/${id}`, {
       method: 'DELETE',
       redirect: 'follow',
       headers: {
-          // "Authorization": `Bearer ${sessionStorage.token}`
+          "Authorization": `Bearer ${sessionStorage.token}`
       },
     })
 

@@ -1,9 +1,10 @@
 import { useEditRole, useGetMeChannel, useGetRoles, useDeleteRole } from "@/apis";
 import { type ChannelType, type Role } from "@/types";
-import envVars from "../../../../public/env-vars.json"
+import "@/styles/Roles.css"
+import envVars from "../../../public/env-vars.json"
 const baseURL = envVars["user-url"]
 
-export default function Roles() {
+function Roles() {
   const [channel, setChannel] = useState<ChannelType>();
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedRole, setSelectedRole] = useState<Role>();
@@ -40,12 +41,11 @@ export default function Roles() {
 
   return (
     <div className="p-4">
-      {/* <iframe allow="camera; microphone; fullscreen; display-capture; autoplay" src="https://meet.jit.si/3PROJ"></iframe> */}
       {!!channel && (
         <div className="flex items-center space-x-4 mb-4">
           <img
             className="h-16 w-16 object-cover rounded-full"
-            src={`${baseURL}/image?imagename=${channel.Icon}`}
+            src={ channel.Icon ? `${baseURL}/image?imagename=${channel.Icon}` : `${baseURL}/image?imagename=default.png`}
             alt=""
           />
           <div>
@@ -69,7 +69,7 @@ export default function Roles() {
             <p className="text-gray-500 mb-1">{role.Weight}</p>
           </div>
         ))}
-        <Link to="/channel/roles/add">Add A Role</Link>
+        <Link to="/channel/roles/add" className="add-btn">Add A Role</Link>
         </div>
       {!!selectedRole && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
@@ -120,3 +120,5 @@ export default function Roles() {
     </div>
   );
 }
+
+export default Roles;

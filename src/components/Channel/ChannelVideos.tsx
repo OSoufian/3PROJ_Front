@@ -81,7 +81,7 @@ function ChannelVideos() {
                   <p>{v.Description}</p>
                 </div>                
                 <p>{`${v.Views} ${v.Views > 1 ? 'views' : 'view'}`}</p>
-                <p>{v.CreationDate.split('T')[0]}</p>
+                <p>{v.CreationDate}</p>
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className="watch-btn">Watch Now</button>
                 </Link>

@@ -102,7 +102,6 @@ export const useGetVideo = (video: string, callback: Function) => (async () => {
 })().then(c => callback(c))
 
 export const useGetVideoById = (id: number, callback: Function) => (async () => {
-    // if (!sessionStorage.token) return
 
     const response = await fetch(`${baseURL}/video/${id}`, {
         method: 'GET',
@@ -117,15 +116,11 @@ export const useGetVideoById = (id: number, callback: Function) => (async () => 
 
 
 export const useGetVideosByChannel = (id: number | undefined, orderBy: string[], callback: Function) => (async () => {
-    if (!sessionStorage.token) return;
 
     const orderByParams = orderBy.join(",");
     const response = await fetch(`${baseURL}/video/chann/${id}?orderBy=${orderByParams}`, {
         method: 'GET',
         redirect: 'follow',
-        headers: {
-            "Authorization": `Bearer ${sessionStorage.token}`
-        }
     });
 
     return response.ok ? await response.json() : await response.text();
@@ -144,7 +139,5 @@ export const useEditVideo = (video: VideoType, channId: number, callback: Functi
     })
 
     const data = await response.json();
-    console.log(data)
     return data
-    // return response.ok ? await response.json() : await response.text()
 })().then(c => callback(c))

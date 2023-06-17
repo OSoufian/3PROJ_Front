@@ -17,10 +17,10 @@ function WebAuthn() {
   }
 
   useEffect(() => {
-    useGetAllUsers((userList: User[]) => {
+    useGetAllUsers(sessionStorage.token, (userList: User[]) => {
       setUsers(userList);
     })
-  });
+  }, []);
 
   const handleUserClick = (selectedUser: User) => {
     setSelectedUser(selectedUser);
