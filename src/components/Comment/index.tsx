@@ -13,6 +13,7 @@ function Comments({ videoId }: { videoId: number }) {
   const [comments, setComments] = useState<Message[]>([]);
   const [user, setUser] = useState<User | undefined>();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownStates, setDropdownStates] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     useGetChats(videoId, (c: Message[]) => {
@@ -75,8 +76,11 @@ function Comments({ videoId }: { videoId: number }) {
     useDeleteChat(commentId, () => {handleRetrieveChats()})
   };
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const toggleDropdown = (commentId: number) => {
+    setDropdownStates((prevState) => ({
+      ...prevState,
+      [commentId]: !prevState[commentId]
+    }));
   };
 
   return (
@@ -135,10 +139,10 @@ function Comments({ videoId }: { videoId: number }) {
                   <div className="comment-date">{comment.Created.split('T')[0]}</div>
                   {comment.User.Username === user?.Username && (
                     <div className="comment-dropdown">
-                      <button className="comment-dropdown-button" onClick={toggleDropdown}>
+                      <button className="comment-dropdown-button" onClick={() => toggleDropdown(comment.Id)}>
                         <FontAwesomeIcon icon={faEllipsisV} />
                       </button>
-                      {showDropdown && (
+                      {dropdownStates[comment.Id] && (
                         <div className="comment-dropdown-menu">
                           <button className="comment-dropdown-item" onClick={() => handleDeleteComment(comment.Id)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
