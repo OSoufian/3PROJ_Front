@@ -104,10 +104,10 @@ return (
                       {video.Channel.Name}
                     </Link>
                   </button>
-                  <div className="video-details-box">
+                </div>
+                <div className="video-details-box">
                   <p className="video-views">{video.Views} Views</p>
                   <p className="video-description">Description: {video.Description}</p>
-                </div>
                 </div>
               </div>
             )}
@@ -125,6 +125,7 @@ return (
     )}
   </div>
 );
+
 }
 
 export default Video;

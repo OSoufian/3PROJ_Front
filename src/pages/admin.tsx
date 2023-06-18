@@ -79,6 +79,13 @@ function WebAuthn() {
     setSelectedUser(selectedUser);
   };
 
+  const handleBanUser = () => {
+    if (selectedUser) {
+      const updatedUser = {...selectedUser, Disable: !selectedUser.Disable}
+      useAdminEditUser(sessionStorage.token, updatedUser, () => {})
+    }
+  }
+
   const handleEditUser = () => {
     if (selectedUser) {
       const updatedUser = {...selectedUser, Disable: !selectedUser.Disable}
@@ -162,7 +169,7 @@ function WebAuthn() {
                       {selectedUser.Disable ? (
                         <button className="ban-btn" onClick={handleEditUser}>UnBan</button>
                         ) : (
-                          <button className="ban-btn" onClick={handleEditUser}>Ban</button>
+                          <button className="ban-btn" onClick={handleBanUser}>Ban</button>
                         )}
                       <button className="delete-btn">Delete</button>
                     </div>
