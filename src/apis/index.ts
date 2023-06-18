@@ -3,7 +3,7 @@ import { useGetChats, useCreateChat, useEditChats, useDeleteChat } from "./chats
 import { useGetUser, useLogin, useRegister} from "./LoginRegister"
 import { useVideoUpload, useGetVideos,useDeleteVideo, useGetVideo, useGetVideoById, useEditVideo, useImageUpload, useGetVideosByChannel } from "./Video"
 import { useCreateChannel, useGetChannelById, useGetMeChannel, useEditChannel } from "./Users/channels"
-import { useGetMe, useGetUserById, useEditMe, useDeleteMe, useDeleteMeMessages, useDeleteMeVideos, useDeleteMeChannel, useDeleteMeUser, useSubscribe, useGetAllUsers, useGetAllConditionUsers, useAdminEditUser} from "./Users/user"
+import { useGetMe, useGetUserById, useEditMe, useDeleteMe, useDeleteMeMessages, useDeleteMeVideos, useDeleteMeChannel, useDeleteMeUser, useSubscribe, useGetAllUsers, useGetAllConditionUsers, useAdminEditUser, useAdminGetVideosByUser, useAdminGetUserChannel} from "./Users/user"
 import { useGetRoles, useEditRole, useCreateRole, useDeleteRole} from "./Roles"
 
 export {
@@ -21,6 +21,8 @@ export {
     useGetAllUsers,
     useGetAllConditionUsers,
     useAdminEditUser,
+    useAdminGetVideosByUser,
+    useAdminGetUserChannel,
     useGetUserById,
     useVideoUpload,
     useGetVideos,

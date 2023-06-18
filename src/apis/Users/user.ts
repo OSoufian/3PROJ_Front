@@ -163,3 +163,31 @@ export const useAdminEditUser = (token: string, user : User, callBack: Function)
  }) 
  return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
+
+export const useAdminGetVideosByUser = (id: number | undefined, orderBy: string[], callback: Function) => (async () => {
+  if (!sessionStorage.token) return;
+
+  const orderByParams = orderBy.join(",");
+  const response = await fetch(`${baseURL}/user/admin/${id}/videos?orderBy=${orderByParams}`, {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        "Authorization": `Bearer ${sessionStorage.token}`
+      }
+  });
+
+  return response.ok ? await response.json() : await response.text();
+})().then(c => callback(c));
+
+export const useAdminGetUserChannel = (user: User, callback: Function) => (async () => {
+  if (!sessionStorage.token) return;
+
+  const response = await fetch(`${baseURL}/user/admin/${user.Username}/channel`, {
+    method: 'GET',
+    headers: {
+      "Authorization": `Bearer ${sessionStorage.token}`
+    }
+  });
+
+  return response.ok ? await response.json() : await response.text();
+})().then(c => callback(c));

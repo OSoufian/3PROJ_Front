@@ -138,7 +138,7 @@ function Comments({ videoId }: { videoId: number }) {
                   <div className="comment-author">{comment.User.Username}</div>
                   <div className="comment-content">{comment.Content}</div>
                   <div className="comment-date">{comment.Created.split('T')[0]}</div>
-                  {comment.User.Username === user?.Username && (
+                  {(comment.User.Username === user?.Username || (user && user?.Permission & 16777216) !== 0) && (
                     <div className="comment-dropdown">
                       <button className="comment-dropdown-button" onClick={() => toggleDropdown(comment.Id)}>
                         <FontAwesomeIcon icon={faEllipsisV} />

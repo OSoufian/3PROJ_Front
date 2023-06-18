@@ -11,6 +11,7 @@ export type VideoType = {
   CreationDate: string;
   IsHide: boolean;
   IsBlock: boolean;
+  Size: number;
 };
 
 export type Message = {
@@ -53,6 +54,7 @@ export type User = {
   Incredentials: string;
   ValideAccount: boolean;
   Disable: boolean;
+  Permission: number;
   Subscribtion?: any;
   Role?: any;
   Credentials?: any;

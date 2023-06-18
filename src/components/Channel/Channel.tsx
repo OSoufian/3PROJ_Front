@@ -124,13 +124,6 @@ function Channel() {
             </div>
             )}
             {channel?.Id != 0 && channel?.Owner && <div>
-              <div className="banner-section">
-                <img className="banner-image" src={`${baseURL}/image?imagename=${channel?.Banner}`} alt="Banner" />
-              </div>
-              <div className="profile-picture-section">
-                <img className="profile-picture" src={`${baseURL}/image?imagename=${channel?.Icon}`} alt="Profile Picture" />
-                <h2 className="channel-name">{channel?.Name}</h2>
-              </div>
               <div className='panel'>
                 <div className='container'>
                   <ul>

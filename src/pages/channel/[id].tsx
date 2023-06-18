@@ -63,18 +63,16 @@ function ChannelVideos() {
         </div>
 
         <div className='panel'>
-      <div className='container'>
-      <ul>
-        {categories.map((category) => (
-          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
-            {category.name}
-          </Link>
-        ))}
-        </ul>
-      </div>
-    </div>
-
-
+          <div className='container'>
+          <ul>
+            {categories.map((category) => (
+              <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
+                {category.name}
+              </Link>
+            ))}
+            </ul>
+          </div>
+        </div>
 
         <div className="video-list">
           {activeCategory === 1 && !!videoList &&

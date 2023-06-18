@@ -207,6 +207,24 @@ h1 {
     margin-right: 10px;
 }
 
-.channel-name {
+.dark .channel-name {
+    color: white;
     font-size: 24px; 
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.channel-name {
+    color: black;
+    font-size: 24px; 
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
