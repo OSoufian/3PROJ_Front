@@ -71,10 +71,10 @@ function Video() {
                 <div className="video-details">
                   <h2 className="new-video-title">{video.Name}</h2>
                   <div className="channel-components">
-                    <button className="channel-icon-button">
+                    <button className="watch-channel-icon-button">
                       <Link to={`/channel/${video.ChannelId}`}>
                         <img
-                          className="channel-icon"
+                          className="watch-channel-icon"
                           src={
                             video.Channel.Icon
                               ? `${baseURL}/image?imagename=${video.Channel.Icon}`

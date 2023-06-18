@@ -8,9 +8,6 @@ function Footer() {
 
   return (
     <nav className="text-xl mt-6 inline-flex gap-2">
-      <Link className="icon-btn mx-2" title={t`Home`} to="/">
-        <div className="i-carbon-campsite" />
-      </Link>
       <button
         className="icon-btn mx-2 !outline-none"
         title={t`Toggle dark mode`}

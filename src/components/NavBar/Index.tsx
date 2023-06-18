@@ -1,11 +1,20 @@
+import { useGetUser } from "@/apis";
 import SearchBar from "./SearchBar";
+import { type User } from "@/types";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | undefined>();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    if (!!sessionStorage.token && !user) {
+      useGetUser(sessionStorage.token, (c: any) => setUser(c))
+      // useGetMeChannel(sessionStorage.token, setChannel)
+    }
+  }, [sessionStorage])  
 
   const navbarClasses = `flex items-center justify-between px-8 py-4 dark:bg-gray-800 dark:text-white bg-white text-gray-800`;
 
@@ -43,6 +52,11 @@ function Navbar() {
                   <Link to="/channel/" className="block px-4 py-2 text-sm rounded-md hover:bg-gray-100 dark:text-#212121">
                     Channel
                   </Link>
+                  {(!!user && user?.Permission & 16777216) !== 0 && 
+                    <Link to="/admin" className="block px-4 py-2 text-sm rounded-md hover:bg-gray-100 dark:text-#212121">
+                      Admin Panel
+                    </Link>
+                  }
                   <Link to="/logout" className="block px-4 py-2 text-sm rounded-md text-red-700 hover:bg-red-100">
                     Logout
                   </Link>

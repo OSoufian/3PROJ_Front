@@ -61,13 +61,13 @@
   margin-top: 10px;
 }
 
-.channel-icon-button {
+.watch-channel-icon-button {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.channel-icon {
+.watch-channel-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
