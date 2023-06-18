@@ -1,5 +1,3 @@
-/* Soufian (15 avril 2023) */
-
 h1 {
     font-size: 32px;
     font-weight: bold;
@@ -20,7 +18,13 @@ h1 {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.your-videos-title {
+.dark .your-videos-title {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.your-videos-title{
     font-size: 28px;
     font-weight: bold;
 }
@@ -28,22 +32,43 @@ h1 {
 .video-list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center; /* Align the videos in the center */
+    align-items: flex-start; /* Align the videos at the top */
 }
 
 
 /* VIDEO CARD */
 
 .video-card {
-    margin: 10px;
-    padding: 5px 7px;
+    margin: 10px auto;
+    padding: 10px;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 5px #ccc;
     border-radius: 5px;
-    width: 47%;
+    width: 45%; /* Adjust the width to make the video card smaller */
+    background-color: #374151;
+}
+
+.dark .video-card {
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px #ccc;
+    border-radius: 5px;
+    width: 45%; /* Adjust the width to make the video card smaller */
+    background-color: #1f2937;
+}
+
+.dark .video-card h3 {
+    color: white;
+    margin: 10px 0;
+    font-size: 20px;
 }
 
 .video-card h3 {
-    margin: 10px;
+    color: white;
+    margin: 10px 0;
+    font-size: 20px;
 }
 
 .video-hidden p {
@@ -51,10 +76,16 @@ h1 {
     color: #999 !important;
 }
 
+.dark .video-card p {
+    font-size: 14px;
+    margin: 10px 0;
+    color: white;
+}
+
 .video-card p {
     font-size: 14px;
-    margin: 10px;
-    color: #777;
+    margin: 10px 0;
+    color: white;
 }
 
 .dropdown {
@@ -97,11 +128,11 @@ h1 {
 }
 
 .dropdown-btn {
-  font-size: 20px;
-  color: #777;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+    font-size: 20px;
+    color: #777;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .dropdown-btn::before {
@@ -144,4 +175,38 @@ h1 {
 
 .delete-btn:hover {
     background-color: #8B0000;
+}
+
+
+/* Soufian (18 juin 2023) : Channel by ID */
+
+.banner-section {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-picture-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.channel-name {
+    font-size: 24px; 
 }
