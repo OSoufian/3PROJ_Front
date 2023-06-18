@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import "@/styles/Chat.css";
 import { type User } from '@/types';
 import { useGetUser } from '@/apis';
+import { useGetAciveUsers } from '@/apis/chats/chat';
 
 interface ChatMessage {
   username?: string;
@@ -11,6 +12,7 @@ interface ChatMessage {
 interface Props {
   socket: WebSocket | null;
   videoId: number;
+  // connections: number;
 }
 
 function Chat(props: Props) {
@@ -18,6 +20,7 @@ function Chat(props: Props) {
   const [chat, setChat] = useState('');
   const [user, setUser] = useState<User | undefined>();
   const [chats, setChats] = useState<ChatMessage[]>([]);
+  const [numConnections, setNumConnections] = useState<number>(0);
   const chatListRef = useRef<HTMLDivElement>(null); // Ref for chat list container
 
   useEffect(() => {
@@ -29,6 +32,19 @@ function Chat(props: Props) {
         if (receivedVideoId === videoId) {
           setChats(prevChats => [...prevChats, { username: receivedUsername, chat: receivedChat }]);
         }
+      };
+
+      // Update the number of connections when a connection is established or closed
+      socket.onopen = () => {
+        useGetAciveUsers((c: any) => {
+          setNumConnections(c.numConnections)
+        })
+      };
+
+      socket.onclose = () => {
+        useGetAciveUsers((c: any) => {
+          setNumConnections(c.numConnections)
+        })
       };
    
       // Clean up the socket connection on component unmount
@@ -72,6 +88,7 @@ function Chat(props: Props) {
 
   return (
     <div className="chats-container dark:bg-#1F2937 dark:text-#C2C2C2">
+      <div className="num-connections">Number of Connections: {numConnections}</div>
       <div className="chat-list" ref={chatListRef}>
         {chats.map((chat, index) => (
           <div className="chat" key={index}>
@@ -86,7 +103,7 @@ function Chat(props: Props) {
             Connect
           </Link>
         </div>
-      ) : (
+      ) : (!user?.Disable ? (
         <div className="chat-form">
           <input
             className="chat-input dark:bg-#1F2937 dark:text-#C2C2C2"
@@ -100,6 +117,9 @@ function Chat(props: Props) {
             Send
           </button>
         </div>
+      ): (
+        <div>Your account has been disabled you cannot add a chat</div>
+      )
       )}
     </div>
   );

@@ -1,5 +1,11 @@
-.video-card {
+.dark .main-video-card {
     padding-bottom: 1vh;
+    background-color: #1f2937;
+}
+
+.main-video-card {
+    padding-bottom: 1vh;
+    background-color: #374151
 }
 
 .image-placeholder {
@@ -10,4 +16,9 @@
 
 .video-title {
     height: 8vh;
+    color: white;
+}
+
+.main-video-card p {
+color: white;
 }

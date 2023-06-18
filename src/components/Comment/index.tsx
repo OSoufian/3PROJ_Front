@@ -12,7 +12,6 @@ function Comments({ videoId }: { videoId: number }) {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Message[]>([]);
   const [user, setUser] = useState<User | undefined>();
-  const [showDropdown, setShowDropdown] = useState(false);
   const [dropdownStates, setDropdownStates] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
@@ -103,7 +102,7 @@ function Comments({ videoId }: { videoId: number }) {
                       Connect
                     </Link>
                   </div>
-                ) : (
+                ) : (!user?.Disable ? (
                   <div>
                     <button className="comment-submit-button" onClick={handleCommentSubmit}>
                       Add Comment
@@ -112,7 +111,9 @@ function Comments({ videoId }: { videoId: number }) {
                       Cancel
                     </button>
                   </div>
-                )
+                ) : (
+                  <div>Your account has been disabled, you cannot add a comment</div>
+                ))
               ) : (
                 <></>
               )}

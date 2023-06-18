@@ -15,7 +15,7 @@ function VideoCard(props: Props) {
   // Pouvoir récupérer les infos de l'utilisateur pour pouvoir afficher son logo et son nom sur la vidéo
 
   return (
-    <div className="w-80 sm:w-96 md:w-80 lg:w-96 xl:w-80 2xl:w-96 m-2 border border-gray-300 shadow-sm rounded-md overflow-hidden inline-block align-top bg-white dark:bg-gray-800 video-card">
+    <div className="w-80 sm:w-96 md:w-80 lg:w-96 xl:w-80 2xl:w-96 m-2 border border-gray-300 shadow-sm rounded-md overflow-hidden inline-block align-top bg-white dark:bg-gray-800 main-video-card">
        {thumbnail ? (
           <img className="w-full h-40 sm:h-52 object-cover" src={`${baseURL}/image?imagename=${thumbnail}`} alt={title} />
         ) : (

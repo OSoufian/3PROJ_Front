@@ -7,10 +7,10 @@ interface Category {
 
 function CategoryPanel() {
   const categories = [
-    {id: 1, name: "Musique"},
-    {id: 2, name: "Jeux vidéos"},
+    {id: 1, name: "Music"},
+    {id: 2, name: "Video Games"},
     {id: 3, name: "Manga"},
-    {id: 4, name: "Comédie"}
+    {id: 4, name: "Sport"}
   ]
 
   const [activeCategory, setActiveCategory] = useState(0);

@@ -5,11 +5,26 @@ import { useParams } from 'react-router-dom';
 import envVars from "../../../public/env-vars.json"
 const baseURL = envVars["user-url"]
 
+interface Category {
+  id: number;
+  name: string;
+}
+
+const categories = [
+  {id: 1, name: "Videos"},
+  {id: 2, name: "Infos"}
+]
+
 
 function ChannelVideos() {
     const [videoList, setVideoList] = useState<VideoType[] | null>()
     const [channel, setChannel] = useState<ChannelType | undefined>();
+    const [activeCategory, setActiveCategory] = useState(1);
     const param = useParams();
+
+    const handleCategoryClick = (category: Category) => {
+      setActiveCategory(category.id);
+    };
 
     useEffect(() => {
       useGetVideosByChannel(parseInt(param.id ?? ""),["created_at DESC"],(c: VideoType[]) => {
@@ -36,12 +51,33 @@ function ChannelVideos() {
     const handleRetreiveChannel = (video: VideoType, c: Function) => {
         return useGetChannelById(video.ChannelId, c)
     }
-
+    
     return (
       <div>
-        <h2 className="your-videos-title">{channel?.Name}</h2>
+        <div className="banner-section">
+          <img className="banner-image" src={`${baseURL}/image?imagename=${channel?.Banner}`} alt="Banner" />
+        </div>
+        <div className="profile-picture-section">
+          <img className="profile-picture" src={`${baseURL}/image?imagename=${channel?.Icon}`} alt="Profile Picture" />
+          <h2 className="channel-name">{channel?.Name}</h2>
+        </div>
+
+        <div className='panel'>
+      <div className='container'>
+      <ul>
+        {categories.map((category) => (
+          <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => handleCategoryClick(category)}>
+            {category.name}
+          </Link>
+        ))}
+        </ul>
+      </div>
+    </div>
+
+
+
         <div className="video-list">
-          {!!videoList &&
+          {activeCategory === 1 && !!videoList &&
             videoList.map((v: VideoType) => (
               <div key={v.Id} className="video-card">
                 <img

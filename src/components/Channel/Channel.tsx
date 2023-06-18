@@ -1,8 +1,9 @@
 import "@/styles/Channel.css";
-import { type ChannelType } from "@/types";
+import { User, type ChannelType } from "@/types";
 import { EditChannelCard, UploadVideoCard, Roles, ChannelVideos } from "./index";
-import { useCreateChannel, useEditChannel, useGetMeChannel, useImageUpload } from "@/apis";
+import { useCreateChannel, useEditChannel, useGetMeChannel, useGetUserById, useImageUpload } from "@/apis";
 import envVars from "../../../public/env-vars.json"
+// import { cp } from "fs";
 const baseURL = envVars["user-url"]
 
 interface Category {
@@ -27,8 +28,17 @@ function Channel() {
   const [icon, setIcon] = useState<FileList | null>()
   
   useEffect(() => {
-    useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => setChannel(c));
+    useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => {
+      useGetUserById(c.OwnerId, (user: User) => {
+        const updatedChannel = {
+          ...c,
+          Owner: user
+        }
+        setChannel(updatedChannel);
+      });
+    });
   }, [channel?.Id]);
+
 
   const handleCategoryClick = (category: Category) => {
     setActiveCategory(category.id);
@@ -113,12 +123,11 @@ function Channel() {
               )}
             </div>
             )}
-            {channel?.Id != 0 && <div>
+            {channel?.Id != 0 && channel?.Owner && <div>
               <div className='panel'>
                 <div className='container'>
                   <ul>
                     {categories.map((category) => (
-                    // <Link key={category.id} to={`/category/${category.id}`} className={`item${activeCategory === category.id ? ' active' : ''}`} onClick={() => handleCategoryClick(category)}>
                     <Link key={category.id} to={``} className={`item${activeCategory === category.id ? ' active' : ''} dark:text-#C2C2C2`} onClick={() => {
                       handleCategoryClick(category);
                       }}>
@@ -129,23 +138,44 @@ function Channel() {
                 </div>
               </div>
               {activeCategory === 1 && (
-                  <ChannelVideos />
+                  <ChannelVideos channel={channel}/>
                 )
               }
-
-              {activeCategory === 2 && (
+              {activeCategory === 2 && !channel?.Owner.Disable ? (
                   <Roles />
+                ) : activeCategory === 2 && (
+                  <div>
+                  <div>Your account is currently disabled you cannot access to the roles</div>
+                    <Link to="/profile" className="save-btn">
+                      Reactivate Account
+                    </Link>
+                  </div>
                 )
               }   
 
-              {activeCategory === 3 && (
+              {activeCategory === 3 && !channel?.Owner.Disable ? (
                   <EditChannelCard />
+                ) : activeCategory === 3 && (
+                  <div>
+                  <div>Your account is currently disabled you cannot access to the Edit channel</div>
+                    <Link to="/profile" className="save-btn">
+                      Reactivate Account
+                    </Link>
+                  </div>
                 )
               }
 
-              {activeCategory === 4 && (
-                <UploadVideoCard />
-              )}
+              {activeCategory === 4 && !channel?.Owner.Disable ? (
+                  <UploadVideoCard channel={channel} />
+                ) : activeCategory === 4 && (
+                  <div>
+                  <div>Your account is currently disabled you cannot access to the upload video</div>
+                    <Link to="/profile" className="save-btn">
+                      Reactivate Account
+                    </Link>
+                  </div>
+                )
+              }
 
             </div>}
           </div>

@@ -1,13 +1,12 @@
 import "@/styles/UploadVideo.css";
 import { type ChannelType, type VideoType } from "@/types";
-import { useEditVideo, useGetMeChannel, useGetVideosByChannel, useImageUpload, useVideoUpload } from "@/apis";
+import { useEditVideo, useGetVideosByChannel, useImageUpload, useVideoUpload } from "@/apis";
 import envVars from "../../../public/env-vars.json"
 // import FileDropZone from "../DropDown";
 const baseURL = envVars["user-url"]
 
-function UploadVideoCard() {
+function UploadVideoCard({channel} : {channel: ChannelType | undefined}) {
 
-  const [channel, setChannel] = useState<ChannelType | undefined>()
   const [uploadedVideo, setuploadedVideo] = useState<FileList>()
   const [videoName, setVideoName] = useState('');
   const [videoDescription, setVideoDescription] = useState('');
@@ -32,7 +31,6 @@ function UploadVideoCard() {
       useVideoUpload(uploadedVideo[0], channel.Id, (c: any) => {
         if (c.status === 200) {
           const id = c.id
-          console.log(c.id)
           useGetVideosByChannel(channel?.Id, ["created_at"], (c: VideoType[]) => {
             const updatedVideos = c
             .filter((v: VideoType) => v.Id == id)
@@ -69,10 +67,6 @@ function UploadVideoCard() {
     }
   };
 
-  useEffect(() => {
-    useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => setChannel(c));
-  }, [channel?.Id]);
-
   const handleVideoNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVideoName(event.target.value);
   };
@@ -102,8 +96,6 @@ function UploadVideoCard() {
         </div> */}
         <input id="Thumbnail-upload" type="file" accept="image/*" onChange={handleThumbnailChange} style={{display:'none'}} onDragOver={(event) => {
             event.preventDefault(); // Prevent default behavior to allow dropping
-
-            console.log(event.target)
         }}/>
         <div className="upload-icon">
           <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {

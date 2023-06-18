@@ -28,6 +28,15 @@ function Roles() {
     setSelectedRole(role);
   };
 
+  const handleRetreiveRoles = () => {
+    if (!!channel) {
+        useGetRoles(channel.Id, sessionStorage.token, (c: Role[]) => {
+          c.sort((a, b)=> {return a.Weight < b.Weight? 1: a.Weight === b.Weight ? 0: -1})
+          setRoles(c);
+        });
+      }
+  }
+
   const handleDrag = (role: Role, weight: number) => {
     console.log(role, weight)
     setRoles([...roles]); // create a new copy of roles array to trigger a re-render
@@ -63,10 +72,10 @@ function Roles() {
             draggable={true}
             onDrag={(e) => handleDrag(role, index)}
           >
-            <h1 className="text-lg font-bold mb-2">{role.Name}</h1>
-            <p className="text-gray-500 mb-1">{role.Description}</p>
-            <p className="text-gray-500 mb-1">{role.Permission}</p>
-            <p className="text-gray-500 mb-1">{role.Weight}</p>
+            <h1 className="text-lg font-bold mb-2">Name : {role.Name}</h1>
+            <p className="text-gray-500 mb-1">Description : {role.Description}</p>
+            <p className="text-gray-500 mb-1">Permission : {role.Permission}</p>
+            <p className="text-gray-500 mb-1">Weight : {role.Weight}</p>
           </div>
         ))}
         <Link to="/channel/roles/add" className="add-btn">Add A Role</Link>
@@ -96,6 +105,14 @@ function Roles() {
                 selectedRole.Permission = parseInt(e.target.value);
               }}
             />
+            <input
+              className="text-gray-500 mb-1"
+              placeholder={selectedRole.Weight.toString()}
+              type="number"
+              onChange={(e) => {
+                selectedRole.Weight = parseInt(e.target.value);
+              }}
+            />
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               onClick={() => {
@@ -103,12 +120,13 @@ function Roles() {
                 setSelectedRole(undefined)
               }}
             >
-              Close
+              Save
             </button>
             <button
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               onClick={()=> {
                 useDeleteRole(selectedRole,() =>{})
+                handleRetreiveRoles()
                 setSelectedRole(undefined)
               }}
             >

@@ -36,8 +36,6 @@ export const useEditMe = (token: string, user : User, callBack: Function) => (as
         },
         body: JSON.stringify(user)
    }) 
-   console.log(user)
-   console.log(JSON.stringify(user))
    return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))
 
@@ -140,4 +138,28 @@ export const useGetAllUsers = (token: string, callBack: Function) => (async () =
         }
    }) 
    return response.ok ? await response.json() : await response.text()
+})().then((c) => callBack(c))
+
+export const useGetAllConditionUsers = (token: string, condition: string, callBack: Function) => (async () =>{
+  if (!token) return
+
+  const response = await fetch(`${baseURL}/user/admin/all?q=${condition}`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+ }) 
+ return response.ok ? await response.json() : await response.text()
+})().then((c) => callBack(c))
+
+export const useAdminEditUser = (token: string, user : User, callBack: Function) => (async () =>{
+    
+  const response = await fetch(`${baseURL}/user/admin/edit`, {
+      method: 'PATCH',
+      headers: {
+          "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(user)
+ }) 
+ return response.ok ? await response.json() : await response.text()
 })().then((c) => callBack(c))

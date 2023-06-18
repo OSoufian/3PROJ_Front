@@ -1,12 +1,18 @@
-.profile-container {
-  display: flex;
+.admin-container {
+  /* display: flex;
   justify-content: center;
-  align-items: center;
-  height: 80vh;
+  align-items: center; */
+  /* height: 80vh; */
   background-color: #f1f1f1;
 }
 
-.profile-wrapper {
+.admin-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-wrapper {
   display: flex;
   gap: 20px;
 }
@@ -116,7 +122,7 @@
 }
 
 /* Dark mode styles */
-.dark .profile-container {
+.dark .admin-container {
   background-color: #222;
   color: #fff;
 }
@@ -137,4 +143,43 @@
 .dark .user-details {
   background-color: #333;
   color: #fff;
+}
+
+/* Pannel style */
+.panel {
+  color: #202020;
+  height: 56px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.panel .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.panel .item {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.panel .item:hover {
+  background-color: grey;
+  color: white;
+}
+
+.panel .item.active {
+  background-color: black;
+  color: white;
 }

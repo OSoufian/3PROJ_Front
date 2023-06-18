@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useEditMe, useGetUser, useImageUpload, useDeleteMe, useDeleteMeMessages, useDeleteMeVideos, useDeleteMeChannel, useGetMeChannel, useDeleteMeUser } from '@/apis';
+import { useEditMe, useGetUser, useImageUpload, useDeleteMe } from '@/apis';
 import "@/styles/Profile.css"
-import { type ChannelType, type User } from '@/types';
-import { useLogoutUser } from '@/apis/LoginRegister';
-import envVars from "../../public/env-vars.json"
-const baseURL = envVars["user-url"]
+import envVars from "@/../public/env-vars.json"
+
+import { type User } from '@/types';
 
 function Profile() {
   const [user, setUser] = useState<User | undefined>();
+  const baseURL = envVars["user-url"]
   // const [channel, setChannel] = useState<ChannelType | undefined>();
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
+  const navigate = useNavigate()
 
   if (!!sessionStorage.token && !user) {
     useGetUser(sessionStorage.token, (c: any) => setUser(c))
@@ -29,16 +30,19 @@ function Profile() {
   };
 
   const handleDeactivateAccount = () => {
-    console.log('Deactivate Account');
+    const updatedUser = { ...user, Disable: !user?.Disable } as User;
+    useEditMe(sessionStorage.token, updatedUser, () => {})
+    setUser(updatedUser);
   };
 
   const handleDeleteAccount = () => {
-    console.log('Delete Account');
     // if (user) useDeleteMeUser(sessionStorage.token, user, () => {
     //   useLogoutUser(sessionStorage.token, () => {})
     // })
     if (user) useDeleteMe(sessionStorage.token, user, () => {
       console.log("deleted")
+      sessionStorage.clear()
+      navigate("/")
     });
   };
 
@@ -81,9 +85,15 @@ function Profile() {
               <div>
                 <div>
                   <div className="account-buttons">
-                    <button className="deactivate-button" onClick={handleDeactivateAccount}>
-                      Deactivate Account
-                    </button>
+                    {user?.Disable ? (
+                      <button className="deactivate-button" onClick={handleDeactivateAccount}>
+                        Reactivate Account
+                      </button>
+                    ) : (
+                      <button className="deactivate-button" onClick={handleDeactivateAccount}>
+                        Deactivate Account
+                      </button>
+                    )}
                     <button className="delete-button" onClick={openDeleteConfirmation}>
                       Delete Account
                     </button>

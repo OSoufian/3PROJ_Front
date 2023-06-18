@@ -1,17 +1,12 @@
 import { type VideoType, type ChannelType } from "@/types";
-import { useDeleteVideo, useGetChannelById, useGetVideosByChannel, useGetMeChannel, useEditVideo } from '@/apis';
+import { useDeleteVideo, useGetChannelById, useGetVideosByChannel, useEditVideo } from '@/apis';
 import "@/styles/ChannelVideosStyle.css"
 import envVars from "../../../public/env-vars.json"
 const baseURL = envVars["user-url"]
 
 
-function ChannelVideos() {
+function ChannelVideos({channel} : {channel: ChannelType | undefined}) {
     const [videoList, setVideoList] = useState<VideoType[] | null>()
-    const [channel, setChannel] = useState<ChannelType | undefined>();
-
-    useEffect(() => {
-      useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => setChannel(c));
-    }, [channel?.Id]);
 
     useEffect(() => {
       useGetVideosByChannel(channel?.Id,["created_at DESC"],(c: VideoType[]) => {
@@ -64,7 +59,7 @@ function ChannelVideos() {
 
         <h2 className="your-videos-title">Your Videos</h2>
         <div className="video-list">
-          {!!videoList &&
+          {!!videoList && channel?.Owner &&
             videoList.map((v: VideoType) => (
               <div key={v.Id} className="video-card">
                 <img
@@ -85,11 +80,12 @@ function ChannelVideos() {
                 <Link to={`/watch/${v.Id}`} key={v.Id}>
                   <button className="watch-btn">Watch Now</button>
                 </Link>
-                {!!channel && (
+                {!!channel && !channel?.Owner.Disable && (
                   <button onClick={() => useDeleteVideo(v.VideoURL, channel.Id, () => handleRetrieve())} className="delete-btn">
                     Delete
                   </button>
                 )}
+                {!channel?.Owner.Disable && 
                 <div className="dropdown">
                   <button className="dropdown-btn" />
                   <div className="dropdown-content">
@@ -146,6 +142,7 @@ function ChannelVideos() {
                     )}
                   </div>
                 </div>
+                }
               </div>
             ))}
         </div>

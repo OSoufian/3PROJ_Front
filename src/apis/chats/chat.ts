@@ -16,6 +16,19 @@ export function useGetChats(video: number, callBack: Function) {
   }().then(c => callBack(c))
 }
 
+export function useGetAciveUsers(callBack: Function) {
+  return async function () {
+
+    const response = await fetch(`http://localhost:3002/ws/connections`, {
+      method: 'GET',
+      redirect: 'follow',
+    })
+
+    const data = await response.json();
+    return data
+  }().then(c => callBack(c))
+}
+
 // export function useGetChat(channelId: number, token: string, callBack: Function) {
 //   return async function () {
 //     if (!token) return

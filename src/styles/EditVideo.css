@@ -55,7 +55,7 @@ h1 {
     position: absolute;
     top: 67%;
     left: 50%;
-    width: 15%;
+    width: 5%;
     transform: translate(-50%, -50%);
     opacity: 0;
     transition: opacity 0.5s ease-in-out;

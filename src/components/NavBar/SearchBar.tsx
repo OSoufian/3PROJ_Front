@@ -9,7 +9,6 @@ function SearchBar() {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Search submitted:', searchText);
   };
 
   return searchText ? (
