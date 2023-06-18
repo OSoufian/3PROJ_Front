@@ -1,6 +1,6 @@
 /* Soufian (15 avril 2023) */
 
-.dark .channel-container {
+.dark .my-channel-container {
     max-width: 800px;
     margin: 0 auto;
     background-color: #313338;
@@ -8,12 +8,17 @@
     border-radius: 5px;
 }
 
-.channel-container {
+.my-channel-container {
   max-width: 800px;
   margin: 0 auto;
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 5px;
+}
+
+.my-channel-container .banner-section {
+  z-index: 1;
+  width: 750px;
 }
 
 
