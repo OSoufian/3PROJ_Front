@@ -23,11 +23,17 @@ function VideoListPage() {
   return (
     <div>
       <div className="dark:bg-#121212 dark:text-#C2C2C2">
-        {/* <CategoryPanel video={filteredVideos} onFilterChange={handleFilterChange} /> */}
         <CategoryPanel />
       </div>
       <div>
-        <VideoList videos={video?.length ? video : tempVideoList} />
+        {video && video.length > 0 ? (
+          <VideoList videos={video} />
+        ) : (
+          <div>
+            <h2 className="no-video-title">No videos available</h2>
+            <p>We're sorry, but there are no videos matching your search! Please try a different search term!</p>
+          </div>
+        )}
       </div>
     </div>
   );

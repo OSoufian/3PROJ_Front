@@ -3,6 +3,7 @@ import VideoList from './VideoList';
 import { useGetVideos } from '@/apis';
 import { type VideoType } from '@/types';
 import tempVideoList from '@/data/videoList';
+import "@/styles/VideoListPage.css"; 
 
 function VideoListPage() {
   const [video, setVideos] = useState<VideoType[]>([]);
@@ -19,7 +20,11 @@ function VideoListPage() {
         <CategoryPanel />
       </div>
       <div>
-        <VideoList videos={video?.length ? video : tempVideoList} />
+        {video && video.length > 0 ? (
+          <VideoList videos={video} />
+        ) : (
+          <div className="no-video-title"><h2>No videos available</h2></div>
+        )}
       </div>
     </div>
   );
