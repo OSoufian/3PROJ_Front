@@ -85,3 +85,8 @@ h1 {
 .icon-container:hover .upload-icon {
   opacity: 1;
 }
+
+.success-message {
+    margin-top: 10px;
+    color: green;
+}

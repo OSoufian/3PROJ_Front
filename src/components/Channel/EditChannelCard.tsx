@@ -6,6 +6,7 @@ const baseURL = envVars["user-url"]
 
 function EditChannelCard() {
   const [channel, setChannel] = useState<ChannelType | undefined>();
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   useEffect(() => {
     useGetMeChannel(sessionStorage.token ?? '', (c: ChannelType) => setChannel(c));
@@ -50,6 +51,18 @@ function EditChannelCard() {
     }
   };
 
+  const handleEditChannel = async () => {
+    if (channel) {
+      useEditChannel(sessionStorage.token, channel, (response: any) => {
+        if (response) {
+          if (response.Id === channel.Id) {
+            setUpdateSuccess(true);
+          }
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <div className="banner-container">
@@ -59,11 +72,15 @@ function EditChannelCard() {
           src={channel?.Banner ? `${baseURL}/image?imagename=${channel?.Banner}` : `${baseURL}/image?imagename=default.png`}
           alt="Banner"
         />
-        <input id="banner-upload" type="file" accept="image/*" onChange={handleBannerChange} style={{display:'none'}}/>
+        <input id="banner-upload" type="file" accept="image/*" onChange={handleBannerChange} style={{ display: 'none' }} />
         <div className="upload-icon">
-          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
-            document.getElementById('banner-upload')?.click();
-          }}></img>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/126/126477.png"
+            onClick={() => {
+              document.getElementById('banner-upload')?.click();
+            }}
+            alt="Upload Banner"
+          ></img>
         </div>
       </div>
       <br />
@@ -74,11 +91,15 @@ function EditChannelCard() {
           src={channel?.Icon ? `${baseURL}/image?imagename=${channel?.Icon}` : `${baseURL}/image?imagename=default.png`}
           alt="Icon"
         />
-        <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{display:'none'}}/>
+        <input id="icon-upload" type="file" accept="image/*" onChange={handleIconChange} style={{ display: 'none' }} />
         <div className="upload-icon">
-          <img src='https://cdn-icons-png.flaticon.com/512/126/126477.png' onClick={() => {
-            document.getElementById('icon-upload')?.click();
-          }}></img>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/126/126477.png"
+            onClick={() => {
+              document.getElementById('icon-upload')?.click();
+            }}
+            alt="Upload Icon"
+          ></img>
         </div>
       </div>
 
@@ -93,9 +114,15 @@ function EditChannelCard() {
 
       <br />
       {!!channel && (
-        <button className="save-btn" onClick={() => {
-          useEditChannel(sessionStorage.token, channel, () => {});
-        }}>Save Channel</button>
+        <button className="save-btn" onClick={handleEditChannel}>
+          Save Channel
+        </button>
+      )}
+
+      {updateSuccess && (
+        <div className="success-message">
+          Channel updated successfully!
+        </div>
       )}
     </div>
   );
